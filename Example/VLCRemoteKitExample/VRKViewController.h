@@ -12,7 +12,10 @@
 
 #pragma mark - Public Methods
 
-- (IBAction)connectAction:(id)sender;
+- (IBAction)startListeningAction:(id)sender;
+- (IBAction)playAction:(id)sender;
+- (IBAction)stopAction:(id)sender;
+- (IBAction)tooglePauseAction:(id)sender;
 - (IBAction)toogleFullScreenAction:(id)sender;
 
 @end

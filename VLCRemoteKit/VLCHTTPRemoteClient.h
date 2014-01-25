@@ -24,32 +24,28 @@
  *
  */
 
-#import <Foundation/Foundation.h>
+#import "VLCCommandProtocol.h"
+#import "VLCRemoteClientProtocol.h"
+
+/** The API version supported by the client. */
+extern double const kVRKHTTPClientAPIVersion;
+/** The recommended time interval to use to pull the status. */
+extern NSTimeInterval const kVRKDefaultTimeInterval;
+
+@interface VLCHTTPRemoteClient : NSObject <VLCCommandProtocol, VLCRemoteClientProtocol>
+
+#pragma mark - Creating and Initializing HTTP Clients
 
 /**
- * Defines the remote-control command list that the receiver must implement.
+ * Initializes an HTTP client using an hostname, a port and a password.
+ * @param hostname the hostname of the machine where the VLC is running.
+ * @param port the port of the machine where the VLC is available (usually the port 8080).
+ * @param password the password configured in VLC.
+ * @version 1.0.0
  */
-@protocol VLCCommandProtocol <NSObject>
+- (id)initWithHostname:(NSString *)hostname port:(NSInteger)port password:(NSString *)password;
+- (id)initWithURL:(NSURL *)url password:(NSString *)password;
 
-/**
- * Starts the playback for the item with a given identifier.
- * @param itemIdentifier an item identifier.
- */
-- (void)playItemWithId:(NSInteger)itemIdentifier;
-
-/**
- * Toggles VLC in pause / playback.
- */
-- (void)tooglePause;
-
-/**
- * Stops the current playback.
- */
-- (void)stop;
-
-/**
- * Toggles VLC in fullscreen / windowed.
- */
-- (void)toogleFullscreen;
+#pragma mark - Public Methods
 
 @end

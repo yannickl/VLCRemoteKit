@@ -10,7 +10,7 @@
 #import "VLCRemoteKit.h"
 
 @interface VRKViewController ()
-
+@property (nonatomic, strong) VLCHTTPRemoteClient *remoteVLC;
 @end
 
 @implementation VRKViewController
@@ -20,18 +20,30 @@
     [super viewDidLoad];
 	
     self.title = @"VLC Remote Kit Example";
+    
+    _remoteVLC = [[VLCHTTPRemoteClient alloc] initWithURL:[NSURL URLWithString:@"http://192.168.0.12:8080"] password:@"password"];
 }
 
 #pragma mark - Public Methods
 
 
-- (IBAction)connectAction:(id)sender {
+- (IBAction)startListeningAction:(id)sender {
+}
+
+- (IBAction)playAction:(id)sender {
+    [_remoteVLC playItemWithId:-1];
+}
+
+- (IBAction)stopAction:(id)sender {
+    [_remoteVLC stop];
+}
+
+- (IBAction)tooglePauseAction:(id)sender {
+    [_remoteVLC tooglePause];
 }
 
 - (IBAction)toogleFullScreenAction:(id)sender {
-    VLCRemoteHTTPClient *client = [[VLCRemoteHTTPClient alloc] initWithURL:[NSURL URLWithString:@"http://192.168.0.12:8080"] password:@"password"];
-    //[client connect];
-    [client toogleFullscreen];
+    [_remoteVLC toogleFullscreen];
 }
 
 @end

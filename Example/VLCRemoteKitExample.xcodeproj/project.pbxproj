@@ -22,7 +22,7 @@
 		F4276E13189437DF0031772F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4276DF2189437DF0031772F /* UIKit.framework */; };
 		F4276E1B189437DF0031772F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F4276E19189437DF0031772F /* InfoPlist.strings */; };
 		F4276E1D189437DF0031772F /* VLCRemoteKitExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F4276E1C189437DF0031772F /* VLCRemoteKitExampleTests.m */; };
-		F4276E2D18943A740031772F /* VLCRemoteHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = F4276E2C18943A740031772F /* VLCRemoteHTTPClient.m */; };
+		F484F0211894776400DDD777 /* VLCHTTPRemoteClient.m in Sources */ = {isa = PBXBuildFile; fileRef = F484F01F1894776400DDD777 /* VLCHTTPRemoteClient.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,11 +56,11 @@
 		F4276E18189437DF0031772F /* VLCRemoteKitExampleTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "VLCRemoteKitExampleTests-Info.plist"; sourceTree = "<group>"; };
 		F4276E1A189437DF0031772F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F4276E1C189437DF0031772F /* VLCRemoteKitExampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VLCRemoteKitExampleTests.m; sourceTree = "<group>"; };
-		F4276E2A189439220031772F /* VLCCommandProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCCommandProtocol.h; sourceTree = "<group>"; };
-		F4276E2B18943A740031772F /* VLCRemoteHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCRemoteHTTPClient.h; sourceTree = "<group>"; };
-		F4276E2C18943A740031772F /* VLCRemoteHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCRemoteHTTPClient.m; sourceTree = "<group>"; };
-		F4276E2F18943B930031772F /* VLCRemoteKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VLCRemoteKit.h; sourceTree = "<group>"; };
-		F4276E30189451C50031772F /* VLCRemoteClientProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VLCRemoteClientProtocol.h; sourceTree = "<group>"; };
+		F484F01C1894776400DDD777 /* VLCCommandProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCCommandProtocol.h; sourceTree = "<group>"; };
+		F484F01D1894776400DDD777 /* VLCRemoteClientProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCRemoteClientProtocol.h; sourceTree = "<group>"; };
+		F484F01E1894776400DDD777 /* VLCHTTPRemoteClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCHTTPRemoteClient.h; sourceTree = "<group>"; };
+		F484F01F1894776400DDD777 /* VLCHTTPRemoteClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCHTTPRemoteClient.m; sourceTree = "<group>"; };
+		F484F0201894776400DDD777 /* VLCRemoteKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCRemoteKit.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,11 +165,11 @@
 		F4276E29189439220031772F /* VLCRemoteKit */ = {
 			isa = PBXGroup;
 			children = (
-				F4276E2F18943B930031772F /* VLCRemoteKit.h */,
-				F4276E30189451C50031772F /* VLCRemoteClientProtocol.h */,
-				F4276E2A189439220031772F /* VLCCommandProtocol.h */,
-				F4276E2B18943A740031772F /* VLCRemoteHTTPClient.h */,
-				F4276E2C18943A740031772F /* VLCRemoteHTTPClient.m */,
+				F484F01C1894776400DDD777 /* VLCCommandProtocol.h */,
+				F484F01D1894776400DDD777 /* VLCRemoteClientProtocol.h */,
+				F484F01E1894776400DDD777 /* VLCHTTPRemoteClient.h */,
+				F484F01F1894776400DDD777 /* VLCHTTPRemoteClient.m */,
+				F484F0201894776400DDD777 /* VLCRemoteKit.h */,
 			);
 			name = VLCRemoteKit;
 			path = ../VLCRemoteKit;
@@ -274,10 +274,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F484F0211894776400DDD777 /* VLCHTTPRemoteClient.m in Sources */,
 				F4276DFF189437DF0031772F /* VRKAppDelegate.m in Sources */,
 				F4276E08189437DF0031772F /* VRKViewController.m in Sources */,
 				F4276DFB189437DF0031772F /* main.m in Sources */,
-				F4276E2D18943A740031772F /* VLCRemoteHTTPClient.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
