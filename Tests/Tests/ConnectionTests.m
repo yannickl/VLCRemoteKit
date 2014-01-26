@@ -1,18 +1,18 @@
 //
-//  VLCRemoteKitExampleTests.m
-//  VLCRemoteKitExampleTests
+//  iOSTests.m
+//  iOSTests
 //
-//  Created by YannickL on 25/01/2014.
-//  Copyright (c) 2014 Yannick Loriot. All rights reserved.
+//  Created by YannickL on 26/01/2014.
+//
 //
 
 #import <XCTest/XCTest.h>
 
-@interface VLCRemoteKitExampleTests : XCTestCase
+@interface iOSTests : XCTestCase
 
 @end
 
-@implementation VLCRemoteKitExampleTests
+@implementation iOSTests
 
 - (void)setUp
 {
