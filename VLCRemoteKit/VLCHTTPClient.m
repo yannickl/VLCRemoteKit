@@ -59,6 +59,12 @@ NSTimeInterval const kVRKTimeoutIntervalForRequest = 1.0f;
 
 @implementation VLCHTTPClient
 
+- (void)dealloc {
+    [_statusSession invalidateAndCancel];
+    [_commandSession invalidateAndCancel];
+    NSLog(@"dealloc");
+}
+
 - (id)initWithHostname:(NSString *)hostname port:(NSInteger)port password:(NSString *)password {
     NSURLComponents *components = [[NSURLComponents alloc] init];
     components.scheme           = @"http";
@@ -84,7 +90,7 @@ NSTimeInterval const kVRKTimeoutIntervalForRequest = 1.0f;
     NSString *base64        = [[credentials dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0];
     NSString *authorization = [NSString stringWithFormat:@"Basic %@", base64];
 
-    return [self initWithURLComponents:urlComponents headers:@{@"Authorization": authorization}];
+    return [self initWithURLComponents:urlComponents headers:@{ @"Authorization": authorization }];
 }
 
 - (id)initWithURLComponents:(NSURLComponents *)urlComponents headers:(NSDictionary *)headers {
@@ -132,14 +138,6 @@ NSTimeInterval const kVRKTimeoutIntervalForRequest = 1.0f;
     return request;
 }
 
-- (void)retrieveRemoteStatus {
-    NSURLSessionDataTask *task = [_statusSession dataTaskWithRequest:_statusRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        NSLog(@"Ma: %@", [NSThread mainThread]);
-        NSLog(@"CT: %@", [NSThread currentThread]);
-    }];
-    [task resume];
-}
-
 - (void)performCommand:(NSString *)command withParameters:(NSString *)parameters {
     if (_status == VLCClientStatusConnected) {
         NSMutableString *query = [NSMutableString stringWithFormat:@"command=%@", command];
@@ -166,7 +164,9 @@ NSTimeInterval const kVRKTimeoutIntervalForRequest = 1.0f;
                     _status = currentStatus;
                     
                     if (_delegate && [_delegate respondsToSelector:@selector(client:reachabilityDidChange:)]) {
-                        [_delegate client:self reachabilityDidChange:_status];
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [_delegate client:self reachabilityDidChange:_status];
+                        });
                     }
                 }
                 

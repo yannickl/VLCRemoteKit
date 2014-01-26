@@ -22,12 +22,17 @@
 	
     _remoteVLC          = [VLCHTTPClient clientWithHostname:@"192.168.0.12" port:8080 password:@"password"];
     _remoteVLC.delegate = self;
+    [_remoteVLC connect];
 }
 
 #pragma mark - Public Methods
 
 
 - (IBAction)startListeningAction:(id)sender {
+    [_remoteVLC disconnect];
+    
+    _remoteVLC          = [VLCHTTPClient clientWithHostname:@"192.168.0.12" port:8080 password:@"password"];
+    _remoteVLC.delegate = self;
     [_remoteVLC connect];
 }
 
