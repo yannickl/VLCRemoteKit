@@ -62,7 +62,6 @@ NSTimeInterval const kVRKTimeoutIntervalForRequest = 1.0f;
 - (void)dealloc {
     [_statusSession invalidateAndCancel];
     [_commandSession invalidateAndCancel];
-    NSLog(@"dealloc");
 }
 
 - (id)initWithHostname:(NSString *)hostname port:(NSInteger)port password:(NSString *)password {

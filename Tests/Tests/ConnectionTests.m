@@ -7,7 +7,18 @@
 //
 
 #import <XCTest/XCTest.h>
+#import <VLCRemoteKit/VLCRemoteKit.h>
 
+#define EXP_SHORTHAND
+#import "Expecta.h"
+#import "OCMock.h"
+
+@interface VLCHTTPClient (UnitTestAdditions)
+@property (nonatomic, strong) NSURLRequest *statusRequest;
+@property (nonatomic, strong) NSURLSession *statusSession;
+@property (nonatomic, strong) NSURLSession *commandSession;
+
+@end
 @interface iOSTests : XCTestCase
 
 @end
@@ -26,9 +37,16 @@
     [super tearDown];
 }
 
-- (void)testExample
+- (void)testHTTPClient
 {
-    XCTFail(@"No implementation for \"%s\"", __PRETTY_FUNCTION__);
+    id statusSessionMock = [OCMockObject niceMockForClass:[NSURLSession class]];
+    [[statusSessionMock expect] dataTaskWithRequest:[OCMArg any] completionHandler:[OCMArg any]];
+    
+    VLCHTTPClient *httpClient = [VLCHTTPClient clientWithHostname:@"1.2.3.4" port:8080 password:@"password"];
+    httpClient.statusSession  = statusSessionMock;
+    [httpClient connect];
+    
+    [statusSessionMock verify];
 }
 
 @end
