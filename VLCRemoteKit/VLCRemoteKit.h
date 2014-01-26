@@ -27,6 +27,10 @@
 #ifndef VLCRemoteKitExample_VLCRemoteKit_h
 #define VLCRemoteKitExample_VLCRemoteKit_h
 
-#import "VLCHTTPRemoteClient.h"
+#import "VLCRemoteStatus.h"
+
+#import "VLCHTTPClient.h"
+
+#import "VLCClientProtocol.h"
 
 #endif

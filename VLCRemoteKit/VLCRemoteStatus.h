@@ -24,28 +24,9 @@
  *
  */
 
-#import "VLCCommandProtocol.h"
-#import "VLCRemoteClientProtocol.h"
+#import <Foundation/Foundation.h>
 
-/** The API version supported by the client. */
-extern double const kVRKHTTPClientAPIVersion;
-/** The recommended time interval to use to pull the status. */
-extern NSTimeInterval const kVRKDefaultTimeInterval;
-
-@interface VLCHTTPRemoteClient : NSObject <VLCCommandProtocol, VLCRemoteClientProtocol>
-
-#pragma mark - Creating and Initializing HTTP Clients
-
-/**
- * Initializes an HTTP client using an hostname, a port and a password.
- * @param hostname the hostname of the machine where the VLC is running.
- * @param port the port of the machine where the VLC is available (usually the port 8080).
- * @param password the password configured in VLC.
- * @version 1.0.0
- */
-- (id)initWithHostname:(NSString *)hostname port:(NSInteger)port password:(NSString *)password;
-- (id)initWithURL:(NSURL *)url password:(NSString *)password;
-
-#pragma mark - Public Methods
+@interface VLCRemoteStatus : NSObject
+@property (atomic, assign) double apiVersion;
 
 @end

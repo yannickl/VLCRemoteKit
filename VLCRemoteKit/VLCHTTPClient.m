@@ -24,14 +24,14 @@
  *
  */
 
-#import "VLCHTTPRemoteClient.h"
+#import "VLCHTTPClient.h"
 
-double const kVRKHTTPClientAPIVersion        = 3;
-NSTimeInterval const kVRKDefaultTimeInterval = 1.0f;
+double const kVRKHTTPClientAPIVersion              = 3;
 
-@interface VLCHTTPRemoteClient ()
-/** The timer uses to keep the status up to date. */
-@property (nonatomic, strong) NSTimer *timer;
+NSTimeInterval const kVRKDefaultRefreshInterval    = 1.0f;
+NSTimeInterval const kVRKTimeoutIntervalForRequest = 1.0f;
+
+@interface VLCHTTPClient ()
 /** The headers used to build the requests. */
 @property (nonatomic, strong) NSDictionary *headers;
 /**
@@ -50,15 +50,18 @@ NSTimeInterval const kVRKDefaultTimeInterval = 1.0f;
 @property (nonatomic, strong) NSURLSession *statusSession;
 /** The session used to perform the command requests. */
 @property (nonatomic, strong) NSURLSession *commandSession;
-/** The internal status. */
-@property (atomic, strong) NSDictionary *status;
+/** Flag to know whether the client needs listening to remote status. */
+@property (atomic, getter = isListenning) BOOL listening;
+/** Internal status. */
+@property (nonatomic, getter = isConnected) BOOL connected;
+@property (nonatomic, assign) VLCHTTPClientStatus status;
 
 @end
 
-@implementation VLCHTTPRemoteClient
+@implementation VLCHTTPClient
 
 - (void)dealloc {
-    [_timer invalidate];
+
 }
 
 - (id)initWithHostname:(NSString *)hostname port:(NSInteger)port password:(NSString *)password {
@@ -89,6 +92,8 @@ NSTimeInterval const kVRKDefaultTimeInterval = 1.0f;
     if ((self = [super init])) {
         _headers = headers;
         
+        _status = VLCHTTPClientStatusNone;
+        
         // Status
         urlComponents.path   = @"/requests/status.json";
         _statusRequest       = [self requestWithURLComponents:urlComponents];
@@ -101,11 +106,15 @@ NSTimeInterval const kVRKDefaultTimeInterval = 1.0f;
         // Create the sessions
         NSURLSessionConfiguration *configuration    = [NSURLSessionConfiguration defaultSessionConfiguration];
         configuration.HTTPMaximumConnectionsPerHost = 1;
+        configuration.timeoutIntervalForRequest     = kVRKTimeoutIntervalForRequest;
+        configuration.timeoutIntervalForResource    = kVRKTimeoutIntervalForRequest;
         _statusSession                              = [NSURLSession sessionWithConfiguration:configuration];
         
         NSURLSessionConfiguration *commandConfiguration    = [NSURLSessionConfiguration defaultSessionConfiguration];
         commandConfiguration.HTTPShouldUsePipelining       = YES;
         commandConfiguration.HTTPMaximumConnectionsPerHost = 3;
+        configuration.timeoutIntervalForRequest            = kVRKTimeoutIntervalForRequest;
+        configuration.timeoutIntervalForResource           = kVRKTimeoutIntervalForRequest;
         _commandSession                                    = [NSURLSession sessionWithConfiguration:commandConfiguration];
     }
     return self;
@@ -115,7 +124,8 @@ NSTimeInterval const kVRKDefaultTimeInterval = 1.0f;
 
 - (NSURLRequest *)requestWithURLComponents:(NSURLComponents *)urlComponents {
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[urlComponents URL]];
-
+    request.timeoutInterval      = kVRKTimeoutIntervalForRequest;
+    
     for (NSString *key in _headers) {
         [request setValue:[_headers objectForKey:key] forHTTPHeaderField:key];
     }
@@ -125,69 +135,106 @@ NSTimeInterval const kVRKDefaultTimeInterval = 1.0f;
 
 - (void)retrieveRemoteStatus {
     NSURLSessionDataTask *task = [_statusSession dataTaskWithRequest:_statusRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        NSLog(@"Data: %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
-        NSLog(@"Error: %@", error);
+        NSLog(@"Ma: %@", [NSThread mainThread]);
+        NSLog(@"CT: %@", [NSThread currentThread]);
     }];
     [task resume];
+}
+
+- (void)performCommand:(NSString *)command withParameters:(NSString *)parameters {
+    if (_connected) {
+        NSMutableString *query = [NSMutableString stringWithFormat:@"command=%@", command];
+        if (parameters) {
+            [query appendString:[NSString stringWithFormat:@"&%@", parameters]];
+        }
+        _statusURLComponents.query = query;
+        
+        NSURLRequest *request = [self requestWithURLComponents:_statusURLComponents];
+        [[_commandSession dataTaskWithRequest:request completionHandler:NULL] resume];
+    }
+}
+
+- (void)listening {
+    if (_listening) {
+        [[_statusSession dataTaskWithRequest:_statusRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+            if (_listening) {
+                NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+
+                if (httpResponse.statusCode == 200) {
+                    if (_status != VLCHTTPClientStatusConnected) {
+                        _status = VLCHTTPClientStatusConnected;
+                        
+                        if (_delegate && [_delegate respondsToSelector:@selector(client:reachabilityDidChange:)]) {
+                            [_delegate client:self reachabilityDidChange:VLCHTTPClientStatusConnected];
+                        }
+                    }
+                }
+                else if (httpResponse.statusCode == 401) {
+                    if (_status != VLCHTTPClientStatusUnauthorized) {
+                        _status = VLCHTTPClientStatusUnauthorized;
+                        
+                        if (_delegate && [_delegate respondsToSelector:@selector(client:reachabilityDidChange:)]) {
+                            [_delegate client:self reachabilityDidChange:VLCHTTPClientStatusUnauthorized];
+                        }
+                    }
+                }
+                else {
+                    if (_status != VLCHTTPClientStatusNone) {
+                        _status = VLCHTTPClientStatusNone;
+                        
+                        if (_delegate && [_delegate respondsToSelector:@selector(client:reachabilityDidChange:)]) {
+                            [_delegate client:self reachabilityDidChange:VLCHTTPClientStatusNone];
+                        }
+                    }
+
+                }
+                
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, kVRKDefaultRefreshInterval * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+                    [self listening];
+                });
+            }
+        }] resume];
+    }
 }
 
 #pragma mark - VLCRemoteClientProtocol Methods
 
-- (BOOL)isVersionSupported {
-    NSURLSessionDataTask *task = [_statusSession dataTaskWithRequest:_statusRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        NSLog(@"Data: %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
-        NSLog(@"Error: %@", error);
-    }];
-    [task resume];
-    return NO;
+- (void)connect {
+    @synchronized (self) {
+        if (!_listening) {
+            _listening = YES;
+            
+            [self listening];
+        }
+    }
 }
 
-- (void)startListeningForStatusUpdateWithTimeInterval:(NSTimeInterval)timeInterval {
-    _timer = [NSTimer timerWithTimeInterval:timeInterval
-                                     target:self
-                                   selector:@selector(retrieveRemoteStatus)
-                                   userInfo:nil
-                                    repeats:YES];
-    
-    [[NSRunLoop currentRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
-}
-
-- (void)stopListeningForStatusUpdate {
-    [_timer invalidate];
-}
-
-- (void)getStatusWithCompletionHandler:(VLCRemoteClientCallback)completionHandler {
-
+- (void)disconnect {
+    @synchronized (self) {
+        _listening = NO;
+    }
 }
 
 #pragma mark - VLCCommand Protocol Methods
 
 - (void)playItemWithId:(NSInteger)itemIdentifier {
-    _statusURLComponents.query = @"command=pl_play";
-    
-    NSURLRequest *request = [self requestWithURLComponents:_statusURLComponents];
-    [[_commandSession dataTaskWithRequest:request completionHandler:NULL] resume];
+    NSString *parameters = nil;
+    if (itemIdentifier >= 0) {
+        parameters = [NSString stringWithFormat:@"id=%ld", (long)itemIdentifier];
+    }
+    [self performCommand:@"pl_play" withParameters:parameters];
 }
 
 - (void)tooglePause {
-    _statusURLComponents.query = @"command=pl_pause";
-    
-    NSURLRequest *request = [self requestWithURLComponents:_statusURLComponents];
-    [[_commandSession dataTaskWithRequest:request completionHandler:NULL] resume];
+    [self performCommand:@"pl_pause" withParameters:nil];
 }
 
 - (void)stop {
-    _statusURLComponents.query = @"command=pl_stop";
-    
-    NSURLRequest *request = [self requestWithURLComponents:_statusURLComponents];
-    [[_commandSession dataTaskWithRequest:request completionHandler:NULL] resume];
+    [self performCommand:@"pl_stop" withParameters:nil];
 }
 
 - (void)toogleFullscreen {
-    _statusURLComponents.query = @"command=fullscreen";
-    
-    NSURLRequest *request = [self requestWithURLComponents:_statusURLComponents];
-    [[_commandSession dataTaskWithRequest:request completionHandler:NULL] resume];
+    [self performCommand:@"fullscreen" withParameters:nil];
 }
 
 @end

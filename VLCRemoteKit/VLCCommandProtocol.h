@@ -32,23 +32,23 @@
 @protocol VLCCommandProtocol <NSObject>
 
 /**
- * Starts the playback for the item with a given identifier.
+ * @abstract Starts the playback for the item with a given identifier.
  * @param itemIdentifier an item identifier.
  */
 - (void)playItemWithId:(NSInteger)itemIdentifier;
 
 /**
- * Toggles VLC in pause / playback.
+ * @abstract Toggles VLC in pause / playback.
  */
 - (void)tooglePause;
 
 /**
- * Stops the current playback.
+ * @abstract Stops the current playback.
  */
 - (void)stop;
 
 /**
- * Toggles VLC in fullscreen / windowed.
+ * @abstract Toggles VLC in fullscreen / windowed.
  */
 - (void)toogleFullscreen;
 

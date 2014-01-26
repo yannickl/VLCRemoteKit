@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "VLCClientProtocol.h"
 
-@interface VRKViewController : UIViewController
+@interface VRKViewController : UIViewController <VLCClientDelegate>
 
 #pragma mark - Public Methods
 

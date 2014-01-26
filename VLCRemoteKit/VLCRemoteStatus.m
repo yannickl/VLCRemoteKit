@@ -24,18 +24,12 @@
  *
  */
 
-#import <Foundation/Foundation.h>
+#import "VLCRemoteStatus.h"
 
-typedef void (^ VLCRemoteClientCallback) (NSDictionary *status);
+@interface VLCRemoteStatus ()
 
-@protocol VLCRemoteClientProtocol <NSObject>
+@end
 
-/**
- * Returns true whether the remote VLC API is compatible with VLCRemoteKit.
- */
-- (BOOL)isVersionSupported;
-- (void)startListeningForStatusUpdateWithTimeInterval:(NSTimeInterval)timeInterval;
-- (void)stopListeningForStatusUpdate;
-- (void)getStatusWithCompletionHandler:(VLCRemoteClientCallback)completionHandler;
+@implementation VLCRemoteStatus
 
 @end
