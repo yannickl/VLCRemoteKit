@@ -52,17 +52,12 @@ NSTimeInterval const kVRKTimeoutIntervalForRequest = 1.0f;
 @property (nonatomic, strong) NSURLSession *commandSession;
 /** Flag to know whether the client needs listening to remote status. */
 @property (atomic, getter = isListenning) BOOL listening;
-/** Internal status. */
-@property (nonatomic, getter = isConnected) BOOL connected;
-@property (nonatomic, assign) VLCHTTPClientStatus status;
+/** The connection status. */
+@property (nonatomic, assign) VLCClientStatus status;
 
 @end
 
 @implementation VLCHTTPClient
-
-- (void)dealloc {
-
-}
 
 - (id)initWithHostname:(NSString *)hostname port:(NSInteger)port password:(NSString *)password {
     NSURLComponents *components = [[NSURLComponents alloc] init];
@@ -71,6 +66,10 @@ NSTimeInterval const kVRKTimeoutIntervalForRequest = 1.0f;
     components.port             = [NSNumber numberWithInteger:port];
     
     return [self initWithURLComponents:components password:password];
+}
+
++ (instancetype)clientWithHostname:(NSString *)hostname port:(NSInteger)port password:(NSString *)password {
+    return [[self alloc] initWithHostname:hostname port:port password:password];
 }
 
 - (id)initWithURL:(NSURL *)url password:(NSString *)password {
@@ -92,7 +91,7 @@ NSTimeInterval const kVRKTimeoutIntervalForRequest = 1.0f;
     if ((self = [super init])) {
         _headers = headers;
         
-        _status = VLCHTTPClientStatusNone;
+        _status = VLCClientStatusNone;
         
         // Status
         urlComponents.path   = @"/requests/status.json";
@@ -142,7 +141,7 @@ NSTimeInterval const kVRKTimeoutIntervalForRequest = 1.0f;
 }
 
 - (void)performCommand:(NSString *)command withParameters:(NSString *)parameters {
-    if (_connected) {
+    if (_status == VLCClientStatusConnected) {
         NSMutableString *query = [NSMutableString stringWithFormat:@"command=%@", command];
         if (parameters) {
             [query appendString:[NSString stringWithFormat:@"&%@", parameters]];
@@ -159,33 +158,20 @@ NSTimeInterval const kVRKTimeoutIntervalForRequest = 1.0f;
         [[_statusSession dataTaskWithRequest:_statusRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
             if (_listening) {
                 NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-
-                if (httpResponse.statusCode == 200) {
-                    if (_status != VLCHTTPClientStatusConnected) {
-                        _status = VLCHTTPClientStatusConnected;
-                        
-                        if (_delegate && [_delegate respondsToSelector:@selector(client:reachabilityDidChange:)]) {
-                            [_delegate client:self reachabilityDidChange:VLCHTTPClientStatusConnected];
-                        }
+                NSInteger statusCode            = httpResponse.statusCode;
+                
+                // Notified the delegate if the reachability status change
+                VLCClientStatus currentStatus = (statusCode == 200) ? VLCClientStatusConnected : (statusCode == 401) ? VLCClientStatusUnauthorized : VLCClientStatusNone;
+                if (_status != currentStatus) {
+                    _status = currentStatus;
+                    
+                    if (_delegate && [_delegate respondsToSelector:@selector(client:reachabilityDidChange:)]) {
+                        [_delegate client:self reachabilityDidChange:_status];
                     }
                 }
-                else if (httpResponse.statusCode == 401) {
-                    if (_status != VLCHTTPClientStatusUnauthorized) {
-                        _status = VLCHTTPClientStatusUnauthorized;
-                        
-                        if (_delegate && [_delegate respondsToSelector:@selector(client:reachabilityDidChange:)]) {
-                            [_delegate client:self reachabilityDidChange:VLCHTTPClientStatusUnauthorized];
-                        }
-                    }
-                }
-                else {
-                    if (_status != VLCHTTPClientStatusNone) {
-                        _status = VLCHTTPClientStatusNone;
-                        
-                        if (_delegate && [_delegate respondsToSelector:@selector(client:reachabilityDidChange:)]) {
-                            [_delegate client:self reachabilityDidChange:VLCHTTPClientStatusNone];
-                        }
-                    }
+                
+                // If all its ok, update the player
+                if (statusCode == 200) {
 
                 }
                 

@@ -26,6 +26,18 @@
 
 #import <Foundation/Foundation.h>
 
+/**
+ * The client's connection status.
+ */
+typedef NS_ENUM(NSInteger, VLCClientStatus) {
+    /** The client can't etablished a connection with the client. */
+    VLCClientStatusNone,
+    /** The client is unauthorized to connect to the VLC's server. */
+    VLCClientStatusUnauthorized,
+    /** The client is connected to the VLC's server endpoints. */
+    VLCClientStatusConnected
+};
+
 @class VLCRemoteStatus;
 
 /**
@@ -42,13 +54,15 @@
  * @abstract Tells the delegate that the reachability with the remote VLC 
  * changed.
  * @param client A client object informing the delegate about the new status.
+ * @version 1.0.0
  */
-- (void)client:(id)client reachabilityDidChange:(NSInteger)status;
+- (void)client:(id)client reachabilityDidChange:(VLCClientStatus)status;
 
 /**
  * @abstract Tells the delegate that the status is changed.
  * @param client A client object informing the delegate about the new status.
  * @param status The new status updated.
+ * @version 1.0.0
  */
 - (void)client:(id)client didUpdateStatus:(VLCRemoteStatus *)status;
                           
@@ -61,16 +75,18 @@
 @protocol VLCClientProtocol <NSObject>
 /** The object that acts as the delegate of the receiving client. */
 @property (nonatomic, weak) id<VLCClientDelegate> delegate;
-/** Returns true whether the client is connected to the server endpoints. */
-@property (nonatomic, readonly, getter = isConnected) BOOL connected;
+/** The connection status. */
+@property (nonatomic, readonly) VLCClientStatus status;
 
 /**
- * Start listening to the remote VLC.
+ * @abstract Start listening to the remote VLC.
+ * @version 1.0.0
  */
 - (void)connect;
 
 /**
- * Stops listening to the remote VLC.
+ * @abstract Stops listening to the remote VLC.
+ * @version 1.0.0
  */
 - (void)disconnect;
 

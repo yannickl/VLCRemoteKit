@@ -33,15 +33,6 @@ extern double const kVRKHTTPClientAPIVersion;
 extern NSTimeInterval const kVRKDefaultRefreshInterval;
 
 /**
- * Defines the remote status.
- */
-typedef NS_ENUM(NSInteger, VLCHTTPClientStatus) {
-    VLCHTTPClientStatusNone,
-    VLCHTTPClientStatusUnauthorized,
-    VLCHTTPClientStatusConnected
-};
-
-/**
  * The HTTP client communicate with the remote VLC over the HTTP protocol.
  *
  * By nature the HTTP is stateless, so it means we can not be notified when a
@@ -61,7 +52,15 @@ typedef NS_ENUM(NSInteger, VLCHTTPClientStatus) {
  * @version 1.0.0
  */
 - (id)initWithHostname:(NSString *)hostname port:(NSInteger)port password:(NSString *)password;
-- (id)initWithURL:(NSURL *)url password:(NSString *)password;
+
+/**
+ * @abstract Creates an HTTP client using an hostname, a port and a password.
+ * @param hostname An hostname of the machine where the VLC is running.
+ * @param port A port of the machine where the VLC is available (usually the port 8080).
+ * @param password A password which correspond to the one configured in VLC.
+ * @version 1.0.0
+ */
++ (instancetype)clientWithHostname:(NSString *)hostname port:(NSInteger)port password:(NSString *)password;
 
 #pragma mark - Managing the Delegate
 /** @name Managing the Delegate */

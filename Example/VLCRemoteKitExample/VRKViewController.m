@@ -20,12 +20,7 @@
 {
     [super viewDidLoad];
 	
-    for (int i = 0; i < 1; i++) {
-        VLCHTTPClient *c = [[VLCHTTPClient alloc] initWithURL:[NSURL URLWithString:@"http://192.168.0.12:8080"] password:@"password"];
-        c.delegate       = self;
-        [c connect];
-    }
-    _remoteVLC          = [[VLCHTTPClient alloc] initWithURL:[NSURL URLWithString:@"http://192.168.0.12:8080"] password:@"password"];
+    _remoteVLC          = [VLCHTTPClient clientWithHostname:@"192.168.0.12" port:8080 password:@"password"];
     _remoteVLC.delegate = self;
 }
 
@@ -54,7 +49,7 @@
 
 #pragma mark - VLCRemoteClient Delegate Methods
 
-- (void)client:(id)client reachabilityDidChange:(NSInteger)status {
+- (void)client:(id)client reachabilityDidChange:(VLCClientStatus)status {
     NSLog(@"CU: %@", [NSThread currentThread]);
     NSLog(@"MA: %@", [NSThread mainThread]);
 }
