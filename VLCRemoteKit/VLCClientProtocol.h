@@ -31,14 +31,14 @@
  */
 typedef NS_ENUM(NSInteger, VLCClientStatus) {
     /** The client can't etablished a connection with the client. */
-    VLCClientStatusNone,
+    VLCClientStatusUnreachable,
     /** The client is unauthorized to connect to the VLC's server. */
     VLCClientStatusUnauthorized,
     /** The client is connected to the VLC's server endpoints. */
     VLCClientStatusConnected
 };
 
-@class VLCRemoteStatus;
+@class VLCPlayerStatus;
 
 /**
  * The delegate of an object which implements the VLCClientProtocol must adopt 
@@ -56,15 +56,16 @@ typedef NS_ENUM(NSInteger, VLCClientStatus) {
  * @param client A client object informing the delegate about the new status.
  * @version 1.0.0
  */
-- (void)client:(id)client reachabilityDidChange:(VLCClientStatus)status;
+- (void)client:(id)client reachabilityStatusDidChange:(VLCClientStatus)status;
 
 /**
- * @abstract Tells the delegate that the status is changed.
- * @param client A client object informing the delegate about the new status.
- * @param status The new status updated.
+ * @abstract Tells the delegate that the player status is changed.
+ * @param client A client object informing the delegate about the new player
+ * status.
+ * @param status The new player status updated.
  * @version 1.0.0
  */
-- (void)client:(id)client didUpdateStatus:(VLCRemoteStatus *)status;
+- (void)client:(id)client playerStatusDidChange:(VLCPlayerStatus *)status;
                           
 @end
 

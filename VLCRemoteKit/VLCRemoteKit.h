@@ -27,7 +27,7 @@
 #ifndef VLCRemoteKitExample_VLCRemoteKit_h
 #define VLCRemoteKitExample_VLCRemoteKit_h
 
-#import "VLCRemoteStatus.h"
+#import "VLCPlayerStatus.h"
 
 #import "VLCHTTPClient.h"
 

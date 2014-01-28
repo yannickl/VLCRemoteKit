@@ -29,8 +29,6 @@
 
 /** The API version supported by the client. */
 extern double const kVRKHTTPClientAPIVersion;
-/** The recommended time interval to use to pull the status. */
-extern NSTimeInterval const kVRKDefaultRefreshInterval;
 
 /**
  * The HTTP client communicate with the remote VLC over the HTTP protocol.

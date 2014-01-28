@@ -28,6 +28,7 @@
 
 double const kVRKHTTPClientAPIVersion              = 3;
 
+/** The recommended time interval to use to pull the status. */
 NSTimeInterval const kVRKDefaultRefreshInterval    = 1.0f;
 NSTimeInterval const kVRKTimeoutIntervalForRequest = 1.0f;
 
@@ -96,7 +97,7 @@ NSTimeInterval const kVRKTimeoutIntervalForRequest = 1.0f;
     if ((self = [super init])) {
         _headers = headers;
         
-        _status = VLCClientStatusNone;
+        _status = VLCClientStatusUnreachable;
         
         // Status
         urlComponents.path   = @"/requests/status.json";
@@ -156,15 +157,15 @@ NSTimeInterval const kVRKTimeoutIntervalForRequest = 1.0f;
             if (_listening) {
                 NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
                 NSInteger statusCode            = httpResponse.statusCode;
-                
-                // Notified the delegate if the reachability status change
-                VLCClientStatus currentStatus = (statusCode == 200) ? VLCClientStatusConnected : (statusCode == 401) ? VLCClientStatusUnauthorized : VLCClientStatusNone;
+
+                // Notify the delegate if the reachability status change
+                VLCClientStatus currentStatus = (statusCode == 200) ? VLCClientStatusConnected : (statusCode == 401) ? VLCClientStatusUnauthorized : VLCClientStatusUnreachable;
                 if (_status != currentStatus) {
                     _status = currentStatus;
                     
-                    if (_delegate && [_delegate respondsToSelector:@selector(client:reachabilityDidChange:)]) {
+                    if (_delegate && [_delegate respondsToSelector:@selector(client:reachabilityStatusDidChange:)]) {
                         dispatch_async(dispatch_get_main_queue(), ^{
-                            [_delegate client:self reachabilityDidChange:_status];
+                            [_delegate client:self reachabilityStatusDidChange:_status];
                         });
                     }
                 }

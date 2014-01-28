@@ -3,6 +3,7 @@ inhibit_all_warnings!
 
 def import_pods
   pod 'Expecta', '~> 0.2'
+  pod 'GHUnit', '~> 0.5'
   pod 'OCMock', '~> 2.0'
   pod 'VLCRemoteKit', :path => '../'
 end

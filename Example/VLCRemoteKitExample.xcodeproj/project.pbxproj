@@ -18,7 +18,7 @@
 		F4276E08189437DF0031772F /* VRKViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4276E07189437DF0031772F /* VRKViewController.m */; };
 		F4276E0A189437DF0031772F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4276E09189437DF0031772F /* Images.xcassets */; };
 		F484F0211894776400DDD777 /* VLCHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = F484F01F1894776400DDD777 /* VLCHTTPClient.m */; };
-		F4A59E2C18953AAA0019B463 /* VLCRemoteStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A59E2B18953AAA0019B463 /* VLCRemoteStatus.m */; };
+		F4A59E2C18953AAA0019B463 /* VLCPlayerStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A59E2B18953AAA0019B463 /* VLCPlayerStatus.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,8 +43,8 @@
 		F484F01E1894776400DDD777 /* VLCHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCHTTPClient.h; sourceTree = "<group>"; };
 		F484F01F1894776400DDD777 /* VLCHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCHTTPClient.m; sourceTree = "<group>"; };
 		F484F0201894776400DDD777 /* VLCRemoteKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCRemoteKit.h; sourceTree = "<group>"; };
-		F4A59E2A18953AAA0019B463 /* VLCRemoteStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCRemoteStatus.h; sourceTree = "<group>"; };
-		F4A59E2B18953AAA0019B463 /* VLCRemoteStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCRemoteStatus.m; sourceTree = "<group>"; };
+		F4A59E2A18953AAA0019B463 /* VLCPlayerStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCPlayerStatus.h; sourceTree = "<group>"; };
+		F4A59E2B18953AAA0019B463 /* VLCPlayerStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCPlayerStatus.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,8 +124,8 @@
 				F484F01E1894776400DDD777 /* VLCHTTPClient.h */,
 				F484F01F1894776400DDD777 /* VLCHTTPClient.m */,
 				F484F0201894776400DDD777 /* VLCRemoteKit.h */,
-				F4A59E2A18953AAA0019B463 /* VLCRemoteStatus.h */,
-				F4A59E2B18953AAA0019B463 /* VLCRemoteStatus.m */,
+				F4A59E2A18953AAA0019B463 /* VLCPlayerStatus.h */,
+				F4A59E2B18953AAA0019B463 /* VLCPlayerStatus.m */,
 			);
 			name = VLCRemoteKit;
 			path = ../VLCRemoteKit;
@@ -198,7 +198,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F4A59E2C18953AAA0019B463 /* VLCRemoteStatus.m in Sources */,
+				F4A59E2C18953AAA0019B463 /* VLCPlayerStatus.m in Sources */,
 				F484F0211894776400DDD777 /* VLCHTTPClient.m in Sources */,
 				F4276DFF189437DF0031772F /* VRKAppDelegate.m in Sources */,
 				F4276E08189437DF0031772F /* VRKViewController.m in Sources */,
