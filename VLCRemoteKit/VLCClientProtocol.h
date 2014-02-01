@@ -29,16 +29,20 @@
 /**
  * The client's connection status.
  */
-typedef NS_ENUM(NSInteger, VLCClientStatus) {
+typedef NS_ENUM(NSInteger, VLCClientConnectionStatus) {
+    /** The client is disconnected. */
+    VLCClientConnectionStatusDisconnected,
+    /** The client is trying to connect to the VLC server. */
+    VLCClientConnectionStatusConnecting,
     /** The client can't etablished a connection with the client. */
-    VLCClientStatusUnreachable,
-    /** The client is unauthorized to connect to the VLC's server. */
-    VLCClientStatusUnauthorized,
-    /** The client is connected to the VLC's server endpoints. */
-    VLCClientStatusConnected
+    VLCClientConnectionStatusUnreachable,
+    /** The client is unauthorized to connect to the VLC server. */
+    VLCClientConnectionStatusUnauthorized,
+    /** The client is connected to the VLC server endpoints. */
+    VLCClientConnectionStatusConnected
 };
 
-@class VLCPlayerStatus;
+@class VLCRemotePlayer;
 
 /**
  * The delegate of an object which implements the VLCClientProtocol must adopt 
@@ -56,7 +60,7 @@ typedef NS_ENUM(NSInteger, VLCClientStatus) {
  * @param client A client object informing the delegate about the new status.
  * @version 1.0.0
  */
-- (void)client:(id)client reachabilityStatusDidChange:(VLCClientStatus)status;
+- (void)client:(id)client reachabilityStatusDidChange:(VLCClientConnectionStatus)status;
 
 /**
  * @abstract Tells the delegate that the player status is changed.
@@ -65,30 +69,65 @@ typedef NS_ENUM(NSInteger, VLCClientStatus) {
  * @param status The new player status updated.
  * @version 1.0.0
  */
-- (void)client:(id)client playerStatusDidChange:(VLCPlayerStatus *)status;
+- (void)client:(id)client playerStatusDidChange:(VLCRemotePlayer *)status;
                           
 @end
 
+@class VLCCommand;
+
 /**
- * The VLCClientProtocol is an interface which unifies the clients (HTTP,
- * telnet, etc.).
+ * The VLCClientProtocol is an interface which unifies the clients for each
+ * supported protocol (HTTP, telnet, etc.). A client can connect to an endpoint,
+ * disconnect from the server, listening to network events (e.g. losing the 
+ * connection), and performs the VLC commands.
  */
 @protocol VLCClientProtocol <NSObject>
 /** The object that acts as the delegate of the receiving client. */
 @property (nonatomic, weak) id<VLCClientDelegate> delegate;
-/** The connection status. */
-@property (nonatomic, readonly) VLCClientStatus status;
-
 /**
- * @abstract Start listening to the remote VLC.
+ * @abstract The connection status.
  * @version 1.0.0
  */
-- (void)connect;
+@property (readonly) VLCClientConnectionStatus connectionStatus;
+/**
+ * Whether auto reconnect is enabled or disabled.
+ *
+ * The default value is YES (enabled).
+ *
+ * Note: Altering this property will only affect future accidental disconnections.
+ * For example, if autoReconnect was true, and you disable this property after an accidental disconnection,
+ * this will not stop the current reconnect process.
+ * In order to stop a current reconnect process use the stop method.
+ *
+ * Similarly, if autoReconnect was false, and you enable this property after an accidental disconnection,
+ * this will not start a reconnect process.
+ * In order to start a reconnect process use the manualStart method.
+ **/
+@property (nonatomic, assign) BOOL autoReconnect;
 
 /**
- * @abstract Stops listening to the remote VLC.
+ * @abstract Connect the client to the remote VLC.
+ * @param completionHandler The completion handler to call when the connection
+ * is complete. This handler is executed on the delegate queue.
  * @version 1.0.0
  */
-- (void)disconnect;
+- (void)connectWithCompletionHandler:(void (^)(NSData *data, NSError *error))completionHandler;
+
+/**
+ * @abstract Disconnect the client.
+ * @param completionHandler The completion handler to call when the
+ * deconnection is complete. This handler is executed on the delegate queue.
+ * @version 1.0.0
+ */
+- (void)disconnectWithCompletionHandler:(void (^) (NSError *error))completionHandler;
+
+- (void)setConnectionStatusChangeBlock:(void (^) (VLCClientConnectionStatus))connectionBlock;
+
+/** 
+ * @abstract 
+ * @param command
+ * @param completionHandler
+ */
+- (void)performCommand:(VLCCommand *)command completionHandler:(void (^) (NSData *data, NSError *error))completionHandler;
 
 @end

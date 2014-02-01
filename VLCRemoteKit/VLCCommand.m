@@ -24,15 +24,28 @@
  *
  */
 
-#ifndef _VLCREMOTEKIT_
-#define _VLCREMOTEKIT_
+#import "VLCCommand.h"
 
-#import "VLCClientProtocol.h"
+@implementation VLCCommand
 
-#import "NSError+VLC.h"
+#pragma mark - Creating and Inializing Commands
 
-#import "VLCRemotePlayer.h"
-#import "VLCRemotePlaylist.h"
-#import "VLCHTTPClient.h"
+- (id)initWithName:(VLCCommandName)name params:(NSDictionary *)params {
+    if ((self = [super init])) {
+        _name   = name;
+        _params = params;
+    }
+    return self;
+}
 
-#endif
++ (instancetype)commandWithName:(VLCCommandName)name params:(NSDictionary *)params {
+    return [[self alloc] initWithName:name params:params];
+}
+
+#pragma mark - Convenience Constructors
+
++ (instancetype)statusCommand {
+    return [[self alloc] initWithName:VLCCommandNameStatus params:nil];
+}
+
+@end

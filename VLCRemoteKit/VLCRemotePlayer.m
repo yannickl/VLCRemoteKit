@@ -24,9 +24,12 @@
  *
  */
 
-#import <Foundation/Foundation.h>
+#import "VLCRemotePlayer.h"
 
-@interface VLCPlayerStatus : NSObject
-@property (atomic, assign) double apiVersion;
+@interface VLCRemotePlayer ()
+
+@end
+
+@implementation VLCRemotePlayer
 
 @end

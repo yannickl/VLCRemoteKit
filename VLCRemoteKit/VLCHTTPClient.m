@@ -25,180 +25,238 @@
  */
 
 #import "VLCHTTPClient.h"
+#import "VLCCommand.h"
 
-double const kVRKHTTPClientAPIVersion              = 3;
+#import "NSError+VLC.h"
+
+double const kVRKHTTPClientAPIVersion  = 3;
 
 /** The recommended time interval to use to pull the status. */
-NSTimeInterval const kVRKDefaultRefreshInterval    = 1.0f;
+NSTimeInterval const kVRKRefreshInterval           = 1.0f;
 NSTimeInterval const kVRKTimeoutIntervalForRequest = 1.0f;
+
+/** Absolute URL path to the status of VLC. */
+NSString * const kVRKURLPathStatus   = @"/requests/status.json";
+/** Absolute URL path to the playlist of VLC. */
+NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
 
 @interface VLCHTTPClient ()
 /** The headers used to build the requests. */
 @property (nonatomic, strong) NSDictionary *headers;
 /**
- * The request to retrieve the current VLC status.
- * As the request will be performed each `kVLCRemoteHTTPClientRefrechTime`
- * we need to keep a reference to improve the performance.
+ * The request to retrieve the current player status of VLC.
+ * @discussion As the request will be performed each kVRKRefreshInterval, we
+ * need to keep a reference to improve the performance.
  */
-@property (nonatomic, strong) NSURLRequest *statusRequest;
-/**
- * The request to retrieve the current playlist.
- */
-@property (nonatomic, strong) NSURLRequest *playlistRequest;
-/** The status URL components to help us to build the queries. */
-@property (nonatomic, strong) NSURLComponents *statusURLComponents;
-/** The session used to perform to retrieve the VLC status. */
-@property (nonatomic, strong) NSURLSession *statusSession;
-/** The session used to perform the command requests. */
-@property (nonatomic, strong) NSURLSession *commandSession;
-/** Flag to know whether the client needs listening to remote status. */
-@property (atomic, getter = isListenning) BOOL listening;
+@property (nonatomic, strong) NSURLRequest *playerStatusURLRequest;
+/** The URL request to retrieve the playlist data. */
+@property (nonatomic, strong) NSURLRequest *playlistURLRequest;
+/** The player status URL components to help us to build the queries. */
+@property (nonatomic, strong) NSURLComponents *playerStatusURLComponents;
+/** The session used to perform the requests. */
+@property (nonatomic, strong) NSURLSession *urlSession;
 /** The connection status. */
-@property (nonatomic, assign) VLCClientStatus status;
+@property (assign) VLCClientConnectionStatus connectionStatus;
+
+/** Creates a resquest  */
++ (NSURLRequest *)requestWithURLComponents:(NSURLComponents *)urlComponents;
+
+- (void)performRequest:(NSURLRequest *)request completionHandler:(void (^) (NSData *data, NSError *error))completionHandler;
 
 @end
 
 @implementation VLCHTTPClient
 
 - (void)dealloc {
-    [_statusSession invalidateAndCancel];
-    [_commandSession invalidateAndCancel];
-}
-
-- (id)initWithHostname:(NSString *)hostname port:(NSInteger)port password:(NSString *)password {
-    NSURLComponents *components = [[NSURLComponents alloc] init];
-    components.scheme           = @"http";
-    components.host             = hostname;
-    components.port             = [NSNumber numberWithInteger:port];
+    [_urlSession invalidateAndCancel];
     
-    return [self initWithURLComponents:components password:password];
+    [self removeObserver:self forKeyPath:@"connectionStatus"];
 }
 
-+ (instancetype)clientWithHostname:(NSString *)hostname port:(NSInteger)port password:(NSString *)password {
-    return [[self alloc] initWithHostname:hostname port:port password:password];
-}
-
-- (id)initWithURL:(NSURL *)url password:(NSString *)password {
-    NSURLComponents *urlComponents = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:YES];
+- (id)initWithHostname:(NSString *)hostname port:(NSInteger)port username:(NSString *)username password:(NSString *)password {
+    NSURLComponents *baseURLComponent = [[NSURLComponents alloc] init];
+    baseURLComponent.scheme           = @"http";
+    baseURLComponent.host             = hostname;
+    baseURLComponent.port             = [NSNumber numberWithInteger:port];
+    baseURLComponent.user             = username ?: @"";
+    baseURLComponent.password         = password ?: @"";
     
-    return [self initWithURLComponents:urlComponents password:password];
+    return [self initWithURLComponents:baseURLComponent];
 }
 
-- (id)initWithURLComponents:(NSURLComponents *)urlComponents password:(NSString *)password {
-    // VLC doesn't need username for the credentials
-    NSString *credentials   = [NSString stringWithFormat:@":%@", password];
-    NSString *base64        = [[credentials dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0];
-    NSString *authorization = [NSString stringWithFormat:@"Basic %@", base64];
-
-    return [self initWithURLComponents:urlComponents headers:@{ @"Authorization": authorization }];
++ (instancetype)clientWithHostname:(NSString *)hostname port:(NSInteger)port username:(NSString *)username password:(NSString *)password {
+    return [[self alloc] initWithHostname:hostname port:port username:username password:password];
 }
 
-- (id)initWithURLComponents:(NSURLComponents *)urlComponents headers:(NSDictionary *)headers {
+- (id)initWithURLComponents:(NSURLComponents *)urlComponents {
+    NSURLSessionConfiguration *configuration    = [NSURLSessionConfiguration defaultSessionConfiguration];
+    configuration.HTTPShouldUsePipelining       = YES;
+    configuration.HTTPMaximumConnectionsPerHost = 3;
+    configuration.timeoutIntervalForRequest     = kVRKTimeoutIntervalForRequest;
+    configuration.timeoutIntervalForResource    = kVRKTimeoutIntervalForRequest;
+    NSURLSession *urlSession                    = [NSURLSession sessionWithConfiguration:configuration];
+    
+    return [self initWithURLComponents:urlComponents urlSession:urlSession];
+}
+
+- (id)initWithURLComponents:(NSURLComponents *)urlComponents urlSession:(NSURLSession *)urlSession  {
     if ((self = [super init])) {
-        _headers = headers;
+        // Build the player status component
+        NSURLComponents *playerStatusURLComponents = [urlComponents copy];
+        playerStatusURLComponents.path             = kVRKURLPathStatus;
+        _playerStatusURLComponents                 = playerStatusURLComponents;
+        _playerStatusURLRequest                    = [[self class] requestWithURLComponents:playerStatusURLComponents];
         
-        _status = VLCClientStatusUnreachable;
+        // Build the playlist component
+        NSURLComponents *playlistURLComponents = [urlComponents copy];
+        playlistURLComponents.path             = kVRKURLPathPlaylist;
+        _playlistURLRequest                    = [[self class] requestWithURLComponents:playlistURLComponents];
         
-        // Status
-        urlComponents.path   = @"/requests/status.json";
-        _statusRequest       = [self requestWithURLComponents:urlComponents];
-        _statusURLComponents = [urlComponents copy];
+        _connectionStatus = VLCClientConnectionStatusDisconnected;
+        _urlSession       = urlSession;
         
-        // Playlist
-        urlComponents.path = @"/requests/playlist.json";
-        _playlistRequest   = [self requestWithURLComponents:urlComponents];
-        
-        // Create the sessions
-        NSURLSessionConfiguration *configuration    = [NSURLSessionConfiguration defaultSessionConfiguration];
-        configuration.HTTPMaximumConnectionsPerHost = 1;
-        configuration.timeoutIntervalForRequest     = kVRKTimeoutIntervalForRequest;
-        configuration.timeoutIntervalForResource    = kVRKTimeoutIntervalForRequest;
-        _statusSession                              = [NSURLSession sessionWithConfiguration:configuration];
-        
-        NSURLSessionConfiguration *commandConfiguration    = [NSURLSessionConfiguration defaultSessionConfiguration];
-        commandConfiguration.HTTPShouldUsePipelining       = YES;
-        commandConfiguration.HTTPMaximumConnectionsPerHost = 3;
-        configuration.timeoutIntervalForRequest            = kVRKTimeoutIntervalForRequest;
-        configuration.timeoutIntervalForResource           = kVRKTimeoutIntervalForRequest;
-        _commandSession                                    = [NSURLSession sessionWithConfiguration:commandConfiguration];
+        [self addObserver:self forKeyPath:@"connectionStatus" options:NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew context:nil];
     }
     return self;
 }
 
 #pragma mark - Private Methods
 
-- (NSURLRequest *)requestWithURLComponents:(NSURLComponents *)urlComponents {
++ (NSURLRequest *)requestWithURLComponents:(NSURLComponents *)urlComponents {
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[urlComponents URL]];
     request.timeoutInterval      = kVRKTimeoutIntervalForRequest;
     
-    for (NSString *key in _headers) {
-        [request setValue:[_headers objectForKey:key] forHTTPHeaderField:key];
-    }
+    return request;
+}
 
+- (NSString *)queryStringFromCommand:(VLCCommand *)command {
+    NSMutableString *queryString = nil;
+    
+    switch (command.name) {
+        case VLCCommandNameStatus:
+            return nil;
+            
+        default:
+            return nil;
+    }
+    
+    for (NSString *key in command.params) {
+        [queryString appendString:[NSString stringWithFormat:@"&%@", command.params[key]]];
+    }
+    
+    return queryString;
+}
+
+- (NSURLRequest *)urlRequestWithCommand:(VLCCommand *)command {
+    NSURLComponents *urlComponents = [_playerStatusURLComponents copy];
+    urlComponents.query            = [self queryStringFromCommand:command];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[urlComponents URL]];
+    request.timeoutInterval      = kVRKTimeoutIntervalForRequest;
     return request;
 }
 
 - (void)performCommand:(NSString *)command withParameters:(NSString *)parameters {
-    if (_status == VLCClientStatusConnected) {
+    if (_connectionStatus == VLCClientConnectionStatusConnected) {
         NSMutableString *query = [NSMutableString stringWithFormat:@"command=%@", command];
         if (parameters) {
             [query appendString:[NSString stringWithFormat:@"&%@", parameters]];
         }
-        _statusURLComponents.query = query;
+        _playerStatusURLComponents.query = query;
         
-        NSURLRequest *request = [self requestWithURLComponents:_statusURLComponents];
-        [[_commandSession dataTaskWithRequest:request completionHandler:NULL] resume];
+        NSURLRequest *request = [[self class] requestWithURLComponents:_playerStatusURLComponents];
+        [[_urlSession dataTaskWithRequest:request completionHandler:NULL] resume];
     }
 }
 
-- (void)listening {
-    if (_listening) {
-        [[_statusSession dataTaskWithRequest:_statusRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-            if (_listening) {
-                NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-                NSInteger statusCode            = httpResponse.statusCode;
-
-                // Notify the delegate if the reachability status change
-                VLCClientStatus currentStatus = (statusCode == 200) ? VLCClientStatusConnected : (statusCode == 401) ? VLCClientStatusUnauthorized : VLCClientStatusUnreachable;
-                if (_status != currentStatus) {
-                    _status = currentStatus;
-                    
-                    if (_delegate && [_delegate respondsToSelector:@selector(client:reachabilityStatusDidChange:)]) {
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            [_delegate client:self reachabilityStatusDidChange:_status];
-                        });
-                    }
+- (void)listeningWithCompletionHandler:(void (^)(NSData *data, NSError *))completionHandler {
+    if (_connectionStatus != VLCClientConnectionStatusDisconnected) {
+        __weak typeof(self) weakSelf = self;
+        [self performRequest:_playerStatusURLRequest completionHandler:^(NSData *data, NSError *error) {
+            __strong typeof(self) strongSelf = weakSelf;
+            
+            if (_connectionStatus != VLCClientConnectionStatusDisconnected) {
+                
+                // Update the current connection status
+                VLCClientConnectionStatus currentStatus = (!error) ? VLCClientConnectionStatusConnected : (error.code == 401) ? VLCClientConnectionStatusUnauthorized : VLCClientConnectionStatusUnreachable;
+                if (_connectionStatus != currentStatus) {
+                    strongSelf.connectionStatus = currentStatus;
                 }
                 
                 // If all its ok, update the player
-                if (statusCode == 200) {
-
+                if (!error) {
+                    
                 }
                 
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, kVRKDefaultRefreshInterval * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-                    [self listening];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, kVRKRefreshInterval * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+                    [self listeningWithCompletionHandler:nil];
                 });
             }
-        }] resume];
+        }];
     }
+}
+
+- (void)performRequest:(NSURLRequest *)request completionHandler:(void (^) (NSData *data, NSError *error))completionHandler {
+    [[_urlSession dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        if (completionHandler) {
+            if (error) {
+                return completionHandler(nil, error);
+            }
+            
+            NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+            NSInteger statusCode            = httpResponse.statusCode;
+            
+            if (statusCode != 200) {
+                NSDictionary *userInfo = nil;
+                if (statusCode == 401) {
+                    userInfo = @{
+                                 NSLocalizedDescriptionKey: NSLocalizedString(@"Request failed", nil),
+                                 NSLocalizedFailureReasonErrorKey: NSLocalizedString(@"Unauthorized", nil),
+                                 NSLocalizedRecoverySuggestionErrorKey: NSLocalizedString(@"Check the client or VLC credentials", nil)
+                                 };
+                }
+                
+                NSError *error = [NSError errorWithDomain:kVLCClientErrorDomain code:statusCode userInfo:userInfo];
+                completionHandler(nil, error);
+            }
+            
+            completionHandler(data, nil);
+        }
+    }] resume];
 }
 
 #pragma mark - VLCRemoteClientProtocol Methods
 
-- (void)connect {
+- (void)connectWithCompletionHandler:(void (^)(NSData *data, NSError *))completionHandler {
     @synchronized (self) {
-        if (!_listening) {
-            _listening = YES;
+        if (_connectionStatus == VLCClientConnectionStatusDisconnected) {
+            self.connectionStatus = VLCClientConnectionStatusConnecting;
             
-            [self listening];
+            [self listeningWithCompletionHandler:completionHandler];
+        }
+        else if (completionHandler) {
+            NSDictionary *userInfo = @{
+                                       NSLocalizedDescriptionKey: NSLocalizedString(@"Connection failed.", nil),
+                                       NSLocalizedFailureReasonErrorKey: NSLocalizedString(@"The client is already connected.", nil)
+                                       };
+            NSError *error = [NSError errorWithDomain:kVLCClientErrorDomain code:VLCClientErrorCodeAlreadyConnected userInfo:userInfo];
+            completionHandler(nil, error);
         }
     }
 }
 
-- (void)disconnect {
-    @synchronized (self) {
-        _listening = NO;
+- (void)disconnectWithCompletionHandler:(void (^) (NSError *error))completionHandler {
+    @synchronized (self ) {
+        _connectionStatus = VLCClientConnectionStatusDisconnected;
+        
+        completionHandler(nil);
     }
+}
+
+- (void)performCommand:(VLCCommand *)command completionHandler:(void (^) (NSData *data, NSError *error))completionHandler {
+    NSURLRequest *commandURLRequest = [self urlRequestWithCommand:command];
+    
+    [self performRequest:commandURLRequest completionHandler:completionHandler];
 }
 
 #pragma mark - VLCCommand Protocol Methods
@@ -221,6 +279,18 @@ NSTimeInterval const kVRKTimeoutIntervalForRequest = 1.0f;
 
 - (void)toogleFullscreen {
     [self performCommand:@"fullscreen" withParameters:nil];
+}
+
+#pragma mark - Key-Value Observing Delegate Methods
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if ([keyPath isEqualToString:@"connectionStatus"] && ![[change objectForKey:@"new"] isEqual:[change objectForKey:@"old"]]) {
+        if (_delegate && [_delegate respondsToSelector:@selector(client:reachabilityStatusDidChange:)]) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [_delegate client:self reachabilityStatusDidChange:_connectionStatus];
+            });
+        }
+    }
 }
 
 @end

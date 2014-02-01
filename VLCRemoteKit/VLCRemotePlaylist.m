@@ -24,15 +24,8 @@
  *
  */
 
-#ifndef _VLCREMOTEKIT_
-#define _VLCREMOTEKIT_
-
-#import "VLCClientProtocol.h"
-
-#import "NSError+VLC.h"
-
-#import "VLCRemotePlayer.h"
 #import "VLCRemotePlaylist.h"
-#import "VLCHTTPClient.h"
 
-#endif
+@implementation VLCRemotePlaylist
+
+@end

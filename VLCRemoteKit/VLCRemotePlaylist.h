@@ -24,12 +24,8 @@
  *
  */
 
-#import "VLCPlayerStatus.h"
+#import <Foundation/Foundation.h>
 
-@interface VLCPlayerStatus ()
-
-@end
-
-@implementation VLCPlayerStatus
+@interface VLCRemotePlaylist : NSObject
 
 @end

@@ -24,15 +24,9 @@
  *
  */
 
-#ifndef _VLCREMOTEKIT_
-#define _VLCREMOTEKIT_
+#import <Foundation/Foundation.h>
 
-#import "VLCClientProtocol.h"
+@interface VLCRemotePlayer : NSObject
+@property (atomic, assign) double apiVersion;
 
-#import "NSError+VLC.h"
-
-#import "VLCRemotePlayer.h"
-#import "VLCRemotePlaylist.h"
-#import "VLCHTTPClient.h"
-
-#endif
+@end

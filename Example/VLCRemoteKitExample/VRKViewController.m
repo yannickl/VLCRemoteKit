@@ -19,20 +19,22 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
-    _remoteVLC          = [VLCHTTPClient clientWithHostname:@"192.168.1.69" port:8080 password:@"password"];
+    _remoteVLC          = [VLCHTTPClient clientWithHostname:@"192.168.0.12" port:8080 username:nil password:@"password"];
     _remoteVLC.delegate = self;
-    [_remoteVLC connect];
+    [_remoteVLC connectWithCompletionHandler:^(NSData *data, NSError *error) {
+        NSLog(@"%@", error);
+    }];
 }
 
 #pragma mark - Public Methods
 
 
 - (IBAction)startListeningAction:(id)sender {
-    [_remoteVLC disconnect];
-    
-    _remoteVLC          = [VLCHTTPClient clientWithHostname:@"192.168.1.69" port:8080 password:@"password"];
-    _remoteVLC.delegate = self;
-    [_remoteVLC connect];
+    [_remoteVLC disconnectWithCompletionHandler:^(NSError *error) {
+        _remoteVLC          = [VLCHTTPClient clientWithHostname:@"192.168.0.12" port:8080 username:nil password:@"password"];
+        _remoteVLC.delegate = self;
+        [_remoteVLC connectWithCompletionHandler:NULL];
+    }];
 }
 
 - (IBAction)playAction:(id)sender {
@@ -53,12 +55,12 @@
 
 #pragma mark - VLCRemoteClient Delegate Methods
 
-- (void)client:(id)client reachabilityStatusDidChange:(VLCClientStatus)status {
+- (void)client:(id)client reachabilityStatusDidChange:(VLCClientConnectionStatus)status {
     NSLog(@"CU: %@", [NSThread currentThread]);
     NSLog(@"MA: %@", [NSThread mainThread]);
 }
 
-- (void)client:(id)client playerStatusDidChange:(VLCPlayerStatus *)status {
+- (void)client:(id)client playerStatusDidChange:(VLCRemotePlayer *)status {
     
 }
 

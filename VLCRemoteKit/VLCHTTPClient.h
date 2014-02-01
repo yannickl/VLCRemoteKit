@@ -43,22 +43,28 @@ extern double const kVRKHTTPClientAPIVersion;
 /** @name Creating and Initializing HTTP Clients */
 
 /**
- * @abstract Initializes an HTTP client using an hostname, a port and a password.
+ * @abstract Initializes an HTTP client using an hostname, a port, a username
+ * and a password.
  * @param hostname An hostname of the machine where the VLC is running.
- * @param port A port of the machine where the VLC is available (usually the port 8080).
+ * @param port A port of the machine where the VLC is available (usually the 
+ * port 8080).
+ * @param username A username to connect to VLC.
  * @param password A password which correspond to the one configured in VLC.
  * @version 1.0.0
  */
-- (id)initWithHostname:(NSString *)hostname port:(NSInteger)port password:(NSString *)password;
+- (id)initWithHostname:(NSString *)hostname port:(NSInteger)port username:(NSString *)username password:(NSString *)password;
 
 /**
- * @abstract Creates an HTTP client using an hostname, a port and a password.
+ * @abstract Creates an HTTP client using an hostname, a port, a username and
+ * a password.
  * @param hostname An hostname of the machine where the VLC is running.
- * @param port A port of the machine where the VLC is available (usually the port 8080).
+ * @param port A port of the machine where the VLC is available (usually the 
+ * port 8080).
+ * @param username A username to connect to VLC.
  * @param password A password which correspond to the one configured in VLC.
  * @version 1.0.0
  */
-+ (instancetype)clientWithHostname:(NSString *)hostname port:(NSInteger)port password:(NSString *)password;
++ (instancetype)clientWithHostname:(NSString *)hostname port:(NSInteger)port username:(NSString *)username password:(NSString *)password;
 
 #pragma mark - Managing the Delegate
 /** @name Managing the Delegate */
