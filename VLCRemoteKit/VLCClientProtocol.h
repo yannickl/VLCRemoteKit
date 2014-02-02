@@ -24,8 +24,6 @@
  *
  */
 
-#import <Foundation/Foundation.h>
-
 /**
  * The client's connection status.
  */
@@ -82,33 +80,43 @@ typedef NS_ENUM(NSInteger, VLCClientConnectionStatus) {
  * connection), and performs the VLC commands.
  */
 @protocol VLCClientProtocol <NSObject>
-/** The object that acts as the delegate of the receiving client. */
+
+#pragma mark - Managing the Connection Status
+/** @name Managing the Connection Status */
+
+/**
+ * @abstract The object that acts as the delegate of the receiving client.
+ * @version 1.0.0
+ */
 @property (nonatomic, weak) id<VLCClientDelegate> delegate;
 /**
  * @abstract The connection status.
  * @version 1.0.0
  */
-@property (readonly) VLCClientConnectionStatus connectionStatus;
+- (VLCClientConnectionStatus)connectionStatus;
+
 /**
- * Whether auto reconnect is enabled or disabled.
+ * @abstract Whether auto reconnect is enabled or disabled.
  *
- * The default value is YES (enabled).
+ * @discussion The default value is YES (enabled).
  *
  * Note: Altering this property will only affect future accidental disconnections.
- * For example, if autoReconnect was true, and you disable this property after an accidental disconnection,
- * this will not stop the current reconnect process.
- * In order to stop a current reconnect process use the stop method.
+ * For example, if autoReconnect was true, and you disable this property after an 
+ * accidental disconnection, this will not stop the current reconnect process.
+ * In order to stop a current reconnect process use the disconnect method.
  *
- * Similarly, if autoReconnect was false, and you enable this property after an accidental disconnection,
- * this will not start a reconnect process.
+ * Similarly, if autoReconnect was false, and you enable this property after an 
+ * accidental disconnection, this will not start a reconnect process.
  * In order to start a reconnect process use the manualStart method.
  **/
 @property (nonatomic, assign) BOOL autoReconnect;
 
+- (VLCRemotePlayer *)player;
+
 /**
  * @abstract Connect the client to the remote VLC.
  * @param completionHandler The completion handler to call when the connection
- * is complete. This handler is executed on the delegate queue.
+ * did completed. This handler is executed on a delegate queue.
  * @version 1.0.0
  */
 - (void)connectWithCompletionHandler:(void (^)(NSData *data, NSError *error))completionHandler;
@@ -116,17 +124,24 @@ typedef NS_ENUM(NSInteger, VLCClientConnectionStatus) {
 /**
  * @abstract Disconnect the client.
  * @param completionHandler The completion handler to call when the
- * deconnection is complete. This handler is executed on the delegate queue.
+ * deconnection did completed. This handler is executed on a delegate queue.
  * @version 1.0.0
  */
 - (void)disconnectWithCompletionHandler:(void (^) (NSError *error))completionHandler;
 
-- (void)setConnectionStatusChangeBlock:(void (^) (VLCClientConnectionStatus))connectionBlock;
+/**
+ * @abstract Set a block to be notified when a connection status change.
+ * @param connectionBlock The block handler to call when a connection event occured.
+ * @version 1.0.0
+ */
+- (void)setConnectionStatusChangeBlock:(void (^) (VLCClientConnectionStatus status))connectionBlock;
 
 /** 
  * @abstract 
  * @param command
- * @param completionHandler
+ * @param completionHandler The completion handler to call when the connection
+ * did completed. This handler is executed on a delegate queue.
+ * @version 1.0.0
  */
 - (void)performCommand:(VLCCommand *)command completionHandler:(void (^) (NSData *data, NSError *error))completionHandler;
 

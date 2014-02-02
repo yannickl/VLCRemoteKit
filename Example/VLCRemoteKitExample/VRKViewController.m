@@ -10,7 +10,7 @@
 #import "VLCRemoteKit.h"
 
 @interface VRKViewController ()
-@property (nonatomic, strong) VLCHTTPClient *remoteVLC;
+@property (nonatomic, strong) VLCHTTPClient *vlcClient;
 
 @end
 
@@ -19,10 +19,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
-    _remoteVLC          = [VLCHTTPClient clientWithHostname:@"192.168.0.12" port:8080 username:nil password:@"password"];
-    _remoteVLC.delegate = self;
-    [_remoteVLC connectWithCompletionHandler:^(NSData *data, NSError *error) {
-        NSLog(@"%@", error);
+    _vlcClient          = [VLCHTTPClient clientWithHostname:@"192.168.0.12" port:8080 username:nil password:@"password"];
+    _vlcClient.delegate = self;
+    [_vlcClient setConnectionStatusChangeBlock:^(VLCClientConnectionStatus status) {
+        NSLog(@"setConnectionStatusChangeBlock CU: %@", [NSThread currentThread]);
+        NSLog(@"setConnectionStatusChangeBlock MA: %@", [NSThread mainThread]);
+    }];
+    [_vlcClient connectWithCompletionHandler:^(NSData *data, NSError *error) {
+        NSLog(@"connectWithCompletionHandler CU: %@", [NSThread currentThread]);
+        NSLog(@"connectWithCompletionHandler MA: %@", [NSThread mainThread]);
     }];
 }
 
@@ -30,34 +35,34 @@
 
 
 - (IBAction)startListeningAction:(id)sender {
-    [_remoteVLC disconnectWithCompletionHandler:^(NSError *error) {
-        _remoteVLC          = [VLCHTTPClient clientWithHostname:@"192.168.0.12" port:8080 username:nil password:@"password"];
-        _remoteVLC.delegate = self;
-        [_remoteVLC connectWithCompletionHandler:NULL];
+    [_vlcClient disconnectWithCompletionHandler:^(NSError *error) {
+        _vlcClient          = [VLCHTTPClient clientWithHostname:@"192.168.0.12" port:8080 username:nil password:@"password"];
+        _vlcClient.delegate = self;
+        [_vlcClient connectWithCompletionHandler:NULL];
     }];
 }
 
 - (IBAction)playAction:(id)sender {
-    [_remoteVLC playItemWithId:5];
+    [_vlcClient.player playItemWithId:5];
 }
 
 - (IBAction)stopAction:(id)sender {
-    [_remoteVLC stop];
+    [_vlcClient.player stop];
 }
 
 - (IBAction)tooglePauseAction:(id)sender {
-    [_remoteVLC tooglePause];
+    [_vlcClient.player tooglePause];
 }
 
 - (IBAction)toogleFullScreenAction:(id)sender {
-    [_remoteVLC toogleFullscreen];
+    [_vlcClient.player toogleFullscreen];
 }
 
 #pragma mark - VLCRemoteClient Delegate Methods
 
 - (void)client:(id)client reachabilityStatusDidChange:(VLCClientConnectionStatus)status {
-    NSLog(@"CU: %@", [NSThread currentThread]);
-    NSLog(@"MA: %@", [NSThread mainThread]);
+    NSLog(@"reachabilityStatusDidChange CU: %@", [NSThread currentThread]);
+    NSLog(@"reachabilityStatusDidChange MA: %@", [NSThread mainThread]);
 }
 
 - (void)client:(id)client playerStatusDidChange:(VLCRemotePlayer *)status {

@@ -26,6 +26,7 @@
 
 #import "VLCHTTPClient.h"
 #import "VLCCommand.h"
+#import "VLCRemotePlayer.h"
 
 #import "NSError+VLC.h"
 
@@ -43,25 +44,19 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
 @interface VLCHTTPClient ()
 /** The headers used to build the requests. */
 @property (nonatomic, strong) NSDictionary *headers;
-/**
- * The request to retrieve the current player status of VLC.
- * @discussion As the request will be performed each kVRKRefreshInterval, we
- * need to keep a reference to improve the performance.
- */
-@property (nonatomic, strong) NSURLRequest *playerStatusURLRequest;
-/** The URL request to retrieve the playlist data. */
-@property (nonatomic, strong) NSURLRequest *playlistURLRequest;
 /** The player status URL components to help us to build the queries. */
 @property (nonatomic, strong) NSURLComponents *playerStatusURLComponents;
 /** The session used to perform the requests. */
 @property (nonatomic, strong) NSURLSession *urlSession;
 /** The connection status. */
 @property (assign) VLCClientConnectionStatus connectionStatus;
-
-/** Creates a resquest  */
-+ (NSURLRequest *)requestWithURLComponents:(NSURLComponents *)urlComponents;
+/** The connection status change block. */
+@property (nonatomic, copy) void (^connectionStatusChangeBlock) (VLCClientConnectionStatus status);
+/** The remote player. */
+@property (nonatomic, strong) VLCRemotePlayer *player;
 
 - (void)performRequest:(NSURLRequest *)request completionHandler:(void (^) (NSData *data, NSError *error))completionHandler;
+- (void)listeningWithRequest:(NSURLRequest *)urlRequest completionHandler:(void (^)(NSData *data, NSError *))completionHandler;
 
 @end
 
@@ -105,15 +100,10 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
         NSURLComponents *playerStatusURLComponents = [urlComponents copy];
         playerStatusURLComponents.path             = kVRKURLPathStatus;
         _playerStatusURLComponents                 = playerStatusURLComponents;
-        _playerStatusURLRequest                    = [[self class] requestWithURLComponents:playerStatusURLComponents];
-        
-        // Build the playlist component
-        NSURLComponents *playlistURLComponents = [urlComponents copy];
-        playlistURLComponents.path             = kVRKURLPathPlaylist;
-        _playlistURLRequest                    = [[self class] requestWithURLComponents:playlistURLComponents];
         
         _connectionStatus = VLCClientConnectionStatusDisconnected;
         _urlSession       = urlSession;
+        _player           = [VLCRemotePlayer remotePlayerWithClient:self];
         
         [self addObserver:self forKeyPath:@"connectionStatus" options:NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew context:nil];
     }
@@ -122,20 +112,21 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
 
 #pragma mark - Private Methods
 
-+ (NSURLRequest *)requestWithURLComponents:(NSURLComponents *)urlComponents {
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[urlComponents URL]];
-    request.timeoutInterval      = kVRKTimeoutIntervalForRequest;
-    
-    return request;
-}
-
 - (NSString *)queryStringFromCommand:(VLCCommand *)command {
     NSMutableString *queryString = nil;
     
     switch (command.name) {
         case VLCCommandNameStatus:
-            return nil;
-            
+            break;
+        case VLCCommandNameStop:
+            queryString = [NSMutableString stringWithString:@"command=pl_stop"];
+            break;
+        case VLCCommandNameToogleFullscreen:
+            queryString = [NSMutableString stringWithString:@"command=fullscreen"];
+            break;
+        case VLCCommandNameTooglePause:
+            queryString = [NSMutableString stringWithString:@"command=pl_pause"];
+            break;
         default:
             return nil;
     }
@@ -156,24 +147,15 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
     return request;
 }
 
-- (void)performCommand:(NSString *)command withParameters:(NSString *)parameters {
-    if (_connectionStatus == VLCClientConnectionStatusConnected) {
-        NSMutableString *query = [NSMutableString stringWithFormat:@"command=%@", command];
-        if (parameters) {
-            [query appendString:[NSString stringWithFormat:@"&%@", parameters]];
-        }
-        _playerStatusURLComponents.query = query;
-        
-        NSURLRequest *request = [[self class] requestWithURLComponents:_playerStatusURLComponents];
-        [[_urlSession dataTaskWithRequest:request completionHandler:NULL] resume];
-    }
-}
-
-- (void)listeningWithCompletionHandler:(void (^)(NSData *data, NSError *))completionHandler {
+- (void)listeningWithRequest:(NSURLRequest *)urlRequest completionHandler:(void (^)(NSData *data, NSError *))completionHandler {
     if (_connectionStatus != VLCClientConnectionStatusDisconnected) {
         __weak typeof(self) weakSelf = self;
-        [self performRequest:_playerStatusURLRequest completionHandler:^(NSData *data, NSError *error) {
+        [self performRequest:urlRequest completionHandler:^(NSData *data, NSError *error) {
             __strong typeof(self) strongSelf = weakSelf;
+            
+            if (completionHandler) {
+                completionHandler(data, error);
+            }
             
             if (_connectionStatus != VLCClientConnectionStatusDisconnected) {
                 
@@ -189,7 +171,7 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
                 }
                 
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, kVRKRefreshInterval * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-                    [self listeningWithCompletionHandler:nil];
+                    [self listeningWithRequest:urlRequest completionHandler:nil];
                 });
             }
         }];
@@ -197,32 +179,34 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
 }
 
 - (void)performRequest:(NSURLRequest *)request completionHandler:(void (^) (NSData *data, NSError *error))completionHandler {
-    [[_urlSession dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+    NSURLSessionDataTask *task = [_urlSession dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (completionHandler) {
             if (error) {
-                return completionHandler(nil, error);
-            }
-            
-            NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-            NSInteger statusCode            = httpResponse.statusCode;
-            
-            if (statusCode != 200) {
-                NSDictionary *userInfo = nil;
-                if (statusCode == 401) {
-                    userInfo = @{
-                                 NSLocalizedDescriptionKey: NSLocalizedString(@"Request failed", nil),
-                                 NSLocalizedFailureReasonErrorKey: NSLocalizedString(@"Unauthorized", nil),
-                                 NSLocalizedRecoverySuggestionErrorKey: NSLocalizedString(@"Check the client or VLC credentials", nil)
-                                 };
-                }
-                
-                NSError *error = [NSError errorWithDomain:kVLCClientErrorDomain code:statusCode userInfo:userInfo];
                 completionHandler(nil, error);
             }
-            
-            completionHandler(data, nil);
+            else {
+                NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+                NSInteger statusCode            = httpResponse.statusCode;
+                
+                if (statusCode != 200) {
+                    NSDictionary *userInfo = nil;
+                    if (statusCode == 401) {
+                        userInfo = @{
+                                     NSLocalizedDescriptionKey: NSLocalizedString(@"Request failed", nil),
+                                     NSLocalizedFailureReasonErrorKey: NSLocalizedString(@"Unauthorized", nil),
+                                     NSLocalizedRecoverySuggestionErrorKey: NSLocalizedString(@"Check the client or VLC credentials", nil)
+                                     };
+                    }
+                    
+                    NSError *error = [NSError errorWithDomain:kVLCClientErrorDomain code:statusCode userInfo:userInfo];
+                    completionHandler(nil, error);
+                }
+                
+                completionHandler(data, nil);
+            }
         }
-    }] resume];
+    }];
+    [task resume];
 }
 
 #pragma mark - VLCRemoteClientProtocol Methods
@@ -232,7 +216,10 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
         if (_connectionStatus == VLCClientConnectionStatusDisconnected) {
             self.connectionStatus = VLCClientConnectionStatusConnecting;
             
-            [self listeningWithCompletionHandler:completionHandler];
+            VLCCommand *statusCommand   = [VLCCommand statusCommand];
+            NSURLRequest *statusRequest = [self urlRequestWithCommand:statusCommand];
+            
+            [self listeningWithRequest:statusRequest completionHandler:completionHandler];
         }
         else if (completionHandler) {
             NSDictionary *userInfo = @{
@@ -247,7 +234,7 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
 
 - (void)disconnectWithCompletionHandler:(void (^) (NSError *error))completionHandler {
     @synchronized (self ) {
-        _connectionStatus = VLCClientConnectionStatusDisconnected;
+        self.connectionStatus = VLCClientConnectionStatusDisconnected;
         
         completionHandler(nil);
     }
@@ -266,29 +253,23 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
     if (itemIdentifier >= 0) {
         parameters = [NSString stringWithFormat:@"id=%ld", (long)itemIdentifier];
     }
-    [self performCommand:@"pl_play" withParameters:parameters];
-}
-
-- (void)tooglePause {
-    [self performCommand:@"pl_pause" withParameters:nil];
-}
-
-- (void)stop {
-    [self performCommand:@"pl_stop" withParameters:nil];
-}
-
-- (void)toogleFullscreen {
-    [self performCommand:@"fullscreen" withParameters:nil];
+    //[self performCommand:@"pl_play" withParameters:parameters];
 }
 
 #pragma mark - Key-Value Observing Delegate Methods
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if ([keyPath isEqualToString:@"connectionStatus"] && ![[change objectForKey:@"new"] isEqual:[change objectForKey:@"old"]]) {
-        if (_delegate && [_delegate respondsToSelector:@selector(client:reachabilityStatusDidChange:)]) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [_delegate client:self reachabilityStatusDidChange:_connectionStatus];
-            });
+    if ([keyPath isEqualToString:@"connectionStatus"]) {
+        if (![[change objectForKey:@"new"] isEqual:[change objectForKey:@"old"]]) {
+            if (_connectionStatusChangeBlock) {
+                _connectionStatusChangeBlock(_connectionStatus);
+            }
+            
+            if (_delegate && [_delegate respondsToSelector:@selector(client:reachabilityStatusDidChange:)]) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [_delegate client:self reachabilityStatusDidChange:_connectionStatus];
+                });
+            }
         }
     }
 }

@@ -25,8 +25,17 @@
  */
 
 #import <Foundation/Foundation.h>
+#import "VLCCommandProtocol.h"
+#import "VLCClientProtocol.h"
 
-@interface VLCRemotePlayer : NSObject
+@interface VLCRemotePlayer : NSObject <VLCCommandProtocol>
+@property (nonatomic, weak, readonly) id<VLCClientProtocol> client;
 @property (atomic, assign) double apiVersion;
+
+#pragma mark - Creating and Initializing a Remote Client
+/** @name Creating and Initializing a Remote Client */
+
+- (id)initWithClient:(id<VLCClientProtocol>)client;
++ (instancetype)remotePlayerWithClient:(id<VLCClientProtocol>)client;
 
 @end

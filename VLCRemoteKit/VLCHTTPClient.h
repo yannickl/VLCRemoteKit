@@ -24,7 +24,6 @@
  *
  */
 
-#import "VLCCommandProtocol.h"
 #import "VLCClientProtocol.h"
 
 /** The API version supported by the client. */
@@ -37,7 +36,7 @@ extern double const kVRKHTTPClientAPIVersion;
  * event occured (for example the progression state of the video). So we need
  * to pull the server every x seconds and check whether something changed.
  */
-@interface VLCHTTPClient : NSObject <VLCCommandProtocol, VLCClientProtocol>
+@interface VLCHTTPClient : NSObject <VLCClientProtocol>
 
 #pragma mark - Creating and Initializing HTTP Clients
 /** @name Creating and Initializing HTTP Clients */

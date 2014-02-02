@@ -48,4 +48,20 @@
     return [[self alloc] initWithName:VLCCommandNameStatus params:nil];
 }
 
++ (instancetype)fullscreenCommandWithFlag:(BOOL)needsFullscreen {
+    return [[self alloc] initWithName:VLCCommandNameFullscreen params:@{ @"fullscreen": @(needsFullscreen) }];
+}
+
++ (instancetype)toogleFullscreenCommand {
+    return [[self alloc] initWithName:VLCCommandNameToogleFullscreen params:nil];
+}
+
++ (instancetype)pauseCommandWithFlag:(BOOL)paused {
+    return [[self alloc] initWithName:VLCCommandNamePause params:@{ @"pause": @(paused) }];
+}
+
++ (instancetype)tooglePauseCommand {
+    return [[self alloc] initWithName:VLCCommandNameTooglePause params:nil];
+}
+
 @end

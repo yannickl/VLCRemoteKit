@@ -27,9 +27,18 @@
 #import <Foundation/Foundation.h>
 
 typedef NS_ENUM(NSInteger, VLCCommandName) {
+    /** The command to tell whether the player needs to be in fullscreen. */
+    VLCCommandNameFullscreen,
+    /** The command to tell whether the player needs to be paused. */
+    VLCCommandNamePause,
+    /** The command to retrieve the player status informations. */
     VLCCommandNameStatus,
+    /** The command to stop the player to play the current media. */
     VLCCommandNameStop,
+    /** The command to toogle the fullscreen of the player. */
     VLCCommandNameToogleFullscreen,
+    /** The command to toogle the pause of the player. */
+    VLCCommandNameTooglePause,
 };
 
 /**
@@ -77,7 +86,36 @@ typedef NS_ENUM(NSInteger, VLCCommandName) {
 
 /**
  * @abstract Creates and returns a command to retrieve the current VLC status.
+ * @version 1.0.0
  */
 + (instancetype)statusCommand;
+
+/**
+ * @abstract Creates and returns a command to put VLC in fullscreen or windowed
+ * mode.
+ * @param needsFullscreen If YES, VLC will be put in the fullscreen mode.
+ * @version 1.0.0
+ */
++ (instancetype)fullscreenCommandWithFlag:(BOOL)needsFullscreen;
+
+/**
+ * @abstract Creates and returns a command to toogle the fullscreen mode of the 
+ * player.
+ * @version 1.0.0
+ */
++ (instancetype)toogleFullscreenCommand;
+
+/**
+ * @abstract Creates and returns a command to pause or play the remote media.
+ * @param paused If YES, the media will be paused.
+ * @version 1.0.0
+ */
++ (instancetype)pauseCommandWithFlag:(BOOL)paused;
+
+/**
+ * @abstract Creates and returns a command to toogle the pause of the player.
+ * @version 1.0.0
+ */
++ (instancetype)tooglePauseCommand;
 
 @end

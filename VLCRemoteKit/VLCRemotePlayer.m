@@ -25,11 +25,54 @@
  */
 
 #import "VLCRemotePlayer.h"
+#import "VLCCommand.h"
 
 @interface VLCRemotePlayer ()
+@property (nonatomic, weak) id<VLCClientProtocol> client;
 
 @end
 
 @implementation VLCRemotePlayer
+
+#pragma mark - Creating and Initializing a Remote Client
+
+- (id)initWithClient:(id<VLCClientProtocol>)client {
+    if ((self = [super init])) {
+        _client = client;
+    }
+    return self;
+}
+
++ (instancetype)remotePlayerWithClient:(id<VLCClientProtocol>)client {
+    return [[self alloc] initWithClient:client];
+}
+
+#pragma mark - VLCCommand Protocol Methods
+
+- (void)playItemWithId:(NSInteger)itemIdentifier {
+    if (_client) {
+        
+    }
+}
+
+- (void)tooglePause {
+    if (_client) {
+        VLCCommand *tooglePauseCommand = [VLCCommand tooglePauseCommand];
+        [_client performCommand:tooglePauseCommand completionHandler:nil];
+    }
+}
+
+- (void)stop {
+    if (_client) {
+        
+    }
+}
+
+- (void)toogleFullscreen {
+    if (_client) {
+        VLCCommand *toogleFullscreenCommand = [VLCCommand toogleFullscreenCommand];
+        [_client performCommand:toogleFullscreenCommand completionHandler:nil];
+    }
+}
 
 @end
