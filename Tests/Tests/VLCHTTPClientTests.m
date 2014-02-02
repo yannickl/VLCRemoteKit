@@ -15,9 +15,7 @@
 #import "FBTestBlocker.h"
 
 @interface VLCHTTPClient (UnitTestAdditions)
-@property (nonatomic, strong) NSURLRequest *statusRequest;
-@property (nonatomic, strong) NSURLSession *statusSession;
-@property (nonatomic, strong) NSURLSession *commandSession;
+@property (nonatomic, strong) NSURLSession *urlSession;
 
 @end
 @interface iOSTests : XCTestCase
@@ -38,25 +36,12 @@
     [super tearDown];
 }
 
-- (void)testHTTPClient {
-    id statusSessionMock = [OCMockObject niceMockForClass:[NSURLSession class]];
-    [[statusSessionMock expect] dataTaskWithRequest:[OCMArg any] completionHandler:[OCMArg any]];
-    
-    VLCHTTPClient *httpClient = [VLCHTTPClient clientWithHostname:@"1.2.3.4" port:8080 password:@"password"];
-    httpClient.statusSession  = statusSessionMock;
-    [httpClient connect];
-    
-    [statusSessionMock verify];
-    
-    
-}
-
-- (void)testGetStatusWith200StatusCode {
+- (void)testVLCClientDelegate {
     id responseStub = [OCMockObject niceMockForClass:[NSHTTPURLResponse class]];
     [[[responseStub stub] andReturnValue:OCMOCK_VALUE((NSInteger)200)] statusCode];
     
-    id statusSessionMock = [OCMockObject niceMockForClass:[NSURLSession class]];
-    [[[statusSessionMock stub] andDo:^(NSInvocation *invocation) {
+    id urlSessionMock = [OCMockObject niceMockForClass:[NSURLSession class]];
+    [[[urlSessionMock stub] andDo:^(NSInvocation *invocation) {
         //the block we will invoke
         void (^completionHandler)(NSData *data, NSURLResponse *response, NSError *error) = nil;
         
@@ -68,14 +53,14 @@
         completionHandler(_statusStub, responseStub, nil);
     }] dataTaskWithRequest:[OCMArg any] completionHandler:[OCMArg any]];
     
-    id mockDelegate = [OCMockObject mockForProtocol:@protocol(VLCClientDelegate)];
+    id mockDelegate = [OCMockObject niceMockForProtocol:@protocol(VLCClientDelegate)];
     
-    VLCHTTPClient *httpClient = [VLCHTTPClient clientWithHostname:@"1.2.3.4" port:8080 password:@"password"];
-    httpClient.statusSession  = statusSessionMock;
+    VLCHTTPClient *httpClient = [VLCHTTPClient clientWithHostname:@"1.2.3.4" port:8080 username:nil password:@"password"];
+    httpClient.urlSession     = urlSessionMock;
     httpClient.delegate       = mockDelegate;
-    [httpClient connect];
+    [httpClient connectWithCompletionHandler:nil];
     
-    [[mockDelegate expect] client:httpClient reachabilityStatusDidChange:VLCClientStatusConnected];
+    [[mockDelegate expect] client:httpClient connectionStatusDidChanged:VLCClientConnectionStatusConnected];
     
     [FBTestBlocker waitForVerifiedMock:mockDelegate delay:2.0f];
 }

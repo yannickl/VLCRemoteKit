@@ -11,11 +11,13 @@
 		1C697485E80945DD954E6B74 /* libPods-osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 69566C369F6D4C14BA961D4B /* libPods-osx.a */; };
 		F45888F7189591F4005B529C /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F45888E0189591D9005B529C /* XCTest.framework */; };
 		F45888FD189591F4005B529C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F45888FB189591F4005B529C /* InfoPlist.strings */; };
-		F45889091895928D005B529C /* ConnectionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F45889071895927E005B529C /* ConnectionTests.m */; };
+		F45889091895928D005B529C /* VLCHTTPClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F45889071895927E005B529C /* VLCHTTPClientTests.m */; };
 		F458890F18959638005B529C /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F45888E0189591D9005B529C /* XCTest.framework */; };
 		F458891018959638005B529C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F45888E2189591D9005B529C /* Foundation.framework */; };
 		F458891118959638005B529C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F45888E4189591D9005B529C /* UIKit.framework */; };
-		F458891E1895964C005B529C /* ConnectionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F45889071895927E005B529C /* ConnectionTests.m */; };
+		F458891E1895964C005B529C /* VLCHTTPClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F45889071895927E005B529C /* VLCHTTPClientTests.m */; };
+		F49FFA06189EECCA004BE640 /* FBTestBlocker.m in Sources */ = {isa = PBXBuildFile; fileRef = F49FFA05189EECCA004BE640 /* FBTestBlocker.m */; };
+		F49FFA07189EECCA004BE640 /* FBTestBlocker.m in Sources */ = {isa = PBXBuildFile; fileRef = F49FFA05189EECCA004BE640 /* FBTestBlocker.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,8 +34,10 @@
 		F45888FA189591F4005B529C /* OSXTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "OSXTests-Info.plist"; sourceTree = "<group>"; };
 		F45888FC189591F4005B529C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F4588900189591F4005B529C /* OSXTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OSXTests-Prefix.pch"; sourceTree = "<group>"; };
-		F45889071895927E005B529C /* ConnectionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectionTests.m; sourceTree = "<group>"; };
+		F45889071895927E005B529C /* VLCHTTPClientTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCHTTPClientTests.m; sourceTree = "<group>"; };
 		F458890E18959637005B529C /* iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F49FFA04189EECCA004BE640 /* FBTestBlocker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBTestBlocker.h; sourceTree = "<group>"; };
+		F49FFA05189EECCA004BE640 /* FBTestBlocker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBTestBlocker.m; sourceTree = "<group>"; };
 		F4FA21ADAE07455FB41C2D9F /* Pods-ios.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios.xcconfig"; path = "Pods/Pods-ios.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -65,6 +69,7 @@
 			isa = PBXGroup;
 			children = (
 				F45889061895927E005B529C /* Tests */,
+				F49FFA03189EECCA004BE640 /* ThirdParty */,
 				F45888E6189591D9005B529C /* iOSTests */,
 				F45888F8189591F4005B529C /* OSXTests */,
 				F45888DF189591D9005B529C /* Frameworks */,
@@ -134,9 +139,18 @@
 		F45889061895927E005B529C /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				F45889071895927E005B529C /* ConnectionTests.m */,
+				F45889071895927E005B529C /* VLCHTTPClientTests.m */,
 			);
 			path = Tests;
+			sourceTree = "<group>";
+		};
+		F49FFA03189EECCA004BE640 /* ThirdParty */ = {
+			isa = PBXGroup;
+			children = (
+				F49FFA04189EECCA004BE640 /* FBTestBlocker.h */,
+				F49FFA05189EECCA004BE640 /* FBTestBlocker.m */,
+			);
+			path = ThirdParty;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -297,7 +311,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F45889091895928D005B529C /* ConnectionTests.m in Sources */,
+				F49FFA07189EECCA004BE640 /* FBTestBlocker.m in Sources */,
+				F45889091895928D005B529C /* VLCHTTPClientTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -305,7 +320,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F458891E1895964C005B529C /* ConnectionTests.m in Sources */,
+				F49FFA06189EECCA004BE640 /* FBTestBlocker.m in Sources */,
+				F458891E1895964C005B529C /* VLCHTTPClientTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
