@@ -27,6 +27,7 @@
 #import "VLCHTTPClient.h"
 #import "VLCCommand.h"
 #import "VLCRemotePlayer.h"
+#import "VLCRemotePlayer+VLCClient.h"
 
 #import "NSError+VLC.h"
 
@@ -158,7 +159,7 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
     return request;
 }
 
-- (void)listeningWithRequest:(NSURLRequest *)urlRequest completionHandler:(void (^)(NSData *data, NSError *))completionHandler {
+- (void)listeningWithRequest:(NSURLRequest *)urlRequest completionHandler:(void (^)(NSData *, NSError *))completionHandler {
     if (_connectionStatus != VLCClientConnectionStatusDisconnected) {
         __weak typeof(self) weakSelf = self;
         [self performRequest:urlRequest completionHandler:^(NSData *data, NSError *error) {
@@ -177,8 +178,12 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
                 }
                 
                 // If all its ok, update the player
-                if (!error) {
-                    
+                if (!error && data) {
+                    //NSDictionary *status = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+                    [_player updatePlayerWithData:data];
+                    /*if (!error) {
+                        [_player updatePlayerWithStatus:status];
+                    }*/
                 }
                 
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, kVRKRefreshInterval * NSEC_PER_SEC), dispatch_get_main_queue(), ^{

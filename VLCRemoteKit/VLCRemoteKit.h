@@ -28,7 +28,6 @@
 #define _VLCREMOTEKIT_
 
 #import "VLCClientProtocol.h"
-#import "VLCCommandProtocol.h"
 
 #import "VLCRemotePlayer.h"
 #import "VLCRemotePlaylist.h"

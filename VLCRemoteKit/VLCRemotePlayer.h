@@ -25,7 +25,6 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "VLCCommandProtocol.h"
 #import "VLCClientProtocol.h"
 
 /**
@@ -33,7 +32,7 @@
  * When you update a property of the local object, the change is automatically
  * sent to the remote player.
  */
-@interface VLCRemotePlayer : NSObject <VLCCommandProtocol>
+@interface VLCRemotePlayer : NSObject
 @property (nonatomic, weak, readonly) id<VLCClientProtocol> client;
 @property (atomic, assign) double apiVersion;
 
@@ -42,5 +41,32 @@
 
 - (id)initWithClient:(id<VLCClientProtocol>)client;
 + (instancetype)remotePlayerWithClient:(id<VLCClientProtocol>)client;
+
+#pragma mark -
+
+/**
+ * @abstract Starts the playback for the item with a given identifier.
+ * @param itemIdentifier An item identifier.
+ * @since 1.0.0
+ */
+- (void)playItemWithId:(NSInteger)itemIdentifier;
+
+/**
+ * @abstract Stops the current playback.
+ * @since 1.0.0
+ */
+- (void)stop;
+
+/**
+ * @abstract Toggles VLC in the fullscreen or the windowed mode.
+ * @since 1.0.0
+ */
+- (void)toogleFullscreen;
+
+/**
+ * @abstract Toggles VLC in pause / playback.
+ * @since 1.0.0
+ */
+- (void)tooglePause;
 
 @end

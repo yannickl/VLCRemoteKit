@@ -24,36 +24,18 @@
  *
  */
 
-#import <Foundation/Foundation.h>
+#import "VLCRemotePlayer.h"
+
+@interface VLCRemotePlayer (VLCClient)
+
+#pragma mark - Updating the Player Status
+/** @name Updating the Player Status */
 
 /**
- * Defines the remote-control command list that the receiver must implement.
- */
-@protocol VLCCommandProtocol <NSObject>
-
-/**
- * @abstract Starts the playback for the item with a given identifier.
- * @param itemIdentifier an item identifier.
+ * @abstract Update the local player representation with the given data.
+ * @param data The data received by the client.
  * @since 1.0.0
  */
-- (void)playItemWithId:(NSInteger)itemIdentifier;
-
-/**
- * @abstract Toggles VLC in pause / playback.
- * @since 1.0.0
- */
-- (void)tooglePause;
-
-/**
- * @abstract Stops the current playback.
- * @since 1.0.0
- */
-- (void)stop;
-
-/**
- * @abstract Toggles VLC in fullscreen / windowed.
- * @since 1.0.0
- */
-- (void)toogleFullscreen;
+- (void)updatePlayerWithData:(NSData *)data;
 
 @end

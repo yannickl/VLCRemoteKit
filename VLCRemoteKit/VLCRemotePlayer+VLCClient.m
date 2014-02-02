@@ -24,59 +24,29 @@
  *
  */
 
-#import "VLCRemotePlayer.h"
-#import "VLCCommand.h"
+#import "VLCRemotePlayer+VLCClient.h"
 
 @interface VLCRemotePlayer ()
-/** The internal status hash. */
-@property (assign) NSUInteger statusHash;
-/** The internal status of the player. */
+@property (assign) NSUInteger   statusHash;
 @property (strong) NSDictionary *status;
-/** The reference to a client to communicate with the remote VLC. */
-@property (nonatomic, weak) id<VLCClientProtocol> client;
 
 @end
 
-@implementation VLCRemotePlayer
+@implementation VLCRemotePlayer (VLCClient)
 
-#pragma mark - Creating and Initializing a Remote Client
+#pragma mark Updating the Player Status
 
-- (id)initWithClient:(id<VLCClientProtocol>)client {
-    if ((self = [super init])) {
-        _client = client;
-    }
-    return self;
-}
-
-+ (instancetype)remotePlayerWithClient:(id<VLCClientProtocol>)client {
-    return [[self alloc] initWithClient:client];
-}
-
-#pragma mark - VLCCommand Protocol Methods
-
-- (void)playItemWithId:(NSInteger)itemIdentifier {
-    if (_client) {
+- (void)updatePlayerWithData:(NSData *)data {
+    NSUInteger dataHash = [data hash];
+    
+    if (self.statusHash != dataHash) {
+        NSError *error       = nil;
+        NSDictionary *status = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
         
-    }
-}
-
-- (void)tooglePause {
-    if (_client) {
-        VLCCommand *tooglePauseCommand = [VLCCommand tooglePauseCommand];
-        [_client performCommand:tooglePauseCommand completionHandler:nil];
-    }
-}
-
-- (void)stop {
-    if (_client) {
-        
-    }
-}
-
-- (void)toogleFullscreen {
-    if (_client) {
-        VLCCommand *toogleFullscreenCommand = [VLCCommand toogleFullscreenCommand];
-        [_client performCommand:toogleFullscreenCommand completionHandler:nil];
+        if (!error) {
+            self.statusHash = dataHash;
+            self.status     = status;
+        }
     }
 }
 
