@@ -30,10 +30,11 @@
 
 #import "NSError+VLC.h"
 
-double const kVRKHTTPClientAPIVersion  = 3;
+double const kVRKHTTPClientAPIVersion = 3;
 
 /** The recommended time interval to use to pull the status. */
 NSTimeInterval const kVRKRefreshInterval           = 1.0f;
+/** The timeout interval to use when waiting for data. */
 NSTimeInterval const kVRKTimeoutIntervalForRequest = 1.0f;
 
 /** Absolute URL path to the status of VLC. */
@@ -44,10 +45,13 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
 @interface VLCHTTPClient ()
 /** The headers used to build the requests. */
 @property (nonatomic, strong) NSDictionary *headers;
-/** The player status URL components to help us to build the queries. */
-@property (nonatomic, strong) NSURLComponents *playerStatusURLComponents;
+/** The URL components to help us to build the requests. */
+@property (nonatomic, strong) NSURLComponents *urlComponents;
 /** The session used to perform the requests. */
 @property (nonatomic, strong) NSURLSession *urlSession;
+
+#pragma mark VLCClient Protocol Properties
+
 /** The connection status. */
 @property (assign) VLCClientConnectionStatus connectionStatus;
 /** The connection status change block. */
@@ -55,10 +59,14 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
 /** The remote player. */
 @property (nonatomic, strong) VLCRemotePlayer *player;
 
+#pragma mark Private Methods
+
 - (void)performRequest:(NSURLRequest *)request completionHandler:(void (^) (NSData *data, NSError *error))completionHandler;
 - (void)listeningWithRequest:(NSURLRequest *)urlRequest completionHandler:(void (^)(NSData *data, NSError *))completionHandler;
 
 @end
+
+#pragma mark -
 
 @implementation VLCHTTPClient
 
@@ -96,12 +104,8 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
 
 - (id)initWithURLComponents:(NSURLComponents *)urlComponents urlSession:(NSURLSession *)urlSession  {
     if ((self = [super init])) {
-        // Build the player status component
-        NSURLComponents *playerStatusURLComponents = [urlComponents copy];
-        playerStatusURLComponents.path             = kVRKURLPathStatus;
-        _playerStatusURLComponents                 = playerStatusURLComponents;
-        
         _connectionStatus = VLCClientConnectionStatusDisconnected;
+        _urlComponents    = urlComponents;
         _urlSession       = urlSession;
         _player           = [VLCRemotePlayer remotePlayerWithClient:self];
         
@@ -112,37 +116,44 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
 
 #pragma mark - Private Methods
 
-- (NSString *)queryStringFromCommand:(VLCCommand *)command {
-    NSMutableString *queryString = nil;
+- (NSURLComponents *)urlComponentsFromCommand:(VLCCommand *)command {
+    NSURLComponents *urlComponents = [_urlComponents copy];
     
     switch (command.name) {
         case VLCCommandNameStatus:
+            urlComponents.path = kVRKURLPathStatus;
             break;
         case VLCCommandNameStop:
-            queryString = [NSMutableString stringWithString:@"command=pl_stop"];
+            urlComponents.path  = kVRKURLPathStatus;
+            urlComponents.query = @"command=pl_stop";
             break;
         case VLCCommandNameToogleFullscreen:
-            queryString = [NSMutableString stringWithString:@"command=fullscreen"];
+            urlComponents.path  = kVRKURLPathStatus;
+            urlComponents.query = @"command=fullscreen";
             break;
         case VLCCommandNameTooglePause:
-            queryString = [NSMutableString stringWithString:@"command=pl_pause"];
+            urlComponents.path  = kVRKURLPathStatus;
+            urlComponents.query = @"command=pl_pause";
             break;
         default:
             return nil;
     }
     
+    NSMutableString *additionalQuery = [NSMutableString string];
     for (NSString *key in command.params) {
-        [queryString appendString:[NSString stringWithFormat:@"&%@", command.params[key]]];
+        [additionalQuery appendString:[NSString stringWithFormat:@"&%@", command.params[key]]];
+    }
+    if (additionalQuery.length > 0) {
+        urlComponents.query = [NSString stringWithFormat:@"%@%@", urlComponents.query, additionalQuery];
     }
     
-    return queryString;
+    return urlComponents;
 }
 
 - (NSURLRequest *)urlRequestWithCommand:(VLCCommand *)command {
-    NSURLComponents *urlComponents = [_playerStatusURLComponents copy];
-    urlComponents.query            = [self queryStringFromCommand:command];
+    NSURLComponents *commandComponents = [self urlComponentsFromCommand:command];
     
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[urlComponents URL]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[commandComponents URL]];
     request.timeoutInterval      = kVRKTimeoutIntervalForRequest;
     return request;
 }

@@ -27,7 +27,9 @@
 #import <Foundation/Foundation.h>
 
 /**
- *
+ * Facade to work with the remote VLC playlist.
+ * When you update a property of the local object, the change is automatically
+ * sent to the remote playlist object.
  */
 @interface VLCRemotePlaylist : NSObject
 

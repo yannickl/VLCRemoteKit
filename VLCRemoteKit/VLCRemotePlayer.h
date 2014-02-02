@@ -29,7 +29,9 @@
 #import "VLCClientProtocol.h"
 
 /**
- *
+ * Facade to work with the remote VLC player.
+ * When you update a property of the local object, the change is automatically
+ * sent to the remote player.
  */
 @interface VLCRemotePlayer : NSObject <VLCCommandProtocol>
 @property (nonatomic, weak, readonly) id<VLCClientProtocol> client;
