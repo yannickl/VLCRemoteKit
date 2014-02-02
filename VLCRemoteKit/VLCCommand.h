@@ -52,12 +52,12 @@ typedef NS_ENUM(NSInteger, VLCCommandName) {
 
 /**
  * @abstract The command's name.
- * @version 1.0.0
+ * @since 1.0.0
  */
 @property (nonatomic, assign) VLCCommandName name;
 /**
  * @abstract The command parameters.
- * @version 1.0.0
+ * @since 1.0.0
  */
 @property (nonatomic, strong) NSDictionary   *params;
 
@@ -68,7 +68,7 @@ typedef NS_ENUM(NSInteger, VLCCommandName) {
  * @abstract Initializes a command using a name and some parameters.
  * @param name A command name.
  * @param params A dictionary of parameters to send with the command.
- * @version 1.0.0
+ * @since 1.0.0
  */
 - (id)initWithName:(VLCCommandName)name params:(NSDictionary *)params;
 
@@ -77,7 +77,7 @@ typedef NS_ENUM(NSInteger, VLCCommandName) {
  * @param name A command name.
  * @param params A dictionary of parameters to send with the command.
  * @see initWithName:params:
- * @version 1.0.0
+ * @since 1.0.0
  */
 + (instancetype)commandWithName:(VLCCommandName)name params:(NSDictionary *)params;
 
@@ -86,7 +86,7 @@ typedef NS_ENUM(NSInteger, VLCCommandName) {
 
 /**
  * @abstract Creates and returns a command to retrieve the current VLC status.
- * @version 1.0.0
+ * @since 1.0.0
  */
 + (instancetype)statusCommand;
 
@@ -94,27 +94,27 @@ typedef NS_ENUM(NSInteger, VLCCommandName) {
  * @abstract Creates and returns a command to put VLC in fullscreen or windowed
  * mode.
  * @param needsFullscreen If YES, VLC will be put in the fullscreen mode.
- * @version 1.0.0
+ * @since 1.0.0
  */
 + (instancetype)fullscreenCommandWithFlag:(BOOL)needsFullscreen;
 
 /**
  * @abstract Creates and returns a command to toogle the fullscreen mode of the 
  * player.
- * @version 1.0.0
+ * @since 1.0.0
  */
 + (instancetype)toogleFullscreenCommand;
 
 /**
  * @abstract Creates and returns a command to pause or play the remote media.
  * @param paused If YES, the media will be paused.
- * @version 1.0.0
+ * @since 1.0.0
  */
 + (instancetype)pauseCommandWithFlag:(BOOL)paused;
 
 /**
  * @abstract Creates and returns a command to toogle the pause of the player.
- * @version 1.0.0
+ * @since 1.0.0
  */
 + (instancetype)tooglePauseCommand;
 

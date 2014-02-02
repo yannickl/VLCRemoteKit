@@ -26,6 +26,9 @@
 
 #import <Foundation/Foundation.h>
 
+/**
+ *
+ */
 @interface VLCRemotePlaylist : NSObject
 
 @end

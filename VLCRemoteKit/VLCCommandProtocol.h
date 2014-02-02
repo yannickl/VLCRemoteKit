@@ -34,25 +34,25 @@
 /**
  * @abstract Starts the playback for the item with a given identifier.
  * @param itemIdentifier an item identifier.
- * @version 1.0.0
+ * @since 1.0.0
  */
 - (void)playItemWithId:(NSInteger)itemIdentifier;
 
 /**
  * @abstract Toggles VLC in pause / playback.
- * @version 1.0.0
+ * @since 1.0.0
  */
 - (void)tooglePause;
 
 /**
  * @abstract Stops the current playback.
- * @version 1.0.0
+ * @since 1.0.0
  */
 - (void)stop;
 
 /**
  * @abstract Toggles VLC in fullscreen / windowed.
- * @version 1.0.0
+ * @since 1.0.0
  */
 - (void)toogleFullscreen;
 

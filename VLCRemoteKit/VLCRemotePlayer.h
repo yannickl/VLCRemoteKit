@@ -28,6 +28,9 @@
 #import "VLCCommandProtocol.h"
 #import "VLCClientProtocol.h"
 
+/**
+ *
+ */
 @interface VLCRemotePlayer : NSObject <VLCCommandProtocol>
 @property (nonatomic, weak, readonly) id<VLCClientProtocol> client;
 @property (atomic, assign) double apiVersion;

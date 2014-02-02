@@ -49,7 +49,7 @@ extern double const kVRKHTTPClientAPIVersion;
  * port 8080).
  * @param username A username to connect to VLC.
  * @param password A password which correspond to the one configured in VLC.
- * @version 1.0.0
+ * @since 1.0.0
  */
 - (id)initWithHostname:(NSString *)hostname port:(NSInteger)port username:(NSString *)username password:(NSString *)password;
 
@@ -61,7 +61,7 @@ extern double const kVRKHTTPClientAPIVersion;
  * port 8080).
  * @param username A username to connect to VLC.
  * @param password A password which correspond to the one configured in VLC.
- * @version 1.0.0
+ * @since 1.0.0
  */
 + (instancetype)clientWithHostname:(NSString *)hostname port:(NSInteger)port username:(NSString *)username password:(NSString *)password;
 
