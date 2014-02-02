@@ -38,6 +38,9 @@
 @end
 
 @implementation VLCRemotePlayer
+@dynamic paused;
+@dynamic playing;
+@dynamic fullscreenMode;
 
 #pragma mark - Creating and Initializing a Remote Client
 
@@ -50,6 +53,45 @@
 
 + (instancetype)remotePlayerWithClient:(id<VLCClientProtocol>)client {
     return [[self alloc] initWithClient:client];
+}
+
+#pragma mark - Properties
+
+- (BOOL)isPaused {
+    if (_status) {
+        return [[_status objectForKey:@"state"] isEqualToString:@"paused"];
+    }
+    return NO;
+}
+
+- (void)setPaused:(BOOL)paused {
+    if (_status) {
+        if (paused != [self isPaused]) {
+            VLCCommand *tooglePauseCommand = [VLCCommand tooglePauseCommand];
+            [_client performCommand:tooglePauseCommand completionHandler:nil];
+        }
+    }
+}
+
+- (BOOL)isPlaying {
+    if (_status) {
+        return [[_status objectForKey:@"state"] isEqualToString:@"playing"];
+    }
+    return NO;
+}
+
+- (BOOL)isFullscreenMode {
+    if (_status) {
+        return [[_status objectForKey:@"fullscreen"] boolValue];
+    }
+    return NO;
+}
+
+- (void)setFullscreenMode:(BOOL)fullscreenMode {
+    if (_status && fullscreenMode != [self isFullscreenMode]) {
+        VLCCommand *toogleFullscreenCommand = [VLCCommand toogleFullscreenCommand];
+        [_client performCommand:toogleFullscreenCommand completionHandler:nil];
+    }
 }
 
 #pragma mark - VLCCommand Protocol Methods

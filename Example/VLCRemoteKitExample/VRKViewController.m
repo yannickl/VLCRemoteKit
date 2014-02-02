@@ -51,11 +51,11 @@
 }
 
 - (IBAction)tooglePauseAction:(id)sender {
-    [_vlcClient.player tooglePause];
+    _vlcClient.player.paused = !_vlcClient.player.paused;
 }
 
 - (IBAction)toogleFullScreenAction:(id)sender {
-    [_vlcClient.player toogleFullscreen];
+    _vlcClient.player.fullscreenMode = !_vlcClient.player.fullscreenMode;
 }
 
 #pragma mark - VLCRemoteClient Delegate Methods

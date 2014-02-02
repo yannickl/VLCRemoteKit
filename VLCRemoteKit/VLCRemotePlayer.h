@@ -34,7 +34,10 @@
  */
 @interface VLCRemotePlayer : NSObject
 @property (nonatomic, weak, readonly) id<VLCClientProtocol> client;
-@property (atomic, assign) double apiVersion;
+@property (nonatomic, readonly) double apiVersion;
+@property (nonatomic, getter = isPaused) BOOL  paused;
+@property (nonatomic, getter = isPlaying) BOOL playing;
+@property (nonatomic, getter = isFullscreenMode) BOOL fullscreenMode;
 
 #pragma mark - Creating and Initializing a Remote Client
 /** @name Creating and Initializing a Remote Client */
