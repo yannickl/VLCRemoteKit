@@ -265,9 +265,9 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
                 _connectionStatusChangeBlock(_connectionStatus);
             }
             
-            if (_delegate && [_delegate respondsToSelector:@selector(client:reachabilityStatusDidChange:)]) {
+            if (_delegate && [_delegate respondsToSelector:@selector(client:connectionStatusDidChanged:)]) {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [_delegate client:self reachabilityStatusDidChange:_connectionStatus];
+                    [_delegate client:self connectionStatusDidChanged:_connectionStatus];
                 });
             }
         }

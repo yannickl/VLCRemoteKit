@@ -60,13 +60,9 @@
 
 #pragma mark - VLCRemoteClient Delegate Methods
 
-- (void)client:(id)client reachabilityStatusDidChange:(VLCClientConnectionStatus)status {
+- (void)client:(id)client connectionStatusDidChanged:(VLCClientConnectionStatus)status {
     NSLog(@"reachabilityStatusDidChange CU: %@", [NSThread currentThread]);
     NSLog(@"reachabilityStatusDidChange MA: %@", [NSThread mainThread]);
-}
-
-- (void)client:(id)client playerStatusDidChange:(VLCRemotePlayer *)status {
-    
 }
 
 @end
