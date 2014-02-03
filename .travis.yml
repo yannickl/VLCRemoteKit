@@ -5,4 +5,4 @@ branches:
 before_install:
     - gem install cocoapods --no-rdoc --no-ri --no-document --quiet
     - cd Tests && pod install && cd $TRAVIS_BUILD_DIR
-script: rake test
+script: rake test:ios
