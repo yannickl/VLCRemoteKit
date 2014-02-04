@@ -1,5 +1,5 @@
 /*
- * YLMoment.h
+ * VLCRemoteKit
  *
  * Copyright 2014 Yannick Loriot.
  * http://yannickloriot.com
@@ -62,6 +62,7 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
 
 #pragma mark Private Methods
 
+/** Load and starts an HTTP GET task using a given, then calls a handler upon completion. */
 - (void)performRequest:(NSURLRequest *)request completionHandler:(void (^) (NSData *data, NSError *error))completionHandler;
 - (void)listeningWithRequest:(NSURLRequest *)urlRequest completionHandler:(void (^)(NSData *data, NSError *))completionHandler;
 
@@ -170,20 +171,16 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
             }
             
             if (_connectionStatus != VLCClientConnectionStatusDisconnected) {
-                
                 // Update the current connection status
                 VLCClientConnectionStatus currentStatus = (!error) ? VLCClientConnectionStatusConnected : (error.code == 401) ? VLCClientConnectionStatusUnauthorized : VLCClientConnectionStatusUnreachable;
+                
                 if (_connectionStatus != currentStatus) {
                     strongSelf.connectionStatus = currentStatus;
                 }
                 
                 // If all its ok, update the player
                 if (!error && data) {
-                    //NSDictionary *status = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
                     [_player updatePlayerWithData:data];
-                    /*if (!error) {
-                        [_player updatePlayerWithStatus:status];
-                    }*/
                 }
                 
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, kVRKRefreshInterval * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
@@ -203,7 +200,7 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
             else {
                 NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
                 NSInteger statusCode            = httpResponse.statusCode;
-                
+
                 if (statusCode != 200) {
                     NSDictionary *userInfo = nil;
                     if (statusCode == 401) {
@@ -217,8 +214,9 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
                     NSError *error = [NSError errorWithDomain:kVLCClientErrorDomain code:statusCode userInfo:userInfo];
                     completionHandler(nil, error);
                 }
-                
-                completionHandler(data, nil);
+                else {
+                    completionHandler(data, nil);
+                }
             }
         }
     }];

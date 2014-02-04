@@ -1,5 +1,5 @@
 /*
- * YLMoment.h
+ * VLCRemoteKit
  *
  * Copyright 2014 Yannick Loriot.
  * http://yannickloriot.com
