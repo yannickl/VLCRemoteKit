@@ -9,6 +9,8 @@
 #import <XCTest/XCTest.h>
 #import <VLCRemoteKit/VLCRemoteKit.h>
 
+#import "NSURLSessionMock.h"
+
 #define EXP_SHORTHAND
 #import "Expecta.h"
 #import "OCMock.h"
@@ -17,6 +19,8 @@
 @interface VLCHTTPClient (UnitTestAdditions)
 @property (nonatomic, strong) NSURLSession   *urlSession;
 @property (assign) VLCClientConnectionStatus connectionStatus;
+
+- (void)performRequest:(NSURLRequest *)request completionHandler:(void (^) (NSData *data, NSError *error))completionHandler;
 
 @end
 
@@ -67,23 +71,28 @@
     [FBTestBlocker waitForVerifiedMock:mockDelegate delay:0.1f];
 }
 
+- (void)testPerformRequestWith200StatusCode {
+    id urlSessionMock = [NSURLSessionMock niceMockWithStatusCode:200];
+    
+    VLCHTTPClient *httpClient = [VLCHTTPClient clientWithHostname:@"1.2.3.4" port:8080 username:nil password:@"password"];
+    httpClient.urlSession     = urlSessionMock;
+    
+    __block NSData *blockData = nil;
+    __block NSError *error    = nil;
+    [httpClient performRequest:nil completionHandler:^(NSData *data, NSError *error) {
+        blockData = data;
+        error     = error;
+    }];
+    
+    [[[FBTestBlocker alloc] init] waitWithTimeout:0.5f];
+    
+    expect(blockData).notTo.beNil();
+    expect(error).to.beNil();
+}
+
 - (void)testConnectionWith200StatusCode {
-    id responseStub = [OCMockObject niceMockForClass:[NSHTTPURLResponse class]];
-    [[[responseStub stub] andReturnValue:OCMOCK_VALUE((NSInteger)200)] statusCode];
-    
-    id urlSessionMock = [OCMockObject niceMockForClass:[NSURLSession class]];
-    [[[urlSessionMock stub] andDo:^(NSInvocation *invocation) {
-        //the block we will invoke
-        void (^completionHandler)(NSData *data, NSURLResponse *response, NSError *error) = nil;
-        
-        // 0 and 1 are reserved for invocation object
-        // 2 would be dataTaskWithRequest, 3 is completionHandler (block)
-        [invocation getArgument:&completionHandler atIndex:3];
-        
-        // Invoke the block
-        completionHandler(_statusStub, responseStub, nil);
-    }] dataTaskWithRequest:[OCMArg any] completionHandler:[OCMArg any]];
-    
+    id urlSessionMock = [NSURLSessionMock niceMockWithStatusCode:200];
+
     id mockDelegate = [OCMockObject niceMockForProtocol:@protocol(VLCClientDelegate)];
     
     VLCHTTPClient *httpClient = [VLCHTTPClient clientWithHostname:@"1.2.3.4" port:8080 username:nil password:@"password"];
@@ -92,7 +101,21 @@
     [httpClient connectWithCompletionHandler:nil];
     
     [[mockDelegate expect] client:httpClient connectionStatusDidChanged:VLCClientConnectionStatusConnected];
-    [FBTestBlocker waitForVerifiedMock:mockDelegate delay:2.0f];
+    [FBTestBlocker waitForVerifiedMock:mockDelegate delay:0.5f];
+}
+
+- (void)testConnectionWith401StatusCode {
+    id urlSessionMock = [NSURLSessionMock niceMockWithStatusCode:401];
+    
+    id mockDelegate = [OCMockObject niceMockForProtocol:@protocol(VLCClientDelegate)];
+    
+    VLCHTTPClient *httpClient = [VLCHTTPClient clientWithHostname:@"1.2.3.4" port:8080 username:nil password:@"password"];
+    httpClient.urlSession     = urlSessionMock;
+    httpClient.delegate       = mockDelegate;
+    [httpClient connectWithCompletionHandler:nil];
+    
+    [[mockDelegate expect] client:httpClient connectionStatusDidChanged:VLCClientConnectionStatusUnauthorized];
+    [FBTestBlocker waitForVerifiedMock:mockDelegate delay:0.5f];
 }
 
 @end

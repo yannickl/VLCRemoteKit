@@ -6,8 +6,15 @@
 //
 //
 
-#import "OCClassMockObject.h"
+#import <Foundation/Foundation.h>
+#import <OCMock/OCMock.h>
 
-@interface NSURLSessionMock : OCClassMockObject
+@interface NSURLSessionMock : OCMockObject
+
+/** 
+ * Creates and returns an NSURLSession mock with the
+ * `dataTaskWithRequest:completionHandler:` method stub.
+ */
++ (instancetype)niceMockWithStatusCode:(NSInteger)statusCode;
 
 @end

@@ -18,6 +18,10 @@
 		F458891E1895964C005B529C /* VLCHTTPClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F45889071895927E005B529C /* VLCHTTPClientTests.m */; };
 		F49FFA06189EECCA004BE640 /* FBTestBlocker.m in Sources */ = {isa = PBXBuildFile; fileRef = F49FFA05189EECCA004BE640 /* FBTestBlocker.m */; };
 		F49FFA07189EECCA004BE640 /* FBTestBlocker.m in Sources */ = {isa = PBXBuildFile; fileRef = F49FFA05189EECCA004BE640 /* FBTestBlocker.m */; };
+		F49FFA1E18A17041004BE640 /* NSURLSessionMock.m in Sources */ = {isa = PBXBuildFile; fileRef = F49FFA1D18A17041004BE640 /* NSURLSessionMock.m */; };
+		F49FFA2018A17E97004BE640 /* NSURLSessionMock.m in Sources */ = {isa = PBXBuildFile; fileRef = F49FFA1D18A17041004BE640 /* NSURLSessionMock.m */; };
+		F49FFA2318A18FA7004BE640 /* NSHTTPURLResponseMock.m in Sources */ = {isa = PBXBuildFile; fileRef = F49FFA2218A18FA7004BE640 /* NSHTTPURLResponseMock.m */; };
+		F49FFA2418A1917E004BE640 /* NSHTTPURLResponseMock.m in Sources */ = {isa = PBXBuildFile; fileRef = F49FFA2218A18FA7004BE640 /* NSHTTPURLResponseMock.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +42,10 @@
 		F458890E18959637005B529C /* iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F49FFA04189EECCA004BE640 /* FBTestBlocker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBTestBlocker.h; sourceTree = "<group>"; };
 		F49FFA05189EECCA004BE640 /* FBTestBlocker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBTestBlocker.m; sourceTree = "<group>"; };
+		F49FFA1C18A17041004BE640 /* NSURLSessionMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSURLSessionMock.h; sourceTree = "<group>"; };
+		F49FFA1D18A17041004BE640 /* NSURLSessionMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSURLSessionMock.m; sourceTree = "<group>"; };
+		F49FFA2118A18FA7004BE640 /* NSHTTPURLResponseMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSHTTPURLResponseMock.h; sourceTree = "<group>"; };
+		F49FFA2218A18FA7004BE640 /* NSHTTPURLResponseMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSHTTPURLResponseMock.m; sourceTree = "<group>"; };
 		F4FA21ADAE07455FB41C2D9F /* Pods-ios.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios.xcconfig"; path = "Pods/Pods-ios.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -139,6 +147,7 @@
 		F45889061895927E005B529C /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				F49FFA1B18A17041004BE640 /* Mocks */,
 				F45889071895927E005B529C /* VLCHTTPClientTests.m */,
 			);
 			path = Tests;
@@ -151,6 +160,18 @@
 				F49FFA05189EECCA004BE640 /* FBTestBlocker.m */,
 			);
 			path = ThirdParty;
+			sourceTree = "<group>";
+		};
+		F49FFA1B18A17041004BE640 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				F49FFA1C18A17041004BE640 /* NSURLSessionMock.h */,
+				F49FFA1D18A17041004BE640 /* NSURLSessionMock.m */,
+				F49FFA2118A18FA7004BE640 /* NSHTTPURLResponseMock.h */,
+				F49FFA2218A18FA7004BE640 /* NSHTTPURLResponseMock.m */,
+			);
+			name = Mocks;
+			path = mocks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -311,7 +332,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F49FFA2418A1917E004BE640 /* NSHTTPURLResponseMock.m in Sources */,
 				F49FFA07189EECCA004BE640 /* FBTestBlocker.m in Sources */,
+				F49FFA2018A17E97004BE640 /* NSURLSessionMock.m in Sources */,
 				F45889091895928D005B529C /* VLCHTTPClientTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -320,7 +343,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F49FFA2318A18FA7004BE640 /* NSHTTPURLResponseMock.m in Sources */,
 				F49FFA06189EECCA004BE640 /* FBTestBlocker.m in Sources */,
+				F49FFA1E18A17041004BE640 /* NSURLSessionMock.m in Sources */,
 				F458891E1895964C005B529C /* VLCHTTPClientTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -6,8 +6,15 @@
 //
 //
 
-#import "OCMockObject.h"
+#import <Foundation/Foundation.h>
+#import <OCMock/OCMock.h>
 
 @interface NSHTTPURLResponseMock : OCMockObject
+
+/**
+ * Creates and returns an NSHTTPURLResponse mock with the
+ * given status code.
+ */
++ (instancetype)niceMockWithStatusCode:(NSInteger)statusCode;
 
 @end
