@@ -25,20 +25,23 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "VLCClientProtocol.h"
-#import "VRKConfigurationViewController.h"
 
-@interface VRKViewController : UIViewController <UIPopoverControllerDelegate, VRKConfigurationDelegate, VLCClientDelegate>
-@property (weak, nonatomic) IBOutlet UILabel         *statusLabel;
-@property (weak, nonatomic) IBOutlet UIButton        *connectButton;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
+@protocol VRKConfigurationDelegate;
+
+@interface VRKConfigurationViewController : UIViewController
+@property (weak, nonatomic) IBOutlet UITextField *ipTextField;
+@property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
+
+@property (nonatomic, weak) id<VRKConfigurationDelegate> delegate;
 
 #pragma mark - Public Methods
 
-- (IBAction)connectAction:(id)sender;
-- (IBAction)playAction:(id)sender;
-- (IBAction)stopAction:(id)sender;
-- (IBAction)tooglePauseAction:(id)sender;
-- (IBAction)toogleFullScreenAction:(id)sender;
+- (IBAction)saveAction:(id)sender;
+
+@end
+
+@protocol VRKConfigurationDelegate <NSObject>
+
+- (void)configurationDidChanged;
 
 @end

@@ -24,21 +24,36 @@
  *
  */
 
-#import <UIKit/UIKit.h>
-#import "VLCClientProtocol.h"
 #import "VRKConfigurationViewController.h"
 
-@interface VRKViewController : UIViewController <UIPopoverControllerDelegate, VRKConfigurationDelegate, VLCClientDelegate>
-@property (weak, nonatomic) IBOutlet UILabel         *statusLabel;
-@property (weak, nonatomic) IBOutlet UIButton        *connectButton;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
+@interface VRKConfigurationViewController ()
+
+@end
+
+@implementation VRKConfigurationViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+	
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *ip                 = [userDefaults stringForKey:@"ip"];
+    NSString *password           = [userDefaults stringForKey:@"password"];
+    
+    _ipTextField.text       = ip;
+    _passwordTextField.text = password;
+}
 
 #pragma mark - Public Methods
 
-- (IBAction)connectAction:(id)sender;
-- (IBAction)playAction:(id)sender;
-- (IBAction)stopAction:(id)sender;
-- (IBAction)tooglePauseAction:(id)sender;
-- (IBAction)toogleFullScreenAction:(id)sender;
+- (IBAction)saveAction:(id)sender {
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:_ipTextField.text forKey:@"ip"];
+    [userDefaults setObject:_passwordTextField.text forKey:@"password"];
+    [userDefaults synchronize];
+    
+    if (_delegate) {
+        [_delegate configurationDidChanged];
+    }
+}
 
 @end

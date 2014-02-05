@@ -71,7 +71,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="startListeningAction:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="8Ye-Pu-77U"/>
+                                    <action selector="connectAction:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="NMU-VG-Ile"/>
                                 </connections>
                             </button>
                         </subviews>

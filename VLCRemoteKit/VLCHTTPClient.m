@@ -250,7 +250,9 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
     @synchronized (self ) {
         self.connectionStatus = VLCClientConnectionStatusDisconnected;
         
-        completionHandler(nil);
+        if (completionHandler) {
+            completionHandler(nil);
+        }
     }
 }
 
