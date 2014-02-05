@@ -24,15 +24,12 @@
  *
  */
 
-#import "NSHTTPURLResponseNiceMock.h"
+#import "VLCHTTPClient.h"
 
-@implementation NSHTTPURLResponseNiceMock
+@interface VLCHTTPClient ()
+@property (nonatomic, strong) NSURLSession   *urlSession;
+@property (assign) VLCClientConnectionStatus connectionStatus;
 
-+ (instancetype)mockWithStatusCode:(NSInteger)statusCode {
-    id responseStub = [OCMockObject niceMockForClass:[NSHTTPURLResponse class]];
-    [[[responseStub stub] andReturnValue:OCMOCK_VALUE((NSInteger)statusCode)] statusCode];
-    
-    return responseStub;
-}
+- (void)performRequest:(NSURLRequest *)request completionHandler:(void (^) (NSData *data, NSError *error))completionHandler;
 
 @end

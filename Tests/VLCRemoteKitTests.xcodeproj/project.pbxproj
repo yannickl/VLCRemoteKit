@@ -46,6 +46,7 @@
 		F49FFA1D18A17041004BE640 /* NSURLSessionNiceMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSURLSessionNiceMock.m; sourceTree = "<group>"; };
 		F49FFA2118A18FA7004BE640 /* NSHTTPURLResponseNiceMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSHTTPURLResponseNiceMock.h; sourceTree = "<group>"; };
 		F49FFA2218A18FA7004BE640 /* NSHTTPURLResponseNiceMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSHTTPURLResponseNiceMock.m; sourceTree = "<group>"; };
+		F49FFA3418A2944F004BE640 /* VLCHTTPClient_UnitTestAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCHTTPClient_UnitTestAdditions.h; sourceTree = "<group>"; };
 		F4FA21ADAE07455FB41C2D9F /* Pods-ios.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios.xcconfig"; path = "Pods/Pods-ios.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -148,6 +149,7 @@
 			isa = PBXGroup;
 			children = (
 				F49FFA1B18A17041004BE640 /* Mocks */,
+				F49FFA3318A2944F004BE640 /* Privates */,
 				F45889071895927E005B529C /* VLCHTTPClientTests.m */,
 			);
 			path = Tests;
@@ -172,6 +174,15 @@
 			);
 			name = Mocks;
 			path = mocks;
+			sourceTree = "<group>";
+		};
+		F49FFA3318A2944F004BE640 /* Privates */ = {
+			isa = PBXGroup;
+			children = (
+				F49FFA3418A2944F004BE640 /* VLCHTTPClient_UnitTestAdditions.h */,
+			);
+			name = Privates;
+			path = privates;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
