@@ -58,6 +58,9 @@
     id dataMock              = (statusCode <= 200 || statusCode < 300) ? [OCMockObject niceMockForClass:[NSData class]] : nil;
     id httpResponseMock      = [NSHTTPURLResponseNiceMock mockWithStatusCode:statusCode];
     id errorMock             = (statusCode < 0 || statusCode > 1000) ? [OCMockObject niceMockForClass:[NSError class]] : nil;
+    if (statusCode < 0 || statusCode > 1000) {
+        [[[errorMock stub] andReturnValue:OCMOCK_VALUE((NSInteger)statusCode)] code];
+    }
     
     return [self mockWithRequest:requestMock completionHandler:completionHandlerMock returnedData:dataMock returnedResponse:httpResponseMock returnedError:errorMock];
 }

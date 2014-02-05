@@ -29,6 +29,7 @@
 @interface VLCHTTPClient ()
 @property (nonatomic, strong) NSURLSession   *urlSession;
 @property (assign) VLCClientConnectionStatus connectionStatus;
+@property (nonatomic, copy) void (^connectionStatusChangeBlock) (VLCClientConnectionStatus status);
 
 - (void)performRequest:(NSURLRequest *)request completionHandler:(void (^) (NSData *data, NSError *error))completionHandler;
 
