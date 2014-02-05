@@ -28,7 +28,7 @@
 
 @protocol VRKConfigurationDelegate;
 
-@interface VRKConfigurationViewController : UIViewController
+@interface VRKConfigurationViewController : UIViewController <UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *ipTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 
@@ -37,11 +37,13 @@
 #pragma mark - Public Methods
 
 - (IBAction)saveAction:(id)sender;
+- (IBAction)cancelAction:(id)sender;
 
 @end
 
 @protocol VRKConfigurationDelegate <NSObject>
 
 - (void)configurationDidChanged;
+- (void)needsDismissConfiguration;
 
 @end

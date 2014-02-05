@@ -56,4 +56,23 @@
     }
 }
 
+- (IBAction)cancelAction:(id)sender {
+    if (_delegate) {
+        [_delegate needsDismissConfiguration];
+    }
+}
+
+#pragma mark - UITextField Delegate Methods
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    if (textField == _ipTextField) {
+        [_passwordTextField becomeFirstResponder];
+        return NO;
+    }
+    else {
+        [textField resignFirstResponder];
+        return YES;
+    }
+}
+
 @end

@@ -45,9 +45,11 @@ static NSString * const CONFIGURATION_SEGUE_NAME = @"VRKConfigurationSegue";
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([[segue identifier] isEqualToString:CONFIGURATION_SEGUE_NAME]) {
-        _popover                   = [(UIStoryboardPopoverSegue *)segue popoverController];
-        _popover.delegate          = self;
-        _editBarButtonItem.enabled = NO;
+        if ([segue isKindOfClass:[UIStoryboardPopoverSegue class]]) {
+            _popover                   = [(UIStoryboardPopoverSegue *)segue popoverController];
+            _popover.delegate          = self;
+            _editBarButtonItem.enabled = NO;
+        }
         
         VRKConfigurationViewController *configViewConfiguration = [segue destinationViewController];
         configViewConfiguration.delegate                        = self;
@@ -67,7 +69,7 @@ static NSString * const CONFIGURATION_SEGUE_NAME = @"VRKConfigurationSegue";
         [_vlcClient connectWithCompletionHandler:NULL];
     }
     else if (!ip || !password) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"You must configure the ip and the password of VLC Remote Kit before to connect" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"The VLC Remote Kit IP and/or password is not configured" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
     }
 }
@@ -143,8 +145,15 @@ static NSString * const CONFIGURATION_SEGUE_NAME = @"VRKConfigurationSegue";
     if (_popover) {
         [_popover dismissPopoverAnimated:YES];
     }
+    else {
+        [self dismissViewControllerAnimated:YES completion:NULL];
+    }
     
     [self disconnectAction:_connectButton];
+}
+
+- (void)needsDismissConfiguration {
+    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 @end
