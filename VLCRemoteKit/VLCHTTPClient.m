@@ -275,6 +275,7 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if ([keyPath isEqualToString:@"connectionStatus"]) {
         if (![[change objectForKey:@"new"] isEqual:[change objectForKey:@"old"]]) {
+            NSLog(@"_connectionStatusChangeBlock: %@", _connectionStatusChangeBlock);
             if (_connectionStatusChangeBlock) {
                 _connectionStatusChangeBlock(_connectionStatus);
             }

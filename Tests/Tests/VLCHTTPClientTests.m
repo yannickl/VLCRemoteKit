@@ -96,17 +96,17 @@
     VLCHTTPClient *httpClient = [VLCHTTPClient clientWithHostname:@"1.2.3.4" port:8080 username:nil password:@"password"];
     httpClient.urlSession     = urlSessionMock;
     
-    __block NSData *blockData = nil;
-    __block NSError *error    = nil;
+    __block NSData *returnedData   = nil;
+    __block NSError *returnedError = nil;
     [httpClient performRequest:nil completionHandler:^(NSData *data, NSError *error) {
-        blockData = data;
-        error     = error;
+        returnedData  = data;
+        returnedError = error;
     }];
     
     [[[FBTestBlocker alloc] init] waitWithTimeout:0.1f];
     
-    expect(blockData).notTo.beNil();
-    expect(error).to.beNil();
+    expect(returnedData).notTo.beNil();
+    expect(returnedError).to.beNil();
 }
 
 #pragma mark - Public
@@ -121,10 +121,25 @@
     VLCHTTPClient *httpClient = [VLCHTTPClient clientWithHostname:@"1.2.3.4" port:8080 username:nil password:@"password"];
     httpClient.urlSession     = urlSessionMock;
     httpClient.delegate       = mockDelegate;
-    [httpClient connectWithCompletionHandler:nil];
+
+    __block VLCClientConnectionStatus returnedStatus = VLCClientConnectionStatusDisconnected;
+    [httpClient setConnectionStatusChangeBlock:^(VLCClientConnectionStatus status) {
+        returnedStatus = status;
+    }];
+    
+    __block NSData *returnedData   = nil;
+    __block NSError *returnedError = nil;
+    [httpClient connectWithCompletionHandler:^(NSData *data, NSError *error) {
+        returnedData  = data;
+        returnedError = error;
+    }];
     
     [[mockDelegate expect] client:httpClient connectionStatusDidChanged:VLCClientConnectionStatusConnected];
     [FBTestBlocker waitForVerifiedMock:mockDelegate delay:0.1f];
+    
+    expect(returnedStatus).to.equal(VLCClientConnectionStatusConnected);
+    expect(returnedData).toNot.beNil();
+    expect(returnedError).to.beNil();
 }
 
 - (void)testConnectionWith401StatusCode {
@@ -135,10 +150,25 @@
     VLCHTTPClient *httpClient = [VLCHTTPClient clientWithHostname:@"1.2.3.4" port:8080 username:nil password:@"password"];
     httpClient.urlSession     = urlSessionMock;
     httpClient.delegate       = mockDelegate;
-    [httpClient connectWithCompletionHandler:nil];
+    
+    __block VLCClientConnectionStatus returnedStatus = VLCClientConnectionStatusDisconnected;
+    [httpClient setConnectionStatusChangeBlock:^(VLCClientConnectionStatus status) {
+        returnedStatus = status;
+    }];
+    
+    __block NSData *returnedData   = nil;
+    __block NSError *returnedError = nil;
+    [httpClient connectWithCompletionHandler:^(NSData *data, NSError *error) {
+        returnedData  = data;
+        returnedError = error;
+    }];
     
     [[mockDelegate expect] client:httpClient connectionStatusDidChanged:VLCClientConnectionStatusUnauthorized];
     [FBTestBlocker waitForVerifiedMock:mockDelegate delay:0.1f];
+    
+    expect(returnedStatus).to.equal(VLCClientConnectionStatusUnauthorized);
+    expect(returnedData).to.beNil();
+    expect(returnedError).notTo.beNil();
 }
 
 @end
