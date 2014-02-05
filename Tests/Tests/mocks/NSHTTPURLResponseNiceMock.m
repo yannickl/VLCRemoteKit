@@ -1,16 +1,16 @@
 //
-//  NSHTTPURLResponseMock.m
+//  NSHTTPURLResponseNiceMock.m
 //  VLCRemoteKitTests
 //
 //  Created by YannickL on 04/02/2014.
 //
 //
 
-#import "NSHTTPURLResponseMock.h"
+#import "NSHTTPURLResponseNiceMock.h"
 
-@implementation NSHTTPURLResponseMock
+@implementation NSHTTPURLResponseNiceMock
 
-+ (instancetype)niceMockWithStatusCode:(NSInteger)statusCode {
++ (instancetype)mockWithStatusCode:(NSInteger)statusCode {
     id responseStub = [OCMockObject niceMockForClass:[NSHTTPURLResponse class]];
     [[[responseStub stub] andReturnValue:OCMOCK_VALUE((NSInteger)statusCode)] statusCode];
     
