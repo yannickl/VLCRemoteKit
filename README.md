@@ -21,7 +21,7 @@ $ cd /path/to/MyProject
 $ touch Podfile
 $ edit Podfile
 platform :ios, '7.0' 
-# Or platform :osx, '10.8'
+# Or platform :osx, '10.9'
 pod 'VLCRemoteKit', '~> 1.0.0'
 ```
 

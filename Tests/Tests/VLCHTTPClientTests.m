@@ -59,13 +59,16 @@
 
 #pragma mark Properties
 
-- (void)testConnectionStatusChangeDelegate {
+- (void)testConnectionStatusUpdateWithDelegate {
     // Create the delegate
     id mockDelegate = [OCMockObject niceMockForProtocol:@protocol(VLCClientDelegate)];
     
     // Create the client
     VLCHTTPClient *httpClient = [VLCHTTPClient clientWithHostname:@"1.2.3.4" port:8080 username:nil password:@"password"];
     httpClient.delegate       = mockDelegate;
+    
+    // Check that the connection status is disconnected
+    expect(httpClient.connectionStatus).to.equal(VLCClientConnectionStatusDisconnected);
     
     // Update the connection status with a new value
     httpClient.connectionStatus = VLCClientConnectionStatusConnecting;
@@ -86,6 +89,42 @@
     httpClient.connectionStatus = VLCClientConnectionStatusConnected;
     [[mockDelegate expect] client:httpClient connectionStatusDidChanged:VLCClientConnectionStatusConnected];
     [FBTestBlocker waitForVerifiedMock:mockDelegate delay:0.1f];
+}
+
+- (void)testConnectionStatusUpdateWithBlock {
+    // Create the delegate
+    id mockDelegate = [OCMockObject  niceMockForProtocol:@protocol(VLCClientDelegate)];
+    
+    // Create the client
+    VLCHTTPClient *httpClient = [VLCHTTPClient clientWithHostname:@"1.2.3.4" port:8080 username:nil password:@"password"];
+    
+    __block VLCClientConnectionStatus returnedStatus = httpClient.connectionStatus;
+    [httpClient setConnectionStatusChangeBlock:^(VLCClientConnectionStatus status) {
+        returnedStatus = status;
+    }];
+    
+    // Check that the connection status is disconnected
+    expect(httpClient.connectionStatus).to.equal(VLCClientConnectionStatusDisconnected);
+    
+    FBTestBlocker *blocker = [[FBTestBlocker alloc] init];
+    
+    // Update the connection status with a new value
+    httpClient.connectionStatus = VLCClientConnectionStatusConnecting;
+    [blocker waitWithTimeout:0.1f];
+    
+    expect(httpClient.connectionStatus).to.equal(VLCClientConnectionStatusConnecting);
+
+    // Update the connection with the same value
+    [[mockDelegate expect] client:httpClient connectionStatusDidChanged:VLCClientConnectionStatusConnecting];
+    [blocker waitWithTimeout:0.1f];
+    
+    expect(httpClient.connectionStatus).to.equal(VLCClientConnectionStatusConnecting);
+    
+    // Update the connection with a new value
+    httpClient.connectionStatus = VLCClientConnectionStatusConnected;
+    [blocker waitWithTimeout:0.1f];
+    
+    expect(httpClient.connectionStatus).to.equal(VLCClientConnectionStatusConnected);
 }
 
 #pragma mark Methods
@@ -109,12 +148,31 @@
     expect(returnedError).to.beNil();
 }
 
+- (void)testPerformRequestWith401StatusCode {
+    id urlSessionMock   = [NSURLSessionNiceMock mockWithReturnedStatusCode:401];
+    
+    VLCHTTPClient *httpClient = [VLCHTTPClient clientWithHostname:@"1.2.3.4" port:8080 username:nil password:@"password"];
+    httpClient.urlSession     = urlSessionMock;
+    
+    __block NSData *returnedData   = nil;
+    __block NSError *returnedError = nil;
+    [httpClient performRequest:nil completionHandler:^(NSData *data, NSError *error) {
+        returnedData  = data;
+        returnedError = error;
+    }];
+    
+    [[[FBTestBlocker alloc] init] waitWithTimeout:0.1f];
+    
+    expect(returnedData).to.beNil();
+    expect(returnedError).notTo.beNil();
+}
+
 #pragma mark - Public
 
 #pragma mark Methods
 
 - (void)testConnectionWith200StatusCode {
-    id urlSessionMock   = [NSURLSessionNiceMock mockWithReturnedStatusCode:200];
+    id urlSessionMock = [NSURLSessionNiceMock mockWithReturnedStatusCode:200];
 
     id mockDelegate = [OCMockObject niceMockForProtocol:@protocol(VLCClientDelegate)];
     
