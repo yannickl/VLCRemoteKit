@@ -93,6 +93,9 @@ typedef NS_ENUM(NSInteger, VLCClientConnectionStatus) {
  * @abstract Set a block to be notified when a connection status change.
  * @param connectionBlock The block handler to call when a connection event
  * occured.
+ * @discussion When you set the change block, you'll be notified for future
+ * connection status change only. You will not receive the current connection
+ * status, or the older changes.
  * @since 1.0.0
  */
 - (void)setConnectionStatusChangeBlock:(void (^) (VLCClientConnectionStatus status))connectionBlock;
