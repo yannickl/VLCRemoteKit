@@ -25,13 +25,10 @@
  */
 
 #import "VLCRemotePlayer.h"
+#import "VLCRemoteObject_Private.h"
 #import "VLCCommand.h"
 
 @interface VLCRemotePlayer ()
-/** The internal status hash. */
-@property (assign) NSUInteger statusHash;
-/** The internal status of the player. */
-@property (strong) NSDictionary *status;
 /** The reference to a client to communicate with the remote VLC. */
 @property (nonatomic, weak) id<VLCClientProtocol> client;
 
@@ -42,83 +39,70 @@
 @dynamic playing;
 @dynamic fullscreenMode;
 
-#pragma mark - Creating and Initializing a Remote Client
-
-- (id)initWithClient:(id<VLCClientProtocol>)client {
-    if ((self = [super init])) {
-        _client = client;
-    }
-    return self;
-}
-
-+ (instancetype)remotePlayerWithClient:(id<VLCClientProtocol>)client {
-    return [[self alloc] initWithClient:client];
-}
-
 #pragma mark - Properties
 
 - (BOOL)isPaused {
-    if (_status) {
-        return [[_status objectForKey:@"state"] isEqualToString:@"paused"];
+    if (self.state) {
+        return [[self.state objectForKey:@"state"] isEqualToString:@"paused"];
     }
     return NO;
 }
 
 - (void)setPaused:(BOOL)paused {
-    if (_status) {
+    if (self.state) {
         if (paused != [self isPaused]) {
             VLCCommand *tooglePauseCommand = [VLCCommand tooglePauseCommand];
-            [_client performCommand:tooglePauseCommand completionHandler:nil];
+            [self.client performCommand:tooglePauseCommand completionHandler:nil];
         }
     }
 }
 
 - (BOOL)isPlaying {
-    if (_status) {
-        return [[_status objectForKey:@"state"] isEqualToString:@"playing"];
+    if (self.state) {
+        return [[self.state objectForKey:@"state"] isEqualToString:@"playing"];
     }
     return NO;
 }
 
 - (BOOL)isFullscreenMode {
-    if (_status) {
-        return [[_status objectForKey:@"fullscreen"] boolValue];
+    if (self.state) {
+        return [[self.state objectForKey:@"fullscreen"] boolValue];
     }
     return NO;
 }
 
 - (void)setFullscreenMode:(BOOL)fullscreenMode {
-    if (_status && fullscreenMode != [self isFullscreenMode]) {
+    if (self.state && fullscreenMode != [self isFullscreenMode]) {
         VLCCommand *toogleFullscreenCommand = [VLCCommand toogleFullscreenCommand];
-        [_client performCommand:toogleFullscreenCommand completionHandler:nil];
+        [self.client performCommand:toogleFullscreenCommand completionHandler:nil];
     }
 }
 
 #pragma mark - VLCCommand Protocol Methods
 
 - (void)playItemWithId:(NSInteger)itemIdentifier {
-    if (_client) {
+    if (self.client) {
         
     }
 }
 
 - (void)tooglePause {
-    if (_client) {
+    if (self.client) {
         VLCCommand *tooglePauseCommand = [VLCCommand tooglePauseCommand];
-        [_client performCommand:tooglePauseCommand completionHandler:nil];
+        [self.client performCommand:tooglePauseCommand completionHandler:nil];
     }
 }
 
 - (void)stop {
-    if (_client) {
+    if (self.client) {
         
     }
 }
 
 - (void)toogleFullscreen {
-    if (_client) {
+    if (self.client) {
         VLCCommand *toogleFullscreenCommand = [VLCCommand toogleFullscreenCommand];
-        [_client performCommand:toogleFullscreenCommand completionHandler:nil];
+        [self.client performCommand:toogleFullscreenCommand completionHandler:nil];
     }
 }
 

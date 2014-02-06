@@ -26,11 +26,22 @@
 
 #import "VLCRemoteObject.h"
 
+@interface VLCRemoteObject ()
+/** The internal hash of the current state. */
+@property (assign) NSUInteger stateHash;
+/** The internal object state. */
+@property (strong) NSDictionary *state;
+/** The client used to perform the communication. */
+@property (nonatomic, weak) id<VLCClientProtocol> client;
+
+#pragma mark - Updating the Internal State
+/** @name Updating the Internal State */
+
 /**
- * Facade to work with the remote VLC playlist.
- * When you update a property of the local object, the change is automatically
- * sent to the remote playlist object.
+ * @abstract Update the local state representation with the given data.
+ * @param data The data received by the client.
+ * @since 1.0.0
  */
-@interface VLCRemotePlaylist : VLCRemoteObject
+- (void)updateStateWithData:(NSData *)data;
 
 @end

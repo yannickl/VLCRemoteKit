@@ -24,18 +24,37 @@
  *
  */
 
-#import "VLCRemotePlayer.h"
+#import <Foundation/Foundation.h>
+#import "VLCClientProtocol.h"
 
-@interface VLCRemotePlayer (VLCClient)
+@interface VLCRemoteObject : NSObject
 
-#pragma mark - Updating the Player Status
-/** @name Updating the Player Status */
+#pragma mark - Creating and Initializing a Remote Object
+/** @name Creating and Initializing a Remote Object */
 
 /**
- * @abstract Update the local player representation with the given data.
- * @param data The data received by the client.
+ * @abstract Initializes and returns a remote object with a given client serving
+ * to communicate with the VLC.
+ * @param client The receiver client.
  * @since 1.0.0
  */
-- (void)updatePlayerWithData:(NSData *)data;
+- (id)initWithClient:(id<VLCClientProtocol>)client;
+
+/**
+ * @abstract Creates and returns a remote object with a given client serving to
+ * communicate with the VLC.
+ * @param client The receiver client.
+ * @since 1.0.0
+ */
++ (instancetype)remoteWithClient:(id<VLCClientProtocol>)client;
+
+#pragma mark - Getting the Client
+/** @name Getting the Client */
+
+/**
+ * @abstract The client used to perform the communication.
+ * @since 1.0.0
+ */
+@property (nonatomic, weak, readonly) id<VLCClientProtocol> client;
 
 @end

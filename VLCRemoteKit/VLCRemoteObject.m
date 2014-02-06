@@ -24,28 +24,38 @@
  *
  */
 
-#import "VLCRemotePlayer+VLCClient.h"
+#import "VLCRemoteObject.h"
+#import "VLCRemoteObject_Private.h"
+#import "VLCCommand.h"
 
-@interface VLCRemotePlayer ()
-@property (assign) NSUInteger   statusHash;
-@property (strong) NSDictionary *status;
+@implementation VLCRemoteObject
 
-@end
+#pragma mark - Creating and Initializing a Remote Client
 
-@implementation VLCRemotePlayer (VLCClient)
+- (id)initWithClient:(id<VLCClientProtocol>)client {
+    if ((self = [super init])) {
+        self.state = 0;
+        _client    = client;
+    }
+    return self;
+}
 
-#pragma mark Updating the Player Status
++ (instancetype)remoteWithClient:(id<VLCClientProtocol>)client {
+    return [[self alloc] initWithClient:client];
+}
 
-- (void)updatePlayerWithData:(NSData *)data {
+#pragma mark - Private Methods
+
+- (void)updateStateWithData:(NSData *)data {
     NSUInteger dataHash = [data hash];
-    
-    if (self.statusHash != dataHash) {
-        NSError *error       = nil;
-        NSDictionary *status = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+   
+    if (self.stateHash != dataHash) {
+        NSError *error      = nil;
+        NSDictionary *state = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
         
         if (!error) {
-            self.statusHash = dataHash;
-            self.status     = status;
+            self.stateHash = dataHash;
+            self.state     = state;
         }
     }
 }

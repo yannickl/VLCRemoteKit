@@ -27,7 +27,8 @@
 #import "VLCHTTPClient.h"
 #import "VLCCommand.h"
 #import "VLCRemotePlayer.h"
-#import "VLCRemotePlayer+VLCClient.h"
+#import "VLCRemotePlaylist.h"
+#import "VLCRemoteObject_Private.h"
 
 #import "NSError+VLC.h"
 
@@ -114,7 +115,7 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
         _urlComponents    = urlComponents;
         _headers          = headers;
         _urlSession       = urlSession;
-        _player           = [VLCRemotePlayer remotePlayerWithClient:self];
+        _player           = [VLCRemotePlayer remoteWithClient:self];
         
         [self addObserver:self forKeyPath:@"connectionStatus" options:NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew context:nil];
     }
@@ -190,7 +191,7 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
                 
                 // If all its ok, update the player
                 if (!error && data) {
-                    [_player updatePlayerWithData:data];
+                    [_player updateStateWithData:data];
                 }
                 
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, kVRKRefreshInterval * NSEC_PER_SEC), dispatch_get_main_queue(), ^{

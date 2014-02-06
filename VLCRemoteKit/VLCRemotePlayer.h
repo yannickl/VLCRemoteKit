@@ -24,7 +24,7 @@
  *
  */
 
-#import <Foundation/Foundation.h>
+#import "VLCRemoteObject.h"
 #import "VLCClientProtocol.h"
 
 /**
@@ -32,20 +32,14 @@
  * When you update a property of the local object, the change is automatically
  * sent to the remote player.
  */
-@interface VLCRemotePlayer : NSObject
-@property (nonatomic, weak, readonly) id<VLCClientProtocol> client;
+@interface VLCRemotePlayer : VLCRemoteObject
 @property (nonatomic, readonly) double apiVersion;
 @property (nonatomic, getter = isPaused) BOOL  paused;
 @property (nonatomic, getter = isPlaying) BOOL playing;
 @property (nonatomic, getter = isFullscreenMode) BOOL fullscreenMode;
 
-#pragma mark - Creating and Initializing a Remote Client
-/** @name Creating and Initializing a Remote Client */
-
-- (id)initWithClient:(id<VLCClientProtocol>)client;
-+ (instancetype)remotePlayerWithClient:(id<VLCClientProtocol>)client;
-
-#pragma mark -
+#pragma mark - Commands
+/** @name Commands */
 
 /**
  * @abstract Starts the playback for the item with a given identifier.

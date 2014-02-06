@@ -25,6 +25,7 @@
  */
 
 #import "VLCRemotePlaylist.h"
+#import "VLCRemoteObject_Private.h"
 
 @implementation VLCRemotePlaylist
 

@@ -17,14 +17,14 @@
 		F4276E05189437DF0031772F /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4276E03189437DF0031772F /* Main_iPad.storyboard */; };
 		F4276E08189437DF0031772F /* VRKViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4276E07189437DF0031772F /* VRKViewController.m */; };
 		F4276E0A189437DF0031772F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4276E09189437DF0031772F /* Images.xcassets */; };
-		F49FF9FD189EE92A004BE640 /* NSError+VLC.m in Sources */ = {isa = PBXBuildFile; fileRef = F49FF9F0189EE92A004BE640 /* NSError+VLC.m */; };
-		F49FF9FE189EE92A004BE640 /* VLCCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = F49FF9F3189EE92A004BE640 /* VLCCommand.m */; };
-		F49FF9FF189EE92A004BE640 /* VLCHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = F49FF9F5189EE92A004BE640 /* VLCHTTPClient.m */; };
-		F49FFA00189EE92A004BE640 /* VLCRemotePlayer+VLCClient.m in Sources */ = {isa = PBXBuildFile; fileRef = F49FF9F8189EE92A004BE640 /* VLCRemotePlayer+VLCClient.m */; };
-		F49FFA01189EE92A004BE640 /* VLCRemotePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F49FF9FA189EE92A004BE640 /* VLCRemotePlayer.m */; };
-		F49FFA02189EE92A004BE640 /* VLCRemotePlaylist.m in Sources */ = {isa = PBXBuildFile; fileRef = F49FF9FC189EE92A004BE640 /* VLCRemotePlaylist.m */; };
 		F49FFA3718A2D1E3004BE640 /* VRKConfigurationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F49FFA3618A2D1E3004BE640 /* VRKConfigurationViewController.m */; };
 		F49FFA3F18A3A2D5004BE640 /* Colours.m in Sources */ = {isa = PBXBuildFile; fileRef = F49FFA3E18A3A2D5004BE640 /* Colours.m */; };
+		F49FFA5418A3C4A4004BE640 /* NSError+VLC.m in Sources */ = {isa = PBXBuildFile; fileRef = F49FFA4618A3C4A4004BE640 /* NSError+VLC.m */; };
+		F49FFA5518A3C4A4004BE640 /* VLCCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = F49FFA4918A3C4A4004BE640 /* VLCCommand.m */; };
+		F49FFA5618A3C4A4004BE640 /* VLCHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = F49FFA4B18A3C4A4004BE640 /* VLCHTTPClient.m */; };
+		F49FFA5718A3C4A4004BE640 /* VLCRemoteObject.m in Sources */ = {isa = PBXBuildFile; fileRef = F49FFA4E18A3C4A4004BE640 /* VLCRemoteObject.m */; };
+		F49FFA5818A3C4A4004BE640 /* VLCRemotePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F49FFA5118A3C4A4004BE640 /* VLCRemotePlayer.m */; };
+		F49FFA5918A3C4A4004BE640 /* VLCRemotePlaylist.m in Sources */ = {isa = PBXBuildFile; fileRef = F49FFA5318A3C4A4004BE640 /* VLCRemotePlaylist.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,24 +44,25 @@
 		F4276E07189437DF0031772F /* VRKViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VRKViewController.m; sourceTree = "<group>"; };
 		F4276E09189437DF0031772F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		F4276E10189437DF0031772F /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		F49FF9EF189EE92A004BE640 /* NSError+VLC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+VLC.h"; sourceTree = "<group>"; };
-		F49FF9F0189EE92A004BE640 /* NSError+VLC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+VLC.m"; sourceTree = "<group>"; };
-		F49FF9F1189EE92A004BE640 /* VLCClientProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCClientProtocol.h; sourceTree = "<group>"; };
-		F49FF9F2189EE92A004BE640 /* VLCCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCCommand.h; sourceTree = "<group>"; };
-		F49FF9F3189EE92A004BE640 /* VLCCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCCommand.m; sourceTree = "<group>"; };
-		F49FF9F4189EE92A004BE640 /* VLCHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCHTTPClient.h; sourceTree = "<group>"; };
-		F49FF9F5189EE92A004BE640 /* VLCHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCHTTPClient.m; sourceTree = "<group>"; };
-		F49FF9F6189EE92A004BE640 /* VLCRemoteKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCRemoteKit.h; sourceTree = "<group>"; };
-		F49FF9F7189EE92A004BE640 /* VLCRemotePlayer+VLCClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "VLCRemotePlayer+VLCClient.h"; sourceTree = "<group>"; };
-		F49FF9F8189EE92A004BE640 /* VLCRemotePlayer+VLCClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "VLCRemotePlayer+VLCClient.m"; sourceTree = "<group>"; };
-		F49FF9F9189EE92A004BE640 /* VLCRemotePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCRemotePlayer.h; sourceTree = "<group>"; };
-		F49FF9FA189EE92A004BE640 /* VLCRemotePlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCRemotePlayer.m; sourceTree = "<group>"; };
-		F49FF9FB189EE92A004BE640 /* VLCRemotePlaylist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCRemotePlaylist.h; sourceTree = "<group>"; };
-		F49FF9FC189EE92A004BE640 /* VLCRemotePlaylist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCRemotePlaylist.m; sourceTree = "<group>"; };
 		F49FFA3518A2D1E3004BE640 /* VRKConfigurationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VRKConfigurationViewController.h; sourceTree = "<group>"; };
 		F49FFA3618A2D1E3004BE640 /* VRKConfigurationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VRKConfigurationViewController.m; sourceTree = "<group>"; };
 		F49FFA3D18A3A2D4004BE640 /* Colours.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Colours.h; sourceTree = "<group>"; };
 		F49FFA3E18A3A2D5004BE640 /* Colours.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Colours.m; sourceTree = "<group>"; };
+		F49FFA4518A3C4A4004BE640 /* NSError+VLC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+VLC.h"; sourceTree = "<group>"; };
+		F49FFA4618A3C4A4004BE640 /* NSError+VLC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+VLC.m"; sourceTree = "<group>"; };
+		F49FFA4718A3C4A4004BE640 /* VLCClientProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCClientProtocol.h; sourceTree = "<group>"; };
+		F49FFA4818A3C4A4004BE640 /* VLCCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCCommand.h; sourceTree = "<group>"; };
+		F49FFA4918A3C4A4004BE640 /* VLCCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCCommand.m; sourceTree = "<group>"; };
+		F49FFA4A18A3C4A4004BE640 /* VLCHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCHTTPClient.h; sourceTree = "<group>"; };
+		F49FFA4B18A3C4A4004BE640 /* VLCHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCHTTPClient.m; sourceTree = "<group>"; };
+		F49FFA4C18A3C4A4004BE640 /* VLCRemoteKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCRemoteKit.h; sourceTree = "<group>"; };
+		F49FFA4D18A3C4A4004BE640 /* VLCRemoteObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCRemoteObject.h; sourceTree = "<group>"; };
+		F49FFA4E18A3C4A4004BE640 /* VLCRemoteObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCRemoteObject.m; sourceTree = "<group>"; };
+		F49FFA4F18A3C4A4004BE640 /* VLCRemoteObject_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCRemoteObject_Private.h; sourceTree = "<group>"; };
+		F49FFA5018A3C4A4004BE640 /* VLCRemotePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCRemotePlayer.h; sourceTree = "<group>"; };
+		F49FFA5118A3C4A4004BE640 /* VLCRemotePlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCRemotePlayer.m; sourceTree = "<group>"; };
+		F49FFA5218A3C4A4004BE640 /* VLCRemotePlaylist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCRemotePlaylist.h; sourceTree = "<group>"; };
+		F49FFA5318A3C4A4004BE640 /* VLCRemotePlaylist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCRemotePlaylist.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,7 +82,7 @@
 		F4276DE2189437DF0031772F = {
 			isa = PBXGroup;
 			children = (
-				F49FF9EE189EE92A004BE640 /* VLCRemoteKit */,
+				F49FFA4418A3C4A4004BE640 /* VLCRemoteKit */,
 				F4276DF4189437DF0031772F /* VLCRemoteKitExample */,
 				F4276DED189437DF0031772F /* Frameworks */,
 				F4276DEC189437DF0031772F /* Products */,
@@ -136,28 +137,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		F49FF9EE189EE92A004BE640 /* VLCRemoteKit */ = {
-			isa = PBXGroup;
-			children = (
-				F49FF9EF189EE92A004BE640 /* NSError+VLC.h */,
-				F49FF9F0189EE92A004BE640 /* NSError+VLC.m */,
-				F49FF9F1189EE92A004BE640 /* VLCClientProtocol.h */,
-				F49FF9F2189EE92A004BE640 /* VLCCommand.h */,
-				F49FF9F3189EE92A004BE640 /* VLCCommand.m */,
-				F49FF9F4189EE92A004BE640 /* VLCHTTPClient.h */,
-				F49FF9F5189EE92A004BE640 /* VLCHTTPClient.m */,
-				F49FF9F6189EE92A004BE640 /* VLCRemoteKit.h */,
-				F49FF9F7189EE92A004BE640 /* VLCRemotePlayer+VLCClient.h */,
-				F49FF9F8189EE92A004BE640 /* VLCRemotePlayer+VLCClient.m */,
-				F49FF9F9189EE92A004BE640 /* VLCRemotePlayer.h */,
-				F49FF9FA189EE92A004BE640 /* VLCRemotePlayer.m */,
-				F49FF9FB189EE92A004BE640 /* VLCRemotePlaylist.h */,
-				F49FF9FC189EE92A004BE640 /* VLCRemotePlaylist.m */,
-			);
-			name = VLCRemoteKit;
-			path = ../VLCRemoteKit;
-			sourceTree = "<group>";
-		};
 		F49FFA3B18A3A2D4004BE640 /* Libs */ = {
 			isa = PBXGroup;
 			children = (
@@ -175,6 +154,29 @@
 			);
 			name = Colours;
 			path = colours;
+			sourceTree = "<group>";
+		};
+		F49FFA4418A3C4A4004BE640 /* VLCRemoteKit */ = {
+			isa = PBXGroup;
+			children = (
+				F49FFA4518A3C4A4004BE640 /* NSError+VLC.h */,
+				F49FFA4618A3C4A4004BE640 /* NSError+VLC.m */,
+				F49FFA4718A3C4A4004BE640 /* VLCClientProtocol.h */,
+				F49FFA4818A3C4A4004BE640 /* VLCCommand.h */,
+				F49FFA4918A3C4A4004BE640 /* VLCCommand.m */,
+				F49FFA4A18A3C4A4004BE640 /* VLCHTTPClient.h */,
+				F49FFA4B18A3C4A4004BE640 /* VLCHTTPClient.m */,
+				F49FFA4C18A3C4A4004BE640 /* VLCRemoteKit.h */,
+				F49FFA4D18A3C4A4004BE640 /* VLCRemoteObject.h */,
+				F49FFA4E18A3C4A4004BE640 /* VLCRemoteObject.m */,
+				F49FFA4F18A3C4A4004BE640 /* VLCRemoteObject_Private.h */,
+				F49FFA5018A3C4A4004BE640 /* VLCRemotePlayer.h */,
+				F49FFA5118A3C4A4004BE640 /* VLCRemotePlayer.m */,
+				F49FFA5218A3C4A4004BE640 /* VLCRemotePlaylist.h */,
+				F49FFA5318A3C4A4004BE640 /* VLCRemotePlaylist.m */,
+			);
+			name = VLCRemoteKit;
+			path = ../VLCRemoteKit;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -244,17 +246,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F49FF9FF189EE92A004BE640 /* VLCHTTPClient.m in Sources */,
+				F49FFA5718A3C4A4004BE640 /* VLCRemoteObject.m in Sources */,
 				F4276DFF189437DF0031772F /* VRKAppDelegate.m in Sources */,
-				F49FFA01189EE92A004BE640 /* VLCRemotePlayer.m in Sources */,
-				F49FFA00189EE92A004BE640 /* VLCRemotePlayer+VLCClient.m in Sources */,
 				F4276E08189437DF0031772F /* VRKViewController.m in Sources */,
 				F4276DFB189437DF0031772F /* main.m in Sources */,
+				F49FFA5818A3C4A4004BE640 /* VLCRemotePlayer.m in Sources */,
+				F49FFA5518A3C4A4004BE640 /* VLCCommand.m in Sources */,
 				F49FFA3718A2D1E3004BE640 /* VRKConfigurationViewController.m in Sources */,
 				F49FFA3F18A3A2D5004BE640 /* Colours.m in Sources */,
-				F49FF9FE189EE92A004BE640 /* VLCCommand.m in Sources */,
-				F49FFA02189EE92A004BE640 /* VLCRemotePlaylist.m in Sources */,
-				F49FF9FD189EE92A004BE640 /* NSError+VLC.m in Sources */,
+				F49FFA5618A3C4A4004BE640 /* VLCHTTPClient.m in Sources */,
+				F49FFA5418A3C4A4004BE640 /* NSError+VLC.m in Sources */,
+				F49FFA5918A3C4A4004BE640 /* VLCRemotePlaylist.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
