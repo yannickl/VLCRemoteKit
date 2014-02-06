@@ -183,6 +183,45 @@
     expect(returnedError.code).to.equal(1001);
 }
 
+- (void)testAuthorizationHeaderRequests {
+    VLCHTTPClient *httpClient = [VLCHTTPClient clientWithHostname:@"1.2.3.4" port:8080 username:nil password:@"password"];
+    
+    VLCCommand *command   = [VLCCommand statusCommand];
+    NSURLRequest *request = [httpClient urlRequestWithCommand:command];
+    
+    // Creates the session stub
+    id urlSessionMock = [OCMockObject niceMockForClass:[NSURLSession class]];
+    [[[urlSessionMock stub] andDo:^(NSInvocation *invocation) {
+        //the block we will invoke
+        void (^handler)(NSData *data, NSURLResponse *response, NSError *error) = nil;
+        
+        // 0 and 1 are reserved for invocation object
+        // 2 would be dataTaskWithRequest, 3 is completionHandler (block)
+        [invocation getArgument:&handler atIndex:3];
+        
+        NSString *password   = [request valueForHTTPHeaderField:@"Authorization"];
+        NSInteger statusCode = ([password isEqualToString:@"Basic OnBhc3N3b3Jk"]) ? 200 : 401;
+        id urlResponse       = [NSHTTPURLResponseNiceMock mockWithStatusCode:statusCode];
+        
+        // Invoke the completion handler block
+        handler([OCMockObject mockForClass:[NSData class]], urlResponse, nil);
+    }] dataTaskWithRequest:request completionHandler:[OCMArg any]];
+    
+    httpClient.urlSession     = urlSessionMock;
+    
+    __block NSData *returnedData   = nil;
+    __block NSError *returnedError = nil;
+    [httpClient performRequest:request completionHandler:^(NSData *data, NSError *error) {
+        returnedData  = data;
+        returnedError = error;
+    }];
+    
+    [[[FBTestBlocker alloc] init] waitWithTimeout:0.1f];
+    
+    expect(returnedData).notTo.beNil();
+    expect(returnedError).to.beNil();
+}
+
 #pragma mark - Public
 
 #pragma mark Methods

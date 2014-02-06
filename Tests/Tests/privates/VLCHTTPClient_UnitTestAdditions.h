@@ -31,6 +31,7 @@
 @property (assign) VLCClientConnectionStatus connectionStatus;
 @property (nonatomic, copy) void (^connectionStatusChangeBlock) (VLCClientConnectionStatus status);
 
+- (NSURLRequest *)urlRequestWithCommand:(VLCCommand *)command;
 - (void)performRequest:(NSURLRequest *)request completionHandler:(void (^) (NSData *data, NSError *error))completionHandler;
 
 @end
