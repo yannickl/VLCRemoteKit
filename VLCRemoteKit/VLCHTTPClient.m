@@ -1,7 +1,7 @@
 /*
  * VLCRemoteKit
  *
- * Copyright 2014 Yannick Loriot.
+ * Copyright 2014-present Yannick Loriot.
  * http://yannickloriot.com
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -62,6 +62,8 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
 
 #pragma mark Private Methods
 
+/** Creates and returns an HTTP request for a given commmand. */
+- (NSURLRequest *)urlRequestWithCommand:(VLCCommand *)command;
 /** Load and starts an HTTP GET task using a given, then calls a handler upon completion. */
 - (void)performRequest:(NSURLRequest *)request completionHandler:(void (^) (NSData *data, NSError *error))completionHandler;
 - (void)listeningWithRequest:(NSURLRequest *)urlRequest completionHandler:(void (^)(NSData *data, NSError *))completionHandler;
@@ -87,7 +89,7 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
     NSString *credentials   = [NSString stringWithFormat:@"%@:%@", (username ?: @""), (password ?: @"")];
     NSString *base64        = [[credentials dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0];
     NSString *authorization = [NSString stringWithFormat:@"Basic %@", base64];
-    
+
     return [self initWithURLComponents:baseURLComponent headers:@{ @"Authorization": authorization }];
 }
 

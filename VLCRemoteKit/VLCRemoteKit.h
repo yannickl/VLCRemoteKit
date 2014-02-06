@@ -1,7 +1,7 @@
 /*
  * VLCRemoteKit
  *
- * Copyright 2014 Yannick Loriot.
+ * Copyright 2014-present Yannick Loriot.
  * http://yannickloriot.com
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -29,9 +29,10 @@
 
 #import "VLCClientProtocol.h"
 
+#import "VLCCommand.h"
+#import "VLCHTTPClient.h"
 #import "VLCRemotePlayer.h"
 #import "VLCRemotePlaylist.h"
-#import "VLCHTTPClient.h"
 
 #import "NSError+VLC.h"
 
