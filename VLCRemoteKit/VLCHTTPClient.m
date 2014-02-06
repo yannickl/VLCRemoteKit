@@ -44,7 +44,7 @@ NSString * const kVRKURLPathStatus   = @"/requests/status.json";
 NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
 
 @interface VLCHTTPClient ()
-/** The headers used to build the requests. */
+/** The HTTP headers used to build the requests. */
 @property (nonatomic, strong) NSDictionary *headers;
 /** The URL components to help us to build the requests. */
 @property (nonatomic, strong) NSURLComponents *urlComponents;
@@ -83,17 +83,19 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
     baseURLComponent.scheme           = @"http";
     baseURLComponent.host             = hostname;
     baseURLComponent.port             = [NSNumber numberWithInteger:port];
-    baseURLComponent.user             = username ?: @"";
-    baseURLComponent.password         = password ?: @"";
     
-    return [self initWithURLComponents:baseURLComponent];
+    NSString *credentials   = [NSString stringWithFormat:@"%@:%@", (username ?: @""), (password ?: @"")];
+    NSString *base64        = [[credentials dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0];
+    NSString *authorization = [NSString stringWithFormat:@"Basic %@", base64];
+    
+    return [self initWithURLComponents:baseURLComponent headers:@{ @"Authorization": authorization }];
 }
 
 + (instancetype)clientWithHostname:(NSString *)hostname port:(NSInteger)port username:(NSString *)username password:(NSString *)password {
     return [[self alloc] initWithHostname:hostname port:port username:username password:password];
 }
 
-- (id)initWithURLComponents:(NSURLComponents *)urlComponents {
+- (id)initWithURLComponents:(NSURLComponents *)urlComponents headers:(NSDictionary *)headers {
     NSURLSessionConfiguration *configuration    = [NSURLSessionConfiguration defaultSessionConfiguration];
     configuration.HTTPShouldUsePipelining       = YES;
     configuration.HTTPMaximumConnectionsPerHost = 3;
@@ -101,13 +103,14 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
     configuration.timeoutIntervalForResource    = kVRKTimeoutIntervalForRequest;
     NSURLSession *urlSession                    = [NSURLSession sessionWithConfiguration:configuration];
     
-    return [self initWithURLComponents:urlComponents urlSession:urlSession];
+    return [self initWithURLComponents:urlComponents headers:headers urlSession:urlSession];
 }
 
-- (id)initWithURLComponents:(NSURLComponents *)urlComponents urlSession:(NSURLSession *)urlSession  {
+- (id)initWithURLComponents:(NSURLComponents *)urlComponents headers:(NSDictionary *)headers urlSession:(NSURLSession *)urlSession  {
     if ((self = [super init])) {
         _connectionStatus = VLCClientConnectionStatusDisconnected;
         _urlComponents    = urlComponents;
+        _headers          = headers;
         _urlSession       = urlSession;
         _player           = [VLCRemotePlayer remotePlayerWithClient:self];
         
@@ -157,6 +160,11 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[commandComponents URL]];
     request.timeoutInterval      = kVRKTimeoutIntervalForRequest;
+
+    for (NSString *key in _headers) {
+        [request setValue:[_headers objectForKey:key] forHTTPHeaderField:key];
+    }
+    
     return request;
 }
 
@@ -277,7 +285,6 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if ([keyPath isEqualToString:@"connectionStatus"]) {
         if (![[change objectForKey:@"new"] isEqual:[change objectForKey:@"old"]]) {
-            NSLog(@"_connectionStatusChangeBlock: %@", _connectionStatusChangeBlock);
             if (_connectionStatusChangeBlock) {
                 _connectionStatusChangeBlock(_connectionStatus);
             }
