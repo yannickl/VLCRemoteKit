@@ -24,6 +24,7 @@
 		F49FFA01189EE92A004BE640 /* VLCRemotePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F49FF9FA189EE92A004BE640 /* VLCRemotePlayer.m */; };
 		F49FFA02189EE92A004BE640 /* VLCRemotePlaylist.m in Sources */ = {isa = PBXBuildFile; fileRef = F49FF9FC189EE92A004BE640 /* VLCRemotePlaylist.m */; };
 		F49FFA3718A2D1E3004BE640 /* VRKConfigurationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F49FFA3618A2D1E3004BE640 /* VRKConfigurationViewController.m */; };
+		F49FFA3F18A3A2D5004BE640 /* Colours.m in Sources */ = {isa = PBXBuildFile; fileRef = F49FFA3E18A3A2D5004BE640 /* Colours.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -59,6 +60,8 @@
 		F49FF9FC189EE92A004BE640 /* VLCRemotePlaylist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCRemotePlaylist.m; sourceTree = "<group>"; };
 		F49FFA3518A2D1E3004BE640 /* VRKConfigurationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VRKConfigurationViewController.h; sourceTree = "<group>"; };
 		F49FFA3618A2D1E3004BE640 /* VRKConfigurationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VRKConfigurationViewController.m; sourceTree = "<group>"; };
+		F49FFA3D18A3A2D4004BE640 /* Colours.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Colours.h; sourceTree = "<group>"; };
+		F49FFA3E18A3A2D5004BE640 /* Colours.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Colours.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +110,7 @@
 		F4276DF4189437DF0031772F /* VLCRemoteKitExample */ = {
 			isa = PBXGroup;
 			children = (
+				F49FFA3B18A3A2D4004BE640 /* Libs */,
 				F4276DF5189437DF0031772F /* Supporting Files */,
 				F4276DFD189437DF0031772F /* VRKAppDelegate.h */,
 				F4276DFE189437DF0031772F /* VRKAppDelegate.m */,
@@ -152,6 +156,25 @@
 			);
 			name = VLCRemoteKit;
 			path = ../VLCRemoteKit;
+			sourceTree = "<group>";
+		};
+		F49FFA3B18A3A2D4004BE640 /* Libs */ = {
+			isa = PBXGroup;
+			children = (
+				F49FFA3C18A3A2D4004BE640 /* Colours */,
+			);
+			name = Libs;
+			path = libs;
+			sourceTree = "<group>";
+		};
+		F49FFA3C18A3A2D4004BE640 /* Colours */ = {
+			isa = PBXGroup;
+			children = (
+				F49FFA3D18A3A2D4004BE640 /* Colours.h */,
+				F49FFA3E18A3A2D5004BE640 /* Colours.m */,
+			);
+			name = Colours;
+			path = colours;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -228,6 +251,7 @@
 				F4276E08189437DF0031772F /* VRKViewController.m in Sources */,
 				F4276DFB189437DF0031772F /* main.m in Sources */,
 				F49FFA3718A2D1E3004BE640 /* VRKConfigurationViewController.m in Sources */,
+				F49FFA3F18A3A2D5004BE640 /* Colours.m in Sources */,
 				F49FF9FE189EE92A004BE640 /* VLCCommand.m in Sources */,
 				F49FFA02189EE92A004BE640 /* VLCRemotePlaylist.m in Sources */,
 				F49FF9FD189EE92A004BE640 /* NSError+VLC.m in Sources */,

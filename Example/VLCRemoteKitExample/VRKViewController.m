@@ -26,6 +26,7 @@
 
 #import "VRKViewController.h"
 #import "VLCRemoteKit.h"
+#import "Colours.h"
 
 static NSString * const CONFIGURATION_SEGUE_NAME = @"VRKConfigurationSegue";
 
@@ -103,19 +104,29 @@ static NSString * const CONFIGURATION_SEGUE_NAME = @"VRKConfigurationSegue";
 - (void)client:(id)client connectionStatusDidChanged:(VLCClientConnectionStatus)status {
     switch (status) {
         case VLCClientConnectionStatusDisconnected:
-            _statusLabel.text = @"Status: disconnected";
+            _statusLabel.text            = @"Status: disconnected";
+            _statusLabel.textColor       = [UIColor whiteColor];
+            _statusLabel.backgroundColor = [UIColor black25PercentColor];
             break;
         case VLCClientConnectionStatusConnecting:
-            _statusLabel.text = @"Status: connecting...";
+            _statusLabel.text            = @"Status: connecting...";
+            _statusLabel.textColor       = [UIColor black25PercentColor];
+            _statusLabel.backgroundColor = [UIColor buttermilkColor];
             break;
         case VLCClientConnectionStatusConnected:
-            _statusLabel.text = @"Status: connected";
+            _statusLabel.text            = @"Status: connected";
+            _statusLabel.textColor       = [UIColor black25PercentColor];
+            _statusLabel.backgroundColor = [UIColor moneyGreenColor];
             break;
         case VLCClientConnectionStatusUnauthorized:
-            _statusLabel.text = @"Status: unauthorized";
+            _statusLabel.text            = @"Status: unauthorized";
+            _statusLabel.textColor       = [UIColor black25PercentColor];
+            _statusLabel.backgroundColor = [UIColor tomatoColor];
             break;
         case VLCClientConnectionStatusUnreachable:
-            _statusLabel.text = @"Status: unreachable";
+            _statusLabel.text            = @"Status: unreachable";
+            _statusLabel.textColor       = [UIColor black25PercentColor];
+            _statusLabel.backgroundColor = [UIColor tomatoColor];
             break;
         default:
             break;
@@ -143,6 +154,7 @@ static NSString * const CONFIGURATION_SEGUE_NAME = @"VRKConfigurationSegue";
 
 - (void)configurationDidChanged {
     if (_popover) {
+        _editBarButtonItem.enabled = YES;
         [_popover dismissPopoverAnimated:YES];
     }
     else {
