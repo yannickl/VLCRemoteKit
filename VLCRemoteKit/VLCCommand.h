@@ -31,6 +31,8 @@ typedef NS_ENUM(NSInteger, VLCCommandName) {
     VLCCommandNameFullscreen,
     /** The command to tell whether the player needs to be paused. */
     VLCCommandNamePause,
+    /** The command to seek to a particular point in a media. */
+    VLCCommandNameSeek,
     /** The command to retrieve the player status informations. */
     VLCCommandNameStatus,
     /** The command to stop the player to play the current media. */
@@ -89,6 +91,14 @@ typedef NS_ENUM(NSInteger, VLCCommandName) {
  * @since 1.0.0
  */
 + (instancetype)statusCommand;
+
+/**
+ * @abstract Creates and returns a command to seek in the media to a given time
+ * position.
+ * @param timePosition A time position to seek.
+ * @since 1.0.0
+ */
++ (instancetype)seekCommandWithTimePosition:(NSTimeInterval)timePosition;
 
 /**
  * @abstract Creates and returns a command to put VLC in fullscreen or windowed

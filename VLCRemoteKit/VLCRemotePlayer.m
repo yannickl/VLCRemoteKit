@@ -35,11 +35,11 @@
 @end
 
 @implementation VLCRemotePlayer
+
+#pragma mark - Accessing Player Properties
 @dynamic paused;
 @dynamic playing;
 @dynamic fullscreen;
-
-#pragma mark - Accessing Player Properties
 
 - (BOOL)isPaused {
     if (self.state) {
@@ -79,6 +79,29 @@
 }
 
 #pragma mark - Accessing the Media Duration
+@dynamic duration;
+@dynamic currentTime;
+
+- (NSTimeInterval)duration {
+    if (self.state) {
+        return [[self.state objectForKey:@"length"] doubleValue];
+    }
+    return 0;
+}
+
+- (NSTimeInterval)currentTime {
+    if (self.state) {
+        return [[self.state objectForKey:@"time"] doubleValue];
+    }
+    return 0;
+}
+
+- (void)setCurrentTime:(NSTimeInterval)currentTime {
+    if (currentTime != [self currentTime]) {
+        VLCCommand *seekCommand = [VLCCommand seekCommandWithTimePosition:currentTime];
+        [self.client performCommand:seekCommand completionHandler:nil];
+    }
+}
 
 #pragma mark - VLCCommand Protocol Methods
 

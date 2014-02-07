@@ -131,6 +131,10 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
     NSURLComponents *urlComponents = [_urlComponents copy];
     
     switch (command.name) {
+        case VLCCommandNameSeek:
+            urlComponents.path  = kVRKURLPathStatus;
+            urlComponents.query = @"command=seek";
+            break;
         case VLCCommandNameStatus:
             urlComponents.path = kVRKURLPathStatus;
             break;

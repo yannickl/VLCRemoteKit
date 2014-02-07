@@ -51,6 +51,25 @@
 #pragma mark - Accessing the Media Duration
 /** @name Accessing the Media Duration */
 
+/**
+ * @abstract The duration of the media, measured in seconds.
+ * @since 1.0.0
+ */
+@property (nonatomic, readonly) NSTimeInterval duration;
+
+/**
+ * @abstract The playback point, in seconds, within the timeline of 
+ * the media associated with the player.
+ * @discussion If the media is playing, currentTime is the offset of
+ * the current playback position, measured in seconds from the start
+ * of the media.
+ * By setting this property you can seek to a specific point in a
+ * media (audio, video, etc.) file or implement media fast-forward 
+ * and rewind functions.
+ * @since 1.0.0
+ */
+@property NSTimeInterval currentTime;
+
 #pragma mark - Commands
 /** @name Commands */
 
