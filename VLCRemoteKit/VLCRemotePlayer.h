@@ -64,9 +64,8 @@ typedef NS_ENUM(NSInteger, VLCRemotePlayerPlaybackState) {
 @property (nonatomic, getter = isPlaying) BOOL playing;
 
 /**
- * @abstract A Boolean that indicates whether the movie player is in 
- * full-screen mode.
- * @discussion This property is relevant in the video mode only.
+ * @abstract A Boolean that indicates whether the player is in full-screen mode.
+ * @discussion This property is relevant in the video/movie mode only.
  * @since 1.0.0
  */
 @property (nonatomic, getter = isFullscreen) BOOL fullscreen;

@@ -27,7 +27,7 @@
 #import "VLCClientProtocol.h"
 
 /** The API version supported by the client. */
-extern double const kVRKHTTPClientAPIVersion;
+extern double const kVLCHTTPClientSupportedAPIVersion;
 
 /**
  * The HTTP client communicate with the remote VLC over the HTTP protocol.

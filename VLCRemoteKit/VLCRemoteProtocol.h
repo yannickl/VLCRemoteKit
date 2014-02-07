@@ -61,17 +61,19 @@
  * @abstract Initializes and returns a remote-object with a given client serving
  * to communicate with the VLC.
  * @param client The receiver client.
+ * @param initialState The initial internal state as data.
  * @since 1.0.0
  */
-- (id)initWithClient:(id<VLCClientProtocol>)client;
+- (id)initWithClient:(id<VLCClientProtocol>)client stateAsData:(NSData *)initialState;
 
 /**
  * @abstract Creates and returns a remote-object with a given client serving to
  * communicate with the VLC.
  * @param client The receiver client.
+ * @param initialState The initial internal state as data.
  * @since 1.0.0
  */
-+ (instancetype)remoteWithClient:(id<VLCClientProtocol>)client;
++ (instancetype)remoteWithClient:(id<VLCClientProtocol>)client stateAsData:(NSData *)initialState;
 
 #pragma mark - Getting the Client
 /** @name Getting the Client */

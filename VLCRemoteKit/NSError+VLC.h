@@ -37,7 +37,7 @@ extern NSString * const kVLCClientErrorDomain;
  */
 typedef NS_ENUM(NSInteger, VLCClientErrorCode) {
     /** The client is already connected. */
-    VLCClientErrorCodeAlreadyConnected = 1000,
+    VLCClientErrorCodeConnectionAlreadyOpened = 1000,
     /** The client is not connected. */
     VLCClientErrorCodeNotConnected = 1001,
 };

@@ -28,12 +28,6 @@
 #import "VLCRemoteObject_Private.h"
 #import "VLCCommand.h"
 
-@interface VLCRemotePlayer ()
-/** The reference to a client to communicate with the remote VLC. */
-@property (nonatomic, weak) id<VLCClientProtocol> client;
-
-@end
-
 @implementation VLCRemotePlayer
 
 #pragma mark - Accessing Player Properties
