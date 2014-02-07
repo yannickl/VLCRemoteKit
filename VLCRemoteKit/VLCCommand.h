@@ -116,16 +116,15 @@ typedef NS_ENUM(NSInteger, VLCCommandName) {
 + (instancetype)toogleFullscreenCommand;
 
 /**
- * @abstract Creates and returns a command to pause or play the remote media.
- * @param paused If YES, the media will be paused.
- * @since 1.0.0
- */
-+ (instancetype)pauseCommandWithFlag:(BOOL)paused;
-
-/**
  * @abstract Creates and returns a command to toogle the pause of the player.
  * @since 1.0.0
  */
 + (instancetype)tooglePauseCommand;
+
+/**
+ * @abstract Creates and returns a command to stop the current playback.
+ * @since 1.0.0
+ */
++ (instancetype)stopCommand;
 
 @end

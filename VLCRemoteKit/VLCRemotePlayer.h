@@ -76,24 +76,53 @@ typedef NS_ENUM(NSInteger, VLCRemotePlayerPlaybackState) {
 
 /**
  * @abstract The duration of the media, measured in seconds.
- * @discussion If the duration of the movie is not known, the value 
- * in this property is 0.0.
+ * @discussion If the duration of the movie is not known, the value in this 
+ * property is 0.0.
  * @since 1.0.0
  */
 @property (nonatomic, readonly) NSTimeInterval duration;
 
 /**
- * @abstract The playback point, in seconds, within the timeline of 
- * the media associated with the player.
- * @discussion If the media is playing, currentTime is the offset of
- * the current playback position, measured in seconds from the start
- * of the media.
- * By setting this property you can seek to a specific point in a
- * media (audio, video, etc.) file or implement media fast-forward 
- * and rewind functions.
+ * @abstract The playback point, in seconds, within the timeline of the media
+ * associated with the player.
+ * @discussion If the media is playing, currentTime is the offset of the 
+ * current playback position, measured in seconds from the start of the media.
+ *
+ * By setting this property you can seek to a specific point in a media (audio,
+ * video, etc.) file or implement media fast-forward and rewind functions.
  * @since 1.0.0
  */
 @property NSTimeInterval currentTime;
+
+#pragma mark - Configuring and Controlling Playback
+/** @name Configuring and Controlling Playback */
+
+/**
+ * @abstract Resumes playback.
+ * @since 1.0.0
+ */
+- (void)play;
+
+/**
+ * @abstract Pauses playback; the media remains ready to resume playback from
+ * where it left off.
+ * @since 1.0.0
+ */
+- (void)pause;
+
+/**
+ * @abstract Stops playback.
+ * @since 1.0.0
+ */
+- (void)stop;
+
+/**
+ * @abstract Toogles VLC in pause / playing mode.
+ * @discussion The media remains ready to resume playback from where it left
+ * off.
+ * @since 1.0.0
+ */
+- (void)tooglePause;
 
 #pragma mark - Commands
 /** @name Commands */
@@ -106,21 +135,9 @@ typedef NS_ENUM(NSInteger, VLCRemotePlayerPlaybackState) {
 - (void)playItemWithId:(NSInteger)itemIdentifier;
 
 /**
- * @abstract Stops the current playback.
- * @since 1.0.0
- */
-- (void)stop;
-
-/**
- * @abstract Toggles VLC in the fullscreen or the windowed mode.
+ * @abstract Toogles VLC in the fullscreen or the windowed mode.
  * @since 1.0.0
  */
 - (void)toogleFullscreen;
-
-/**
- * @abstract Toggles VLC in pause / playback.
- * @since 1.0.0
- */
-- (void)tooglePause;
 
 @end

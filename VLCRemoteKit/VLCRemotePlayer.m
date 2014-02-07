@@ -121,11 +121,24 @@
     }
 }
 
-#pragma mark - VLCCommand Protocol Methods
+#pragma mark - Configuring and Controlling Playback
 
-- (void)playItemWithId:(NSInteger)itemIdentifier {
+- (void)play {
+    if (self.client && [self playbackState] == VLCRemotePlayerPlaybackStatePaused) {
+        [self tooglePause];
+    }
+}
+
+- (void)pause {
+    if (self.client && [self playbackState] == VLCRemotePlayerPlaybackStatePlaying) {
+        [self tooglePause];
+    }
+}
+
+- (void)stop {
     if (self.client) {
-        
+        VLCCommand *stopCommand = [VLCCommand stopCommand];
+        [self.client performCommand:stopCommand completionHandler:nil];
     }
 }
 
@@ -136,7 +149,9 @@
     }
 }
 
-- (void)stop {
+#pragma mark - VLCCommand Protocol Methods
+
+- (void)playItemWithId:(NSInteger)itemIdentifier {
     if (self.client) {
         
     }

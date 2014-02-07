@@ -60,12 +60,12 @@
     return [[self alloc] initWithName:VLCCommandNameToogleFullscreen params:nil];
 }
 
-+ (instancetype)pauseCommandWithFlag:(BOOL)paused {
-    return [[self alloc] initWithName:VLCCommandNamePause params:@{ @"pause": @(paused) }];
-}
-
 + (instancetype)tooglePauseCommand {
     return [[self alloc] initWithName:VLCCommandNameTooglePause params:nil];
+}
+
++ (instancetype)stopCommand {
+    return [[self alloc] initWithName:VLCCommandNameStop params:nil];
 }
 
 @end
