@@ -136,6 +136,8 @@ static NSString * const CONFIGURATION_SEGUE_NAME = @"VRKConfigurationSegue";
     switch (status) {
         case VLCClientConnectionStatusDisconnected:
             _statusLabel.text            = @"Status: disconnected";
+            _filenameLabel.text          = @"disconnected";
+            _progressView.progress       = 0;
             _statusLabel.textColor       = [UIColor whiteColor];
             _statusLabel.backgroundColor = [UIColor black25PercentColor];
             break;
@@ -190,6 +192,10 @@ static NSString * const CONFIGURATION_SEGUE_NAME = @"VRKConfigurationSegue";
         
         NSString *pauseTitle = (player.playing) ? @"Pause Playback" : @"Resume Playback";
         [_toogePauseButton setTitle:pauseTitle forState:UIControlStateNormal];
+        
+        _filenameLabel.text = player.filename;
+        
+        _progressView.progress = player.currentTime / player.duration;
     }
 }
 

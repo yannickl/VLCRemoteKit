@@ -96,6 +96,15 @@ typedef NS_ENUM(NSInteger, VLCRemotePlayerPlaybackState) {
  */
 @property NSTimeInterval currentTime;
 
+#pragma mark - Accessing the Media Metadatas
+/** @name Accessing the Media Metadatas */
+
+/**
+ * @abstract The filename which is currently playing.
+ * @since 1.0.0
+ */
+@property (nonatomic, readonly) NSString *filename;
+
 #pragma mark - Configuring and Controlling Playback
 /** @name Configuring and Controlling Playback */
 

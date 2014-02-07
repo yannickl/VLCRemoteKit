@@ -93,6 +93,16 @@
     }
 }
 
+#pragma mark - Accessing the Media Metadatas
+@dynamic filename;
+
+- (NSString *)filename {
+    if ([self playbackState] != VLCRemotePlayerPlaybackStateStopped) {
+        return [[[[self.state objectForKey:@"information"] objectForKey:@"category"] objectForKey:@"meta"] objectForKey:@"filename"];
+    }
+    return nil;
+}
+
 #pragma mark - Configuring and Controlling Playback
 
 - (void)play {

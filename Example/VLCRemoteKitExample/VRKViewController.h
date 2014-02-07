@@ -31,10 +31,12 @@
 
 @interface VRKViewController : UIViewController <UIPopoverControllerDelegate, VRKConfigurationDelegate, VLCClientDelegate, VLCRemoteDelegate>
 @property (weak, nonatomic) IBOutlet UILabel         *statusLabel;
+@property (weak, nonatomic) IBOutlet UILabel         *filenameLabel;
 @property (weak, nonatomic) IBOutlet UIButton        *connectButton;
 @property (weak, nonatomic) IBOutlet UIButton        *stopButton;
 @property (weak, nonatomic) IBOutlet UIButton        *toogePauseButton;
 @property (weak, nonatomic) IBOutlet UIButton        *toogleFullscreenButton;
+@property (weak, nonatomic) IBOutlet UIProgressView  *progressView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
 
 #pragma mark - Public Methods
