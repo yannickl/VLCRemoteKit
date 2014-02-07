@@ -271,9 +271,11 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
 }
 
 - (void)performCommand:(VLCCommand *)command completionHandler:(void (^) (NSData *data, NSError *error))completionHandler {
-    NSURLRequest *commandURLRequest = [self urlRequestWithCommand:command];
-    
-    [self performRequest:commandURLRequest completionHandler:completionHandler];
+    if (_connectionStatus == VLCClientConnectionStatusConnected) {
+        NSURLRequest *commandURLRequest = [self urlRequestWithCommand:command];
+        
+        [self performRequest:commandURLRequest completionHandler:completionHandler];
+    }
 }
 
 #pragma mark - VLCCommand Protocol Methods

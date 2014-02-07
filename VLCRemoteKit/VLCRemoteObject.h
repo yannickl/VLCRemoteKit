@@ -25,42 +25,21 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "VLCClientProtocol.h"
+#import "VLCRemoteProtocol.h"
 
 /**
- * Base class to create remote objects.
- * A remote object is an abstraction to make the interaction with a remote
- * "object" (e.g. the player or the playlist) easier. It allows you to
- * manipulate VLC by working/modifying local objects like any other objects.
+ * Base class to create remote objects which implements the required methods.
  */
-@interface VLCRemoteObject : NSObject
+@interface VLCRemoteObject : NSObject <VLCRemoteProtocol>
 
-#pragma mark - Creating and Initializing a Remote Object
-/** @name Creating and Initializing a Remote Object */
+#pragma mark - Managing the Delegate
+/** @name Managing the Delegate */
 
 /**
- * @abstract Initializes and returns a remote object with a given client serving
- * to communicate with the VLC.
- * @param client The receiver client.
+ * @abstract The object that acts as the delegate of the receiving remote-
+ * object.
  * @since 1.0.0
  */
-- (id)initWithClient:(id<VLCClientProtocol>)client;
-
-/**
- * @abstract Creates and returns a remote object with a given client serving to
- * communicate with the VLC.
- * @param client The receiver client.
- * @since 1.0.0
- */
-+ (instancetype)remoteWithClient:(id<VLCClientProtocol>)client;
-
-#pragma mark - Getting the Client
-/** @name Getting the Client */
-
-/**
- * @abstract The client used to perform the communication.
- * @since 1.0.0
- */
-@property (nonatomic, weak, readonly) id<VLCClientProtocol> client;
+@property(nonatomic, weak) id<VLCRemoteDelegate> delegate;
 
 @end

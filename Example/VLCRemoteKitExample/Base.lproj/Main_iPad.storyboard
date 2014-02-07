@@ -128,6 +128,9 @@
                         <outlet property="connectButton" destination="FbT-1Y-rPd" id="xFy-C5-xe0"/>
                         <outlet property="editBarButtonItem" destination="RfF-Uh-p9V" id="4bY-NN-ohs"/>
                         <outlet property="statusLabel" destination="vLn-8h-088" id="VZb-u7-tyM"/>
+                        <outlet property="stopButton" destination="aLW-XS-hzh" id="IOX-nA-yyZ"/>
+                        <outlet property="toogePauseButton" destination="lNe-pz-LNs" id="GLa-Ck-qIY"/>
+                        <outlet property="toogleFullscreenButton" destination="8E1-C0-Bfy" id="ucy-k8-N3B"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

@@ -65,8 +65,10 @@ static NSString * const CONFIGURATION_SEGUE_NAME = @"VRKConfigurationSegue";
     NSString *password           = [userDefaults stringForKey:@"password"];
     
     if (_vlcClient.connectionStatus == VLCClientConnectionStatusDisconnected && ip && password) {
-        _vlcClient          = [VLCHTTPClient clientWithHostname:ip port:8080 username:nil password:password];
-        _vlcClient.delegate = self;
+        _vlcClient                   = [VLCHTTPClient clientWithHostname:ip port:8080 username:nil password:password];
+        _vlcClient.delegate          = self;
+        _vlcClient.player.delegate   = self;
+        _vlcClient.playlist.delegate = self;
         [_vlcClient connectWithCompletionHandler:NULL];
     }
     else if (!ip || !password) {
@@ -94,10 +96,34 @@ static NSString * const CONFIGURATION_SEGUE_NAME = @"VRKConfigurationSegue";
 }
 
 - (IBAction)toogleFullScreenAction:(id)sender {
-    _vlcClient.player.fullscreenMode = !_vlcClient.player.fullscreenMode;
+    _vlcClient.player.fullscreen = ![_vlcClient.player isFullscreen];
 }
 
 #pragma mark - Private Methods
+
+#pragma mark - UIPopoverController Delegate Methods
+
+- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController {
+    _editBarButtonItem.enabled = YES;
+}
+
+#pragma mark - VRKConfiguration Delegate Methods
+
+- (void)configurationDidChanged {
+    if (_popover) {
+        _editBarButtonItem.enabled = YES;
+        [_popover dismissPopoverAnimated:YES];
+    }
+    else {
+        [self dismissViewControllerAnimated:YES completion:NULL];
+    }
+    
+    [self disconnectAction:_connectButton];
+}
+
+- (void)needsDismissConfiguration {
+    [self dismissViewControllerAnimated:YES completion:NULL];
+}
 
 #pragma mark - VLCRemoteClient Delegate Methods
 
@@ -132,6 +158,10 @@ static NSString * const CONFIGURATION_SEGUE_NAME = @"VRKConfigurationSegue";
             break;
     }
     
+    _stopButton.enabled             = (status == VLCClientConnectionStatusConnected);
+    _toogePauseButton.enabled       = (status == VLCClientConnectionStatusConnected);
+    _toogleFullscreenButton.enabled = (status == VLCClientConnectionStatusConnected);
+    
     if (status == VLCClientConnectionStatusDisconnected) {
         [_connectButton setTitle:@"Connect" forState:UIControlStateNormal];
         [_connectButton removeTarget:self action:@selector(disconnectAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -144,28 +174,10 @@ static NSString * const CONFIGURATION_SEGUE_NAME = @"VRKConfigurationSegue";
     }
 }
 
-#pragma mark - UIPopoverController Delegate Methods
+#pragma mark - VLCRemote Delegate Methods
 
-- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController {
-    _editBarButtonItem.enabled = YES;
-}
+- (void)remoteObjectDidChanged:(id<VLCRemoteProtocol>)remote {
 
-#pragma mark - VRKConfiguration Delegate Methods
-
-- (void)configurationDidChanged {
-    if (_popover) {
-        _editBarButtonItem.enabled = YES;
-        [_popover dismissPopoverAnimated:YES];
-    }
-    else {
-        [self dismissViewControllerAnimated:YES completion:NULL];
-    }
-    
-    [self disconnectAction:_connectButton];
-}
-
-- (void)needsDismissConfiguration {
-    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 @end

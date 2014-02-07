@@ -33,7 +33,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x29-NM-T2o">
                                 <rect key="frame" x="20" y="469" width="280" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Toogle FullScreen">
+                                <state key="normal" title="Toogle Fullscreen">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -121,6 +121,9 @@
                     <connections>
                         <outlet property="connectButton" destination="AX1-zL-1X5" id="peU-fO-e8J"/>
                         <outlet property="statusLabel" destination="CSz-ge-ViK" id="Ol6-ox-3oj"/>
+                        <outlet property="stopButton" destination="rn5-4d-l6U" id="khc-Yz-YQa"/>
+                        <outlet property="toogePauseButton" destination="ENi-S6-BAz" id="UjF-4S-0vt"/>
+                        <outlet property="toogleFullscreenButton" destination="x29-NM-T2o" id="POg-F8-j5C"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>

@@ -33,10 +33,23 @@
  * sent to the remote player.
  */
 @interface VLCRemotePlayer : VLCRemoteObject
-@property (nonatomic, readonly) double apiVersion;
+
+#pragma mark - Accessing Player Properties
+/** @name Accessing Player Properties */
+
 @property (nonatomic, getter = isPaused) BOOL  paused;
 @property (nonatomic, getter = isPlaying) BOOL playing;
-@property (nonatomic, getter = isFullscreenMode) BOOL fullscreenMode;
+
+/**
+ * @abstract A Boolean that indicates whether the movie player is in 
+ * full-screen mode.
+ * @discussion This property is relevant in the video mode.
+ * @since 1.0.0
+ */
+@property (nonatomic, getter = isFullscreen) BOOL fullscreen;
+
+#pragma mark - Accessing the Media Duration
+/** @name Accessing the Media Duration */
 
 #pragma mark - Commands
 /** @name Commands */

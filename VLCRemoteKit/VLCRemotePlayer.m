@@ -37,9 +37,9 @@
 @implementation VLCRemotePlayer
 @dynamic paused;
 @dynamic playing;
-@dynamic fullscreenMode;
+@dynamic fullscreen;
 
-#pragma mark - Properties
+#pragma mark - Accessing Player Properties
 
 - (BOOL)isPaused {
     if (self.state) {
@@ -64,19 +64,21 @@
     return NO;
 }
 
-- (BOOL)isFullscreenMode {
+- (BOOL)isFullscreen {
     if (self.state) {
         return [[self.state objectForKey:@"fullscreen"] boolValue];
     }
     return NO;
 }
 
-- (void)setFullscreenMode:(BOOL)fullscreenMode {
-    if (self.state && fullscreenMode != [self isFullscreenMode]) {
+- (void)setFullscreen:(BOOL)fullscreen {
+    if (self.state && fullscreen != [self isFullscreen]) {
         VLCCommand *toogleFullscreenCommand = [VLCCommand toogleFullscreenCommand];
         [self.client performCommand:toogleFullscreenCommand completionHandler:nil];
     }
 }
+
+#pragma mark - Accessing the Media Duration
 
 #pragma mark - VLCCommand Protocol Methods
 

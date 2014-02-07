@@ -56,6 +56,10 @@
         if (!error) {
             self.stateHash = dataHash;
             self.state     = state;
+            
+            if (_delegate) {
+                [_delegate remoteObjectDidChanged:self];
+            }
         }
     }
 }
