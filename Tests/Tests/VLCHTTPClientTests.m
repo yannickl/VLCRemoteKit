@@ -310,6 +310,20 @@
     }];
     
     [[[FBTestBlocker alloc] init] waitWithTimeout:0.1f];
+    
+    // We can't perform a command if we are not connected
+    expect(returnedData).to.beNil();
+    expect(returnedError).toNot.beNil();
+    expect(returnedError.code).to.equal(VLCClientErrorCodeNotConnected);
+    
+    // So we make the connection
+    [httpClient connectWithCompletionHandler:NULL];
+    [httpClient performCommand:statusCommand completionHandler:^(NSData *data, NSError *error) {
+        returnedData  = data;
+        returnedError = error;
+    }];
+    
+    [[[FBTestBlocker alloc] init] waitWithTimeout:0.1f];
     expect(returnedData).toNot.beNil();
     expect(returnedError).to.beNil();
 }

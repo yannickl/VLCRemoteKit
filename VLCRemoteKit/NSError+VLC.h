@@ -32,12 +32,14 @@
 extern NSString * const kVLCClientErrorDomain;
 
 /**
- * The VLC client error codes. Codes below 1000 are reserved for HTML status
- * codes (e.g. 404, 500, etc.).
+ * Constants describing the VLC client error codes. Codes below 1000 are reserved
+ * for HTML status codes (e.g. 404, 500, etc.).
  */
 typedef NS_ENUM(NSInteger, VLCClientErrorCode) {
     /** The client is already connected. */
     VLCClientErrorCodeAlreadyConnected = 1000,
+    /** The client is not connected. */
+    VLCClientErrorCodeNotConnected = 1001,
 };
 
 /**

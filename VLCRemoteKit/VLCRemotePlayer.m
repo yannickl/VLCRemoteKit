@@ -37,9 +37,27 @@
 @implementation VLCRemotePlayer
 
 #pragma mark - Accessing Player Properties
+@dynamic playbackState;
 @dynamic paused;
 @dynamic playing;
 @dynamic fullscreen;
+
+- (VLCRemotePlayerPlaybackState)playbackState {
+    if (self.state) {
+        NSString *state = [self.state objectForKey:@"state"];
+        if ([state isEqualToString:@"stopped"]) {
+            return VLCRemotePlayerPlaybackStateStopped;
+        }
+        else if ([state isEqualToString:@"playing"]) {
+            return VLCRemotePlayerPlaybackStatePlaying;
+        }
+        else {
+            return VLCRemotePlayerPlaybackStatePaused;
+        }
+    }
+    
+    return VLCRemotePlayerPlaybackStateStopped;
+}
 
 - (BOOL)isPaused {
     if (self.state) {

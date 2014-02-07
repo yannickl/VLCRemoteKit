@@ -28,14 +28,37 @@
 #import "VLCClientProtocol.h"
 
 /**
- * Facade to work with the remote VLC player.
- * When you update a property of the local object, the change is automatically
- * sent to the remote player.
+ * Constants describing the state of the player's playback.
+ */
+typedef NS_ENUM(NSInteger, VLCRemotePlayerPlaybackState) {
+    /** The player is stopped. */
+    VLCRemotePlayerPlaybackStateStopped,
+    /** The player is playing. */
+    VLCRemotePlayerPlaybackStatePlaying,
+    /** The player is paused. */
+    VLCRemotePlayerPlaybackStatePaused
+};
+
+/**
+ * The VLCRemotePlayer is a facade which facilitate the communication with the
+ * VLC player.
+ *
+ * At a given moment, a VLCRemotePlayer represents the state of the remote VLC
+ * player. You can modify its properties locally to propagate the changes to
+ * the remote player.
  */
 @interface VLCRemotePlayer : VLCRemoteObject
 
 #pragma mark - Accessing Player Properties
 /** @name Accessing Player Properties */
+
+/**
+ * @abstract The playback state of the player.
+ * @discussion By default this property is equal to 
+ * VLCRemotePlayerPlaybackStateStopped.
+ * @since 1.0.0
+ */
+@property (nonatomic, readonly) VLCRemotePlayerPlaybackState playbackState;
 
 @property (nonatomic, getter = isPaused) BOOL  paused;
 @property (nonatomic, getter = isPlaying) BOOL playing;
@@ -43,7 +66,7 @@
 /**
  * @abstract A Boolean that indicates whether the movie player is in 
  * full-screen mode.
- * @discussion This property is relevant in the video mode.
+ * @discussion This property is relevant in the video mode only.
  * @since 1.0.0
  */
 @property (nonatomic, getter = isFullscreen) BOOL fullscreen;
@@ -53,6 +76,8 @@
 
 /**
  * @abstract The duration of the media, measured in seconds.
+ * @discussion If the duration of the movie is not known, the value 
+ * in this property is 0.0.
  * @since 1.0.0
  */
 @property (nonatomic, readonly) NSTimeInterval duration;

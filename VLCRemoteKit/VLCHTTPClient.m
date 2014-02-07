@@ -280,6 +280,14 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
         
         [self performRequest:commandURLRequest completionHandler:completionHandler];
     }
+    else if (completionHandler) {
+        NSDictionary *userInfo = @{
+                                   NSLocalizedDescriptionKey: NSLocalizedString(@"Command failed.", nil),
+                                   NSLocalizedFailureReasonErrorKey: NSLocalizedString(@"The client is not connected.", nil)
+                                   };
+        NSError *error = [NSError errorWithDomain:kVLCClientErrorDomain code:VLCClientErrorCodeNotConnected userInfo:userInfo];
+        completionHandler(nil, error);
+    }
 }
 
 #pragma mark - VLCCommand Protocol Methods
