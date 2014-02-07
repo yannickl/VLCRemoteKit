@@ -32,21 +32,18 @@
 
 #pragma mark - Creating and Initializing a Remote Client
 
-- (id)initWithClient:(id<VLCClientProtocol>)client stateAsData:(NSData *)initialState {
+- (id)initWithClient:(id<VLCClientProtocol>)client {
     if ((self = [super init])) {
-        NSAssert(client, @"The client must not be nil");
-        NSAssert(initialState, @"The remote needs to be initialized with an initial state");
+        NSAssert(client, @"A remote needs to be initialized with a client");
         
         self.state = 0;
         _client    = client;
-        
-        [self updateStateWithData:initialState];
     }
     return self;
 }
 
-+ (instancetype)remoteWithClient:(id<VLCClientProtocol>)client stateAsData:(NSData *)initialState {
-    return [[self alloc] initWithClient:client stateAsData:initialState];
++ (instancetype)remoteWithClient:(id<VLCClientProtocol>)client {
+    return [[self alloc] initWithClient:client];
 }
 
 #pragma mark - Private Methods
@@ -63,7 +60,9 @@
             self.state     = state;
             
             if (_delegate) {
-                [_delegate remoteObjectDidChanged:self];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [_delegate remoteObjectDidChanged:self];
+                });
             }
         }
     }

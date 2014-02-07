@@ -128,6 +128,8 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
         _urlComponents    = urlComponents;
         _headers          = headers;
         _urlSession       = urlSession;
+        _player           = [VLCRemotePlayer remoteWithClient:self];
+        _playlist         = [VLCRemotePlaylist remoteWithClient:self];
         
         [self addObserver:self forKeyPath:@"connectionStatus" options:NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew context:nil];
     }
@@ -208,20 +210,10 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
                 // If all its ok, update the player
                 if (!error && data) {
                     if (remote == VLCHTTPClientRemotePlayer) {
-                        if (_player) {
-                            [_player updateStateWithData:data];
-                        }
-                        else {
-                            _player = [VLCRemotePlayer remoteWithClient:self stateAsData:data];
-                        }
+                        [_player updateStateWithData:data];
                     }
                     else if (remote == VLCHTTPClientRemotePlaylist) {
-                        if (_playlist) {
-                            [_playlist updateStateWithData:data];
-                        }
-                        else {
-                            _playlist = [VLCRemotePlaylist remoteWithClient:self stateAsData:data];
-                        }
+                        [_playlist updateStateWithData:data];
                     }
                 }
                 

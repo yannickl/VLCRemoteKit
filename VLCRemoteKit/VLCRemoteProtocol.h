@@ -64,7 +64,7 @@
  * @param initialState The initial internal state as data.
  * @since 1.0.0
  */
-- (id)initWithClient:(id<VLCClientProtocol>)client stateAsData:(NSData *)initialState;
+- (id)initWithClient:(id<VLCClientProtocol>)client;
 
 /**
  * @abstract Creates and returns a remote-object with a given client serving to
@@ -73,7 +73,7 @@
  * @param initialState The initial internal state as data.
  * @since 1.0.0
  */
-+ (instancetype)remoteWithClient:(id<VLCClientProtocol>)client stateAsData:(NSData *)initialState;
++ (instancetype)remoteWithClient:(id<VLCClientProtocol>)client;
 
 #pragma mark - Getting the Client
 /** @name Getting the Client */

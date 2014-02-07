@@ -51,7 +51,7 @@
                                 <constraints>
                                     <constraint firstAttribute="width" constant="169" id="fHK-Mp-JgE"/>
                                 </constraints>
-                                <state key="normal" title="Toogle FullScreen">
+                                <state key="normal" title="FullScreen">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -61,7 +61,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lNe-pz-LNs">
                                 <rect key="frame" x="64" y="269" width="169" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Toogle Pause">
+                                <state key="normal" title="Pause">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>

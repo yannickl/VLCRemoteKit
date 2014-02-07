@@ -60,8 +60,11 @@ typedef NS_ENUM(NSInteger, VLCRemotePlayerPlaybackState) {
  */
 @property (nonatomic, readonly) VLCRemotePlayerPlaybackState playbackState;
 
-@property (nonatomic, getter = isPaused) BOOL  paused;
-@property (nonatomic, getter = isPlaying) BOOL playing;
+/**
+ * @abstract A Boolean value that indicates whether the player is playing.
+ * @since 1.0.0
+ */
+@property (nonatomic, getter = isPlaying, readonly) BOOL playing;
 
 /**
  * @abstract A Boolean that indicates whether the player is in full-screen mode.
@@ -132,11 +135,5 @@ typedef NS_ENUM(NSInteger, VLCRemotePlayerPlaybackState) {
  * @since 1.0.0
  */
 - (void)playItemWithId:(NSInteger)itemIdentifier;
-
-/**
- * @abstract Toogles VLC in the fullscreen or the windowed mode.
- * @since 1.0.0
- */
-- (void)toogleFullscreen;
 
 @end

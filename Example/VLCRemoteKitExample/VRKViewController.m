@@ -92,7 +92,12 @@ static NSString * const CONFIGURATION_SEGUE_NAME = @"VRKConfigurationSegue";
 }
 
 - (IBAction)tooglePauseAction:(id)sender {
-    _vlcClient.player.paused = !_vlcClient.player.paused;
+    if ([_vlcClient.player isPlaying]) {
+        [_vlcClient.player pause];
+    }
+    else {
+        [_vlcClient.player play];
+    }
 }
 
 - (IBAction)toogleFullScreenAction:(id)sender {
@@ -177,7 +182,15 @@ static NSString * const CONFIGURATION_SEGUE_NAME = @"VRKConfigurationSegue";
 #pragma mark - VLCRemote Delegate Methods
 
 - (void)remoteObjectDidChanged:(id<VLCRemoteProtocol>)remote {
-
+    if (_vlcClient.player == remote) {
+        VLCRemotePlayer *player = _vlcClient.player;
+        
+        NSString *fullscreenTitle = (player.fullscreen) ? @"Exit Full-Screen Mode" : @"Enter Full-Screen Mode";
+        [_toogleFullscreenButton setTitle:fullscreenTitle forState:UIControlStateNormal];
+        
+        NSString *pauseTitle = (player.playing) ? @"Pause Playback" : @"Resume Playback";
+        [_toogePauseButton setTitle:pauseTitle forState:UIControlStateNormal];
+    }
 }
 
 @end
