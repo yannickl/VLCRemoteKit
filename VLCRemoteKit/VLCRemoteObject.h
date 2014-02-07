@@ -27,6 +27,12 @@
 #import <Foundation/Foundation.h>
 #import "VLCClientProtocol.h"
 
+/**
+ * Base class to create remote objects.
+ * A remote object is an abstraction to make the interaction with a remote
+ * "object" (e.g. the player or the playlist) easier. It allows you to
+ * manipulate VLC by working/modifying local objects like any other objects.
+ */
 @interface VLCRemoteObject : NSObject
 
 #pragma mark - Creating and Initializing a Remote Object

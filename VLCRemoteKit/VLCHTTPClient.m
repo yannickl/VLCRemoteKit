@@ -60,6 +60,8 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
 @property (nonatomic, copy) void (^connectionStatusChangeBlock) (VLCClientConnectionStatus status);
 /** The remote player. */
 @property (nonatomic, strong) VLCRemotePlayer *player;
+/** The remote playlist. */
+@property (nonatomic, strong) VLCRemotePlaylist *playlist;
 
 #pragma mark Private Methods
 
@@ -116,6 +118,7 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
         _headers          = headers;
         _urlSession       = urlSession;
         _player           = [VLCRemotePlayer remoteWithClient:self];
+        _playlist         = [VLCRemotePlaylist remoteWithClient:self];
         
         [self addObserver:self forKeyPath:@"connectionStatus" options:NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew context:nil];
     }

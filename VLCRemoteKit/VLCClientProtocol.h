@@ -24,6 +24,10 @@
  *
  */
 
+@class VLCCommand;
+@class VLCRemotePlayer;
+@class VLCRemotePlaylist;
+
 /**
  * The client's connection status.
  */
@@ -40,13 +44,10 @@ typedef NS_ENUM(NSInteger, VLCClientConnectionStatus) {
     VLCClientConnectionStatusConnected
 };
 
-@class VLCRemotePlayer;
-
 /**
- * The delegate of an object which implements the VLCClientProtocol must adopt 
- * the VLCClientDelegate protocol. Optional methods of the protocol allow the
- * delegate to be notified about reachability changes or when a the VLC status
- * is updated.
+ * The delegate of an object which implements the VLCClientProtocol should 
+ * adopt the VLCClientDelegate protocol. Optional methods of the protocol allow
+ * the delegate to be notified about the connection status changes.
  */
 @protocol VLCClientDelegate <NSObject>
 
@@ -63,8 +64,6 @@ typedef NS_ENUM(NSInteger, VLCClientConnectionStatus) {
 - (void)client:(id)client connectionStatusDidChanged:(VLCClientConnectionStatus)status;
                           
 @end
-
-@class VLCCommand;
 
 /**
  * The VLCClientProtocol is an interface which unifies the clients for each
@@ -84,12 +83,6 @@ typedef NS_ENUM(NSInteger, VLCClientConnectionStatus) {
 - (VLCClientConnectionStatus)connectionStatus;
 
 /**
- * @abstract The object that acts as the delegate of the receiving client.
- * @since 1.0.0
- */
-@property (nonatomic, weak) id<VLCClientDelegate> delegate;
-
-/**
  * @abstract Set a block to be notified when a connection status change.
  * @param connectionBlock The block handler to call when a connection event
  * occured.
@@ -100,14 +93,26 @@ typedef NS_ENUM(NSInteger, VLCClientConnectionStatus) {
  */
 - (void)setConnectionStatusChangeBlock:(void (^) (VLCClientConnectionStatus status))connectionBlock;
 
-#pragma mark - 
-/** @name */
+/**
+ * @abstract The object that acts as the delegate of the receiving client.
+ * @since 1.0.0
+ */
+@property (nonatomic, weak) id<VLCClientDelegate> delegate;
+
+#pragma mark - Getting the Remote Objects
+/** @name Getting the Remote Objects */
 
 /**
  * @abstract Returns the remote player object associated to the client.
  * @since 1.0.0
  */
 - (VLCRemotePlayer *)player;
+
+/**
+ * @abstract Returns the remote playlist object associated to the client.
+ * @since 1.0.0
+ */
+- (VLCRemotePlaylist *)playlist;
 
 
 #pragma mark - Communicating With VLC
@@ -117,6 +122,10 @@ typedef NS_ENUM(NSInteger, VLCClientConnectionStatus) {
  * @abstract Connect the client to the remote VLC.
  * @param completionHandler The completion handler to call when the connection
  * did completed. This handler is executed on a delegate queue.
+ * @discussion Once the method called, the client will try to connect to the
+ * endpoint until the `disconnectWithCompletionHandler:` method will be called.
+ * It means that if the remote endpoint is unreachable for example, the client
+ * will not be disconnected automatically.
  * @since 1.0.0
  */
 - (void)connectWithCompletionHandler:(void (^)(NSData *data, NSError *error))completionHandler;

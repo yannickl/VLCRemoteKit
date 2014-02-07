@@ -9,6 +9,7 @@
 	<key>--ignore</key>
 	<array>
 		<string>.m</string>
+		<string>VLCRemoteObject_Private.h</string>
 	</array>
 	<key>--docset-platform-family</key>
 	<string>iphoneos</string>
