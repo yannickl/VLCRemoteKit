@@ -36,7 +36,9 @@
 @property (weak, nonatomic) IBOutlet UIButton        *stopButton;
 @property (weak, nonatomic) IBOutlet UIButton        *toogePauseButton;
 @property (weak, nonatomic) IBOutlet UIButton        *toogleFullscreenButton;
-@property (weak, nonatomic) IBOutlet UIProgressView  *progressView;
+@property (weak, nonatomic) IBOutlet UILabel         *currentTimeLabel;
+@property (weak, nonatomic) IBOutlet UILabel         *durationLabel;
+@property (weak, nonatomic) IBOutlet UISlider        *progressSlider;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
 
 #pragma mark - Public Methods
@@ -46,5 +48,6 @@
 - (IBAction)stopAction:(id)sender;
 - (IBAction)tooglePauseAction:(id)sender;
 - (IBAction)toogleFullScreenAction:(id)sender;
+- (IBAction)seekAction:(id)sender;
 
 @end

@@ -49,7 +49,7 @@
 }
 
 + (instancetype)seekCommandWithTimePosition:(NSTimeInterval)timePosition {
-    return [[self alloc] initWithName:VLCCommandNameSeek params:@{ @"val": @(timePosition) }];
+    return [[self alloc] initWithName:VLCCommandNameSeek params:@{ @"val": @((NSInteger)timePosition) }];
 }
 
 + (instancetype)fullscreenCommandWithFlag:(BOOL)needsFullscreen {

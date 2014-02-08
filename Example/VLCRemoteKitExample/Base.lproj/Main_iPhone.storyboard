@@ -111,56 +111,85 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.29803921570000003" green="0.41568627450000001" blue="0.54901960780000003" alpha="0.5" colorSpace="custom" customColorSpace="adobeRGB1998"/>
                             </view>
-                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Zf1-nR-kjN">
-                                <rect key="frame" x="0.0" y="176" width="320" height="2"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FXh-5C-a2U">
+                                <rect key="frame" x="0.0" y="221" width="93" height="19"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="93" id="n92-Em-mQE"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ekJ-38-4vf">
+                                <rect key="frame" x="227" y="221" width="93" height="19"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="93" id="3bH-tA-S9V"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="zQm-gO-DRz">
+                                <rect key="frame" x="2" y="183" width="318" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" red="0.80392156859999997" green="0.0" blue="0.047058823530000002" alpha="1" colorSpace="calibratedRGB"/>
-                            </progressView>
+                                <connections>
+                                    <action selector="seekAction:" destination="vXZ-lx-hvc" eventType="valueChanged" id="Xos-x1-CP0"/>
+                                </connections>
+                            </slider>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="jvV-0c-c4T" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" constant="127" id="0C5-Ve-DOC"/>
                             <constraint firstItem="AX1-zL-1X5" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="20" symbolic="YES" id="1Ft-Xv-sqm"/>
                             <constraint firstItem="ENi-S6-BAz" firstAttribute="top" secondItem="rn5-4d-l6U" secondAttribute="bottom" constant="8" symbolic="YES" id="1yw-3G-8S5"/>
-                            <constraint firstItem="Zf1-nR-kjN" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="3du-ur-5Ci"/>
                             <constraint firstItem="fKS-Zg-e3e" firstAttribute="top" secondItem="AX1-zL-1X5" secondAttribute="bottom" constant="10" id="4GX-1b-NP4"/>
                             <constraint firstItem="fKS-Zg-e3e" firstAttribute="leading" secondItem="rMh-Rr-Ju9" secondAttribute="leading" id="5Ph-ag-eDC"/>
+                            <constraint firstItem="zQm-gO-DRz" firstAttribute="top" secondItem="rMh-Rr-Ju9" secondAttribute="bottom" constant="8" symbolic="YES" id="7hV-WL-sDB"/>
                             <constraint firstAttribute="trailing" secondItem="AX1-zL-1X5" secondAttribute="trailing" constant="20" symbolic="YES" id="8I0-Sq-CNF"/>
+                            <constraint firstItem="rMh-Rr-Ju9" firstAttribute="trailing" secondItem="zQm-gO-DRz" secondAttribute="trailing" constant="2" id="9EB-w4-6Ru"/>
                             <constraint firstItem="rn5-4d-l6U" firstAttribute="leading" secondItem="A3E-NJ-f7q" secondAttribute="leading" id="9sV-Ft-auT"/>
                             <constraint firstItem="x29-NM-T2o" firstAttribute="trailing" secondItem="ENi-S6-BAz" secondAttribute="trailing" id="CZt-tr-131"/>
+                            <constraint firstItem="ekJ-38-4vf" firstAttribute="trailing" secondItem="zQm-gO-DRz" secondAttribute="trailing" constant="2" id="EqM-TY-jL9"/>
                             <constraint firstItem="jvV-0c-c4T" firstAttribute="trailing" secondItem="A3E-NJ-f7q" secondAttribute="trailing" id="FKp-xx-zV8"/>
                             <constraint firstItem="rMh-Rr-Ju9" firstAttribute="top" secondItem="jvV-0c-c4T" secondAttribute="bottom" constant="6" id="I55-pL-DJp"/>
                             <constraint firstItem="THs-4M-9ME" firstAttribute="top" secondItem="IRQ-hn-Upg" secondAttribute="bottom" id="JMX-cL-9Yn"/>
                             <constraint firstItem="rn5-4d-l6U" firstAttribute="top" secondItem="A3E-NJ-f7q" secondAttribute="bottom" constant="8" symbolic="YES" id="Jby-M0-mtv"/>
                             <constraint firstItem="A3E-NJ-f7q" firstAttribute="leading" secondItem="jvV-0c-c4T" secondAttribute="leading" id="KVJ-9W-AUV"/>
                             <constraint firstItem="jvV-0c-c4T" firstAttribute="top" secondItem="fKS-Zg-e3e" secondAttribute="bottom" constant="8" symbolic="YES" id="KgG-7N-qus"/>
+                            <constraint firstItem="CSz-ge-ViK" firstAttribute="leading" secondItem="FXh-5C-a2U" secondAttribute="leading" id="Nle-9O-wOv"/>
                             <constraint firstItem="fKS-Zg-e3e" firstAttribute="centerX" secondItem="AX1-zL-1X5" secondAttribute="centerX" id="R4K-2Y-NQc"/>
                             <constraint firstItem="CSz-ge-ViK" firstAttribute="top" secondItem="x29-NM-T2o" secondAttribute="bottom" constant="23" id="TDB-dY-fFb"/>
+                            <constraint firstItem="FXh-5C-a2U" firstAttribute="leading" secondItem="zQm-gO-DRz" secondAttribute="leading" constant="-4" id="U0W-dZ-TZA"/>
                             <constraint firstItem="THs-4M-9ME" firstAttribute="leading" secondItem="fKS-Zg-e3e" secondAttribute="leading" id="XKV-6x-cFX"/>
                             <constraint firstItem="ENi-S6-BAz" firstAttribute="trailing" secondItem="rn5-4d-l6U" secondAttribute="trailing" id="XXI-dD-qG1"/>
+                            <constraint firstItem="CSz-ge-ViK" firstAttribute="trailing" secondItem="ekJ-38-4vf" secondAttribute="trailing" id="dP3-Ru-kgV"/>
                             <constraint firstItem="ENi-S6-BAz" firstAttribute="leading" secondItem="rn5-4d-l6U" secondAttribute="leading" id="dPi-EI-Odi"/>
                             <constraint firstItem="jvV-0c-c4T" firstAttribute="trailing" secondItem="AX1-zL-1X5" secondAttribute="trailing" id="eWp-xI-mIm"/>
-                            <constraint firstItem="Zf1-nR-kjN" firstAttribute="top" secondItem="jvV-0c-c4T" secondAttribute="bottom" constant="8" symbolic="YES" id="gf4-bo-0of"/>
-                            <constraint firstItem="rMh-Rr-Ju9" firstAttribute="leading" secondItem="Zf1-nR-kjN" secondAttribute="leading" id="gro-G3-ox3"/>
-                            <constraint firstItem="CSz-ge-ViK" firstAttribute="trailing" secondItem="Zf1-nR-kjN" secondAttribute="trailing" id="h77-Yy-8tV"/>
+                            <constraint firstItem="FXh-5C-a2U" firstAttribute="top" secondItem="rMh-Rr-Ju9" secondAttribute="bottom" constant="46" id="huG-u3-uGT"/>
                             <constraint firstItem="fKS-Zg-e3e" firstAttribute="trailing" secondItem="rMh-Rr-Ju9" secondAttribute="trailing" id="i1F-mK-mKY"/>
                             <constraint firstItem="AX1-zL-1X5" firstAttribute="top" secondItem="THs-4M-9ME" secondAttribute="bottom" constant="14" id="iTe-Qd-LFI"/>
-                            <constraint firstItem="Zf1-nR-kjN" firstAttribute="top" secondItem="rMh-Rr-Ju9" secondAttribute="bottom" constant="1" id="jbx-0e-ZCb"/>
                             <constraint firstItem="AX1-zL-1X5" firstAttribute="leading" secondItem="jvV-0c-c4T" secondAttribute="leading" id="lwt-D3-P2L"/>
-                            <constraint firstItem="Zf1-nR-kjN" firstAttribute="trailing" secondItem="rMh-Rr-Ju9" secondAttribute="trailing" id="nFv-67-eK8"/>
+                            <constraint firstItem="ekJ-38-4vf" firstAttribute="baseline" secondItem="FXh-5C-a2U" secondAttribute="baseline" id="qVN-WV-uWX"/>
                             <constraint firstItem="x29-NM-T2o" firstAttribute="leading" secondItem="ENi-S6-BAz" secondAttribute="leading" id="ruz-ak-ukA"/>
                             <constraint firstItem="A3E-NJ-f7q" firstAttribute="trailing" secondItem="rn5-4d-l6U" secondAttribute="trailing" id="s8K-jS-NvK"/>
+                            <constraint firstItem="zQm-gO-DRz" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" constant="183" id="sbn-Aa-Dbs"/>
                             <constraint firstAttribute="bottom" secondItem="CSz-ge-ViK" secondAttribute="bottom" id="tDC-8N-s6x"/>
+                            <constraint firstItem="rMh-Rr-Ju9" firstAttribute="leading" secondItem="zQm-gO-DRz" secondAttribute="leading" constant="-4" id="vtF-e5-g3j"/>
                             <constraint firstItem="x29-NM-T2o" firstAttribute="top" secondItem="ENi-S6-BAz" secondAttribute="bottom" constant="8" symbolic="YES" id="yDs-HH-dKa"/>
                             <constraint firstItem="fKS-Zg-e3e" firstAttribute="trailing" secondItem="THs-4M-9ME" secondAttribute="trailing" id="yFG-8p-Prl"/>
-                            <constraint firstItem="CSz-ge-ViK" firstAttribute="leading" secondItem="Zf1-nR-kjN" secondAttribute="leading" id="z2j-wu-ueD"/>
+                            <constraint firstItem="zQm-gO-DRz" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="4" id="zBZ-Vo-mK6"/>
                         </constraints>
                     </view>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="connectButton" destination="AX1-zL-1X5" id="peU-fO-e8J"/>
+                        <outlet property="currentTimeLabel" destination="FXh-5C-a2U" id="o8i-e1-xK4"/>
+                        <outlet property="durationLabel" destination="ekJ-38-4vf" id="PxP-pE-8iT"/>
                         <outlet property="filenameLabel" destination="jvV-0c-c4T" id="rjk-Lf-KZX"/>
-                        <outlet property="progressView" destination="Zf1-nR-kjN" id="kKN-RS-7mf"/>
+                        <outlet property="progressSlider" destination="zQm-gO-DRz" id="oPq-Iq-NY8"/>
                         <outlet property="statusLabel" destination="CSz-ge-ViK" id="Ol6-ox-3oj"/>
                         <outlet property="stopButton" destination="rn5-4d-l6U" id="khc-Yz-YQa"/>
                         <outlet property="toogePauseButton" destination="ENi-S6-BAz" id="UjF-4S-0vt"/>

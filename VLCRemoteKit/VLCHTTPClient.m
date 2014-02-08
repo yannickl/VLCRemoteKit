@@ -167,7 +167,7 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
     
     NSMutableString *additionalQuery = [NSMutableString string];
     for (NSString *key in command.params) {
-        [additionalQuery appendString:[NSString stringWithFormat:@"&%@", command.params[key]]];
+        [additionalQuery appendString:[NSString stringWithFormat:@"&%@=%@", key, command.params[key]]];
     }
     if (additionalQuery.length > 0) {
         urlComponents.query = [NSString stringWithFormat:@"%@%@", urlComponents.query, additionalQuery];
@@ -293,7 +293,7 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
 - (void)performCommand:(VLCCommand *)command completionHandler:(void (^) (NSData *data, NSError *error))completionHandler {
     if (_connectionStatus == VLCClientConnectionStatusConnected) {
         NSURLRequest *commandURLRequest = [self urlRequestWithCommand:command];
-        
+
         [self performRequest:commandURLRequest completionHandler:completionHandler];
     }
     else if (completionHandler) {

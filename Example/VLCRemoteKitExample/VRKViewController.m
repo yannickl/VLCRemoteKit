@@ -104,6 +104,11 @@ static NSString * const CONFIGURATION_SEGUE_NAME = @"VRKConfigurationSegue";
     _vlcClient.player.fullscreen = ![_vlcClient.player isFullscreen];
 }
 
+- (IBAction)seekAction:(id)sender {
+    NSTimeInterval seekTime       = _vlcClient.player.duration * _progressSlider.value;
+    _vlcClient.player.currentTime = seekTime;
+}
+
 #pragma mark - Private Methods
 
 #pragma mark - UIPopoverController Delegate Methods
@@ -137,7 +142,7 @@ static NSString * const CONFIGURATION_SEGUE_NAME = @"VRKConfigurationSegue";
         case VLCClientConnectionStatusDisconnected:
             _statusLabel.text            = @"Status: disconnected";
             _filenameLabel.text          = @"disconnected";
-            _progressView.progress       = 0;
+            _progressSlider.value        = 0;
             _statusLabel.textColor       = [UIColor whiteColor];
             _statusLabel.backgroundColor = [UIColor black25PercentColor];
             break;
@@ -170,6 +175,7 @@ static NSString * const CONFIGURATION_SEGUE_NAME = @"VRKConfigurationSegue";
     _stopButton.enabled             = (status == VLCClientConnectionStatusConnected);
     _toogePauseButton.enabled       = (status == VLCClientConnectionStatusConnected);
     _toogleFullscreenButton.enabled = (status == VLCClientConnectionStatusConnected);
+    _progressSlider.enabled         = (status == VLCClientConnectionStatusConnected);
     
     if (status == VLCClientConnectionStatusDisconnected) {
         [_connectButton setTitle:@"Connect" forState:UIControlStateNormal];
@@ -197,7 +203,20 @@ static NSString * const CONFIGURATION_SEGUE_NAME = @"VRKConfigurationSegue";
         
         _filenameLabel.text = player.filename ?: @"No Media Currently Playing";
         
-        _progressView.progress = player.currentTime / player.duration;
+        NSInteger currentTime = (NSInteger)player.currentTime;
+        NSInteger ctSeconds   = currentTime % 60;
+        NSInteger ctMinutes   = (currentTime / 60) % 60;
+        NSInteger ctHours     = (currentTime / 3600);
+        
+        NSInteger duration = player.duration;
+        NSInteger dSeconds = duration % 60;
+        NSInteger dMinutes = (duration / 60) % 60;
+        NSInteger dHours   = (duration / 3600);
+        
+        _currentTimeLabel.text  = [NSString stringWithFormat:@"%02ld:%02ld:%02ld", (long)ctHours, (long)ctMinutes, (long)ctSeconds];
+        _durationLabel.text     = [NSString stringWithFormat:@"%02ld:%02ld:%02ld", (long)dHours, (long)dMinutes, (long)dSeconds];
+        _progressSlider.value   = currentTime / (duration * 1.0f);
+        _progressSlider.enabled = !(player.playbackState == VLCRemotePlayerPlaybackStateStopped);
     }
 }
 
