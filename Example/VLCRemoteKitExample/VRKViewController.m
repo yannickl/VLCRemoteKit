@@ -153,11 +153,13 @@ static NSString * const CONFIGURATION_SEGUE_NAME = @"VRKConfigurationSegue";
             break;
         case VLCClientConnectionStatusUnauthorized:
             _statusLabel.text            = @"Status: unauthorized";
+            _filenameLabel.text          = @"unauthorized";
             _statusLabel.textColor       = [UIColor black25PercentColor];
             _statusLabel.backgroundColor = [UIColor tomatoColor];
             break;
         case VLCClientConnectionStatusUnreachable:
             _statusLabel.text            = @"Status: unreachable";
+            _filenameLabel.text          = @"unreachable";
             _statusLabel.textColor       = [UIColor black25PercentColor];
             _statusLabel.backgroundColor = [UIColor tomatoColor];
             break;
@@ -193,7 +195,7 @@ static NSString * const CONFIGURATION_SEGUE_NAME = @"VRKConfigurationSegue";
         NSString *pauseTitle = (player.playing) ? @"Pause Playback" : @"Resume Playback";
         [_toogePauseButton setTitle:pauseTitle forState:UIControlStateNormal];
         
-        _filenameLabel.text = player.filename;
+        _filenameLabel.text = player.filename ?: @"No Media Currently Playing";
         
         _progressView.progress = player.currentTime / player.duration;
     }
