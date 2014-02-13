@@ -52,10 +52,6 @@
     return [[self alloc] initWithName:VLCCommandNameSeek params:@{ @"val": @((NSInteger)timePosition) }];
 }
 
-+ (instancetype)fullscreenCommandWithFlag:(BOOL)needsFullscreen {
-    return [[self alloc] initWithName:VLCCommandNameFullscreen params:@{ @"fullscreen": @(needsFullscreen) }];
-}
-
 + (instancetype)toogleFullscreenCommand {
     return [[self alloc] initWithName:VLCCommandNameToogleFullscreen params:nil];
 }
@@ -66,6 +62,10 @@
 
 + (instancetype)stopCommand {
     return [[self alloc] initWithName:VLCCommandNameStop params:nil];
+}
+
++ (instancetype)volumeCommandWithValue:(NSInteger)volume {
+    return [[self alloc] initWithName:VLCCommandNameVolume params:@{ @"val": @(volume) }];
 }
 
 @end

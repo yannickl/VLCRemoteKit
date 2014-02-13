@@ -39,6 +39,8 @@
 @property (weak, nonatomic) IBOutlet UILabel         *currentTimeLabel;
 @property (weak, nonatomic) IBOutlet UILabel         *durationLabel;
 @property (weak, nonatomic) IBOutlet UISlider        *progressSlider;
+@property (weak, nonatomic) IBOutlet UILabel         *volumeLabel;
+@property (weak, nonatomic) IBOutlet UISlider        *volumeSlider;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
 
 #pragma mark - Public Methods
@@ -49,5 +51,6 @@
 - (IBAction)tooglePauseAction:(id)sender;
 - (IBAction)toogleFullScreenAction:(id)sender;
 - (IBAction)seekAction:(id)sender;
+- (IBAction)volumeAction:(id)sender;
 
 @end

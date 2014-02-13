@@ -109,6 +109,15 @@ typedef NS_ENUM(NSInteger, VLCRemotePlayerPlaybackState) {
 /** @name Configuring and Controlling Playback */
 
 /**
+ * @abstract The playback volume for the audio player, ranging from 0.0 through
+ * 1.0 on a linear scale.
+ * @discussion A value of 0.0 indicates silence; a value of 1.0 indicates full
+ * volume for the audio player instance.
+ * @since 1.0.0
+ */
+@property (nonatomic) float volume;
+
+/**
  * @abstract Resumes playback.
  * @since 1.0.0
  */

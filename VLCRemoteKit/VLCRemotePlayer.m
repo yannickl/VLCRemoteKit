@@ -104,6 +104,16 @@
 }
 
 #pragma mark - Configuring and Controlling Playback
+@dynamic volume;
+
+- (float)volume {
+    return [[self.state objectForKey:@"volume"] floatValue] / 256.0f;
+}
+
+- (void)setVolume:(float)volume {
+    VLCCommand *volumeCommand = [VLCCommand volumeCommandWithValue:(256 * volume)];
+    [self.client performCommand:volumeCommand completionHandler:nil];
+}
 
 - (void)play {
     if ([self playbackState] == VLCRemotePlayerPlaybackStatePaused) {

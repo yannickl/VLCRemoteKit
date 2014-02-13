@@ -27,10 +27,6 @@
 #import <Foundation/Foundation.h>
 
 typedef NS_ENUM(NSInteger, VLCCommandName) {
-    /** The command to tell whether the player needs to be in fullscreen. */
-    VLCCommandNameFullscreen,
-    /** The command to tell whether the player needs to be paused. */
-    VLCCommandNamePause,
     /** The command to seek to a particular point in a media. */
     VLCCommandNameSeek,
     /** The command to retrieve the player status informations. */
@@ -41,6 +37,8 @@ typedef NS_ENUM(NSInteger, VLCCommandName) {
     VLCCommandNameToogleFullscreen,
     /** The command to toogle the pause of the player. */
     VLCCommandNameTooglePause,
+    /** The command to change the volume of the playback. */
+    VLCCommandNameVolume,
 };
 
 /**
@@ -101,14 +99,6 @@ typedef NS_ENUM(NSInteger, VLCCommandName) {
 + (instancetype)seekCommandWithTimePosition:(NSTimeInterval)timePosition;
 
 /**
- * @abstract Creates and returns a command to put VLC in fullscreen or windowed
- * mode.
- * @param needsFullscreen If YES, VLC will be put in the fullscreen mode.
- * @since 1.0.0
- */
-+ (instancetype)fullscreenCommandWithFlag:(BOOL)needsFullscreen;
-
-/**
  * @abstract Creates and returns a command to toogle the fullscreen mode of the 
  * player.
  * @since 1.0.0
@@ -126,5 +116,16 @@ typedef NS_ENUM(NSInteger, VLCCommandName) {
  * @since 1.0.0
  */
 + (instancetype)stopCommand;
+
+/**
+ * @abstract Creates and returns a command to change the volume of the 
+ * playback.
+ * @param volume The playback volume for the audio player, ranging from 0 
+ * through 256 on a linear scale.
+ * @discussion A value of 0 indicates silence; a value of 256 indicates full
+ * volume for the audio player instance.
+ * @since 1.0.0
+ */
++ (instancetype)volumeCommandWithValue:(NSInteger)volume;
 
 @end

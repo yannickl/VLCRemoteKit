@@ -45,9 +45,9 @@ typedef NS_ENUM(NSInteger, VLCHTTPClientRemote) {
 };
 
 /** The recommended time interval to use to pull the status. */
-NSTimeInterval const kVRKRefreshInterval           = 1.0f;
+NSTimeInterval const kVRKRefreshInterval           = 0.8f;
 /** The timeout interval to use when waiting for data. */
-NSTimeInterval const kVRKTimeoutIntervalForRequest = 1.0f;
+NSTimeInterval const kVRKTimeoutIntervalForRequest = 1.5f;
 
 /** Absolute URL path to the status of VLC. */
 NSString * const kVRKURLPathStatus   = @"/requests/status.json";
@@ -160,6 +160,10 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
         case VLCCommandNameTooglePause:
             urlComponents.path  = kVRKURLPathStatus;
             urlComponents.query = @"command=pl_pause";
+            break;
+        case VLCCommandNameVolume:
+            urlComponents.path  = kVRKURLPathStatus;
+            urlComponents.query = @"command=volume";
             break;
         default:
             return nil;

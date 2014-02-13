@@ -109,6 +109,10 @@ static NSString * const CONFIGURATION_SEGUE_NAME = @"VRKConfigurationSegue";
     _vlcClient.player.currentTime = seekTime;
 }
 
+- (IBAction)volumeAction:(id)sender {
+    _vlcClient.player.volume = _volumeSlider.value;
+}
+
 #pragma mark - Private Methods
 
 #pragma mark - UIPopoverController Delegate Methods
@@ -143,6 +147,7 @@ static NSString * const CONFIGURATION_SEGUE_NAME = @"VRKConfigurationSegue";
             _statusLabel.text            = @"Status: disconnected";
             _filenameLabel.text          = @"disconnected";
             _progressSlider.value        = 0;
+            _volumeSlider.value          = 0;
             _statusLabel.textColor       = [UIColor whiteColor];
             _statusLabel.backgroundColor = [UIColor black25PercentColor];
             break;
@@ -176,6 +181,7 @@ static NSString * const CONFIGURATION_SEGUE_NAME = @"VRKConfigurationSegue";
     _toogePauseButton.enabled       = (status == VLCClientConnectionStatusConnected);
     _toogleFullscreenButton.enabled = (status == VLCClientConnectionStatusConnected);
     _progressSlider.enabled         = (status == VLCClientConnectionStatusConnected);
+    _volumeSlider.enabled           = _progressSlider.enabled;
     
     if (status == VLCClientConnectionStatusDisconnected) {
         [_connectButton setTitle:@"Connect" forState:UIControlStateNormal];
@@ -217,6 +223,10 @@ static NSString * const CONFIGURATION_SEGUE_NAME = @"VRKConfigurationSegue";
         _durationLabel.text     = [NSString stringWithFormat:@"%02ld:%02ld:%02ld", (long)dHours, (long)dMinutes, (long)dSeconds];
         _progressSlider.value   = currentTime / (duration * 1.0f);
         _progressSlider.enabled = !(player.playbackState == VLCRemotePlayerPlaybackStateStopped);
+        
+        _volumeLabel.text     = [NSString stringWithFormat:@"Volume: %d%%", (int)(player.volume * 100)];
+        _volumeSlider.value   = player.volume;
+        _volumeSlider.enabled = _progressSlider.enabled;
     }
 }
 
