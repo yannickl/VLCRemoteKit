@@ -27,17 +27,17 @@
 #import <Foundation/Foundation.h>
 
 typedef NS_ENUM(NSInteger, VLCCommandName) {
-    /** The command to seek to a particular point in a media. */
+    /** Seeks to a particular point in the current playback. */
     VLCCommandNameSeek,
-    /** The command to retrieve the player status informations. */
+    /** Retrieves the player status informations. */
     VLCCommandNameStatus,
-    /** The command to stop the player to play the current media. */
+    /** Stops the player to play the current media. */
     VLCCommandNameStop,
-    /** The command to toogle the fullscreen of the player. */
+    /** Toogles the fullscreen of the player. */
     VLCCommandNameToogleFullscreen,
-    /** The command to toogle the pause of the player. */
+    /** Toogles the pause of the player. */
     VLCCommandNameTooglePause,
-    /** The command to toogle random playback. */
+    /** Toogles random playback. */
     VLCCommandNameToogleRandomPlayback,
     /** The command to change the volume of the playback. */
     VLCCommandNameVolume,

@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = 'VLCRemoteKit'
-  s.version      = '1.0.0'
+  s.version      = '1.0.0-a1'
   s.license      = { :type => 'MIT', :file => 'LICENSE' } 
   s.summary      = 'Remote control for VLC in Objective-C'
   s.homepage     = 'https://github.com/YannickL/VLCRemoteKit'
