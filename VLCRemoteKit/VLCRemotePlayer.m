@@ -34,6 +34,7 @@
 @dynamic playbackState;
 @dynamic playing;
 @dynamic fullscreen;
+@dynamic volume;
 
 - (VLCRemotePlayerPlaybackState)playbackState {
     NSString *state = [self.state objectForKey:@"state"];
@@ -74,6 +75,15 @@
     }
 }
 
+- (float)volume {
+    return [[self.state objectForKey:@"volume"] floatValue] / 256.0f;
+}
+
+- (void)setVolume:(float)volume {
+    VLCCommand *volumeCommand = [VLCCommand volumeCommandWithValue:(256 * volume)];
+    [self.client performCommand:volumeCommand completionHandler:nil];
+}
+
 #pragma mark - Accessing the Media Duration
 @dynamic duration;
 @dynamic currentTime;
@@ -104,15 +114,17 @@
 }
 
 #pragma mark - Configuring and Controlling Playback
-@dynamic volume;
+@dynamic randomPlayback;
 
-- (float)volume {
-    return [[self.state objectForKey:@"volume"] floatValue] / 256.0f;
+- (BOOL)isRandomPlayback {
+    return [[self.state objectForKey:@"random"] boolValue];
 }
 
-- (void)setVolume:(float)volume {
-    VLCCommand *volumeCommand = [VLCCommand volumeCommandWithValue:(256 * volume)];
-    [self.client performCommand:volumeCommand completionHandler:nil];
+- (void)setRandomPlayback:(BOOL)randomPlayback {
+    if ([self isRandomPlayback] != randomPlayback) {
+        VLCCommand *toogleRandomPlayback = [VLCCommand toogleRandomPlayback];
+        [self.client performCommand:toogleRandomPlayback completionHandler:nil];
+    }
 }
 
 - (void)play {

@@ -37,6 +37,8 @@ typedef NS_ENUM(NSInteger, VLCCommandName) {
     VLCCommandNameToogleFullscreen,
     /** The command to toogle the pause of the player. */
     VLCCommandNameTooglePause,
+    /** The command to toogle random playback. */
+    VLCCommandNameToogleRandomPlayback,
     /** The command to change the volume of the playback. */
     VLCCommandNameVolume,
 };
@@ -110,6 +112,12 @@ typedef NS_ENUM(NSInteger, VLCCommandName) {
  * @since 1.0.0
  */
 + (instancetype)tooglePauseCommand;
+
+/**
+ * @abstract Creates and returns a command to toogle random playback.
+ * @since 1.0.0
+ */
++ (instancetype)toogleRandomPlayback;
 
 /**
  * @abstract Creates and returns a command to stop the current playback.

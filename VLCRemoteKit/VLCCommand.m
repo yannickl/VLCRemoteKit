@@ -60,6 +60,10 @@
     return [[self alloc] initWithName:VLCCommandNameTooglePause params:nil];
 }
 
++ (instancetype)toogleRandomPlayback {
+    return [[self alloc] initWithName:VLCCommandNameToogleRandomPlayback params:nil];
+}
+
 + (instancetype)stopCommand {
     return [[self alloc] initWithName:VLCCommandNameStop params:nil];
 }
