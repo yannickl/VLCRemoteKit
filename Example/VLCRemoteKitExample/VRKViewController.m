@@ -91,7 +91,7 @@ static NSString * const CONFIGURATION_SEGUE_NAME = @"VRKConfigurationSegue";
     [_vlcClient.player stop];
 }
 
-- (IBAction)tooglePauseAction:(id)sender {
+- (IBAction)togglePauseAction:(id)sender {
     if ([_vlcClient.player isPlaying]) {
         [_vlcClient.player pause];
     }
@@ -100,7 +100,7 @@ static NSString * const CONFIGURATION_SEGUE_NAME = @"VRKConfigurationSegue";
     }
 }
 
-- (IBAction)toogleFullScreenAction:(id)sender {
+- (IBAction)toggleFullScreenAction:(id)sender {
     _vlcClient.player.fullscreen = ![_vlcClient.player isFullscreen];
 }
 
@@ -179,7 +179,7 @@ static NSString * const CONFIGURATION_SEGUE_NAME = @"VRKConfigurationSegue";
     
     _stopButton.enabled             = (status == VLCClientConnectionStatusConnected);
     _toogePauseButton.enabled       = (status == VLCClientConnectionStatusConnected);
-    _toogleFullscreenButton.enabled = (status == VLCClientConnectionStatusConnected);
+    _toggleFullscreenButton.enabled = (status == VLCClientConnectionStatusConnected);
     _progressSlider.enabled         = (status == VLCClientConnectionStatusConnected);
     _volumeSlider.enabled           = _progressSlider.enabled;
     
@@ -202,7 +202,7 @@ static NSString * const CONFIGURATION_SEGUE_NAME = @"VRKConfigurationSegue";
         VLCRemotePlayer *player = _vlcClient.player;
         
         NSString *fullscreenTitle = (player.fullscreen) ? @"Exit Full-Screen Mode" : @"Enter Full-Screen Mode";
-        [_toogleFullscreenButton setTitle:fullscreenTitle forState:UIControlStateNormal];
+        [_toggleFullscreenButton setTitle:fullscreenTitle forState:UIControlStateNormal];
         
         NSString *pauseTitle = (player.playing) ? @"Pause Playback" : @"Resume Playback";
         [_toogePauseButton setTitle:pauseTitle forState:UIControlStateNormal];

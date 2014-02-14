@@ -35,7 +35,7 @@
 @property (weak, nonatomic) IBOutlet UIButton        *connectButton;
 @property (weak, nonatomic) IBOutlet UIButton        *stopButton;
 @property (weak, nonatomic) IBOutlet UIButton        *toogePauseButton;
-@property (weak, nonatomic) IBOutlet UIButton        *toogleFullscreenButton;
+@property (weak, nonatomic) IBOutlet UIButton        *toggleFullscreenButton;
 @property (weak, nonatomic) IBOutlet UILabel         *currentTimeLabel;
 @property (weak, nonatomic) IBOutlet UILabel         *durationLabel;
 @property (weak, nonatomic) IBOutlet UISlider        *progressSlider;
@@ -48,8 +48,8 @@
 - (IBAction)connectAction:(id)sender;
 - (IBAction)playAction:(id)sender;
 - (IBAction)stopAction:(id)sender;
-- (IBAction)tooglePauseAction:(id)sender;
-- (IBAction)toogleFullScreenAction:(id)sender;
+- (IBAction)togglePauseAction:(id)sender;
+- (IBAction)toggleFullScreenAction:(id)sender;
 - (IBAction)seekAction:(id)sender;
 - (IBAction)volumeAction:(id)sender;
 

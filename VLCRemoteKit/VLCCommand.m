@@ -52,16 +52,20 @@
     return [[self alloc] initWithName:VLCCommandNameSeek params:@{ @"val": @((NSInteger)timePosition) }];
 }
 
-+ (instancetype)toogleFullscreenCommand {
-    return [[self alloc] initWithName:VLCCommandNameToogleFullscreen params:nil];
++ (instancetype)toggleFullscreenCommand {
+    return [[self alloc] initWithName:VLCCommandNameToggleFullscreen params:nil];
 }
 
-+ (instancetype)tooglePauseCommand {
-    return [[self alloc] initWithName:VLCCommandNameTooglePause params:nil];
++ (instancetype)toggleLoopCommand {
+    return [[self alloc] initWithName:VLCCommandNameToggleLoop params:nil];
 }
 
-+ (instancetype)toogleRandomPlayback {
-    return [[self alloc] initWithName:VLCCommandNameToogleRandomPlayback params:nil];
++ (instancetype)togglePauseCommand {
+    return [[self alloc] initWithName:VLCCommandNameTogglePause params:nil];
+}
+
++ (instancetype)toggleRandomPlayback {
+    return [[self alloc] initWithName:VLCCommandNameToggleRandomPlayback params:nil];
 }
 
 + (instancetype)stopCommand {

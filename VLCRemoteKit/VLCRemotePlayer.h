@@ -118,11 +118,18 @@ typedef NS_ENUM(NSInteger, VLCRemotePlayerPlaybackState) {
 /** @name Configuring and Controlling Playback */
 
 /**
- * @abstract A Boolean that indicates whether a the player should play medias 
- * randomly.
+ * @abstract A Boolean that indicates whether a the player should play items
+ * available in the playlist randomly.
  * @since 1.0.0
  */
 @property (nonatomic, getter = isRandomPlayback) BOOL randomPlayback;
+
+/**
+ * @abstract A Boolean that indicates whether a the player should repeats all
+ * items in the playlist.
+ * @since 1.0.0
+ */
+@property (nonatomic, getter = isLoopingPlaylist) BOOL loopingPlaylist;
 
 /**
  * @abstract Resumes playback.
@@ -144,12 +151,12 @@ typedef NS_ENUM(NSInteger, VLCRemotePlayerPlaybackState) {
 - (void)stop;
 
 /**
- * @abstract Toogles VLC in pause / playing mode.
+ * @abstract Toggles VLC in pause / playing mode.
  * @discussion The media remains ready to resume playback from where it left
  * off.
  * @since 1.0.0
  */
-- (void)tooglePause;
+- (void)togglePause;
 
 #pragma mark - Commands
 /** @name Commands */

@@ -6,7 +6,8 @@
    - `VLCCommandNameSeek`: Seek to a particular point in the current playback
    - `VLCCommandNameStatus`: Retrieve the player status informations
    - `VLCCommandNameStop`: Stops the player to play the current media
-   - `VLCCommandNameToogleFullscreen`: Toogles the fullscreen of the player
-   - `VLCCommandNameTooglePause`: Toogles the pause of the player
-   - `VLCCommandNameToogleRandomPlayback`: Toogles random playback
-   - `VLCCommandNameVolume`: The command to change the volume of the playback
+   - `VLCCommandNameToggleFullscreen`: Toggles the fullscreen of the player
+   - `VLCCommandNameToggleLoop`: Toggles the loop all medias in the playlist
+   - `VLCCommandNameTogglePause`: Toggles the pause of the player
+   - `VLCCommandNameToggleRandomPlayback`: Toggles random playback
+   - `VLCCommandNameVolume`: Changes the volume of the playback

@@ -153,15 +153,19 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
             urlComponents.path  = kVRKURLPathStatus;
             urlComponents.query = @"command=pl_stop";
             break;
-        case VLCCommandNameToogleFullscreen:
+        case VLCCommandNameToggleFullscreen:
             urlComponents.path  = kVRKURLPathStatus;
             urlComponents.query = @"command=fullscreen";
             break;
-        case VLCCommandNameTooglePause:
+        case VLCCommandNameToggleLoop:
+            urlComponents.path  = kVRKURLPathStatus;
+            urlComponents.query = @"command=pl_loop";
+            break;
+        case VLCCommandNameTogglePause:
             urlComponents.path  = kVRKURLPathStatus;
             urlComponents.query = @"command=pl_pause";
             break;
-        case VLCCommandNameToogleRandomPlayback:
+        case VLCCommandNameToggleRandomPlayback:
             urlComponents.path  = kVRKURLPathStatus;
             urlComponents.query = @"command=pl_random";
             break;

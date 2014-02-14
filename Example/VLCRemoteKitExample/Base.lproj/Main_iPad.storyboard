@@ -52,7 +52,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="toogleFullScreenAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ttU-nM-CHp"/>
+                                    <action selector="toggleFullScreenAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0cM-Dp-rj0"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lNe-pz-LNs">
@@ -62,7 +62,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="tooglePauseAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="nR2-Df-YzU"/>
+                                    <action selector="togglePauseAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="MyU-G6-csy"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QFw-hP-5Y5">
@@ -222,8 +222,8 @@
                         <outlet property="progressSlider" destination="NG9-gZ-yxt" id="C3u-P0-YEv"/>
                         <outlet property="statusLabel" destination="vLn-8h-088" id="VZb-u7-tyM"/>
                         <outlet property="stopButton" destination="aLW-XS-hzh" id="IOX-nA-yyZ"/>
+                        <outlet property="toggleFullscreenButton" destination="8E1-C0-Bfy" id="vEC-Xs-ZxM"/>
                         <outlet property="toogePauseButton" destination="lNe-pz-LNs" id="GLa-Ck-qIY"/>
-                        <outlet property="toogleFullscreenButton" destination="8E1-C0-Bfy" id="ucy-k8-N3B"/>
                         <outlet property="volumeLabel" destination="yrJ-Uu-yEl" id="SLT-K8-HSY"/>
                         <outlet property="volumeSlider" destination="yLt-q3-7vw" id="T3g-Gb-E7a"/>
                     </connections>

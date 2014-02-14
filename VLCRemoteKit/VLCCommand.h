@@ -33,13 +33,15 @@ typedef NS_ENUM(NSInteger, VLCCommandName) {
     VLCCommandNameStatus,
     /** Stops the player to play the current media. */
     VLCCommandNameStop,
-    /** Toogles the fullscreen of the player. */
-    VLCCommandNameToogleFullscreen,
-    /** Toogles the pause of the player. */
-    VLCCommandNameTooglePause,
-    /** Toogles random playback. */
-    VLCCommandNameToogleRandomPlayback,
-    /** The command to change the volume of the playback. */
+    /** Toggles the fullscreen of the player. */
+    VLCCommandNameToggleFullscreen,
+    /** Toggles the loop all medias in the playlist. */
+    VLCCommandNameToggleLoop,
+    /** Toggles the pause of the player. */
+    VLCCommandNameTogglePause,
+    /** Toggles random playback. */
+    VLCCommandNameToggleRandomPlayback,
+    /** Changes the volume of the playback. */
     VLCCommandNameVolume,
 };
 
@@ -101,23 +103,29 @@ typedef NS_ENUM(NSInteger, VLCCommandName) {
 + (instancetype)seekCommandWithTimePosition:(NSTimeInterval)timePosition;
 
 /**
- * @abstract Creates and returns a command to toogle the fullscreen mode of the 
+ * @abstract Creates and returns a command to toggle the fullscreen mode of the
  * player.
  * @since 1.0.0
  */
-+ (instancetype)toogleFullscreenCommand;
++ (instancetype)toggleFullscreenCommand;
 
 /**
- * @abstract Creates and returns a command to toogle the pause of the player.
+ * @abstract Creates and returns a command to toggle loop.
  * @since 1.0.0
  */
-+ (instancetype)tooglePauseCommand;
++ (instancetype)toggleLoopCommand;
 
 /**
- * @abstract Creates and returns a command to toogle random playback.
+ * @abstract Creates and returns a command to toggle the pause of the player.
  * @since 1.0.0
  */
-+ (instancetype)toogleRandomPlayback;
++ (instancetype)togglePauseCommand;
+
+/**
+ * @abstract Creates and returns a command to toggle random playback.
+ * @since 1.0.0
+ */
++ (instancetype)toggleRandomPlayback;
 
 /**
  * @abstract Creates and returns a command to stop the current playback.

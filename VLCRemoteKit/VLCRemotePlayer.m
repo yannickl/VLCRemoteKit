@@ -55,8 +55,8 @@
 
 - (void)setPaused:(BOOL)paused {
     if (paused != [self isPaused]) {
-        VLCCommand *tooglePauseCommand = [VLCCommand tooglePauseCommand];
-        [self.client performCommand:tooglePauseCommand completionHandler:nil];
+        VLCCommand *togglePauseCommand = [VLCCommand togglePauseCommand];
+        [self.client performCommand:togglePauseCommand completionHandler:nil];
     }
 }
 
@@ -70,8 +70,8 @@
 
 - (void)setFullscreen:(BOOL)fullscreen {
     if (fullscreen != [self isFullscreen]) {
-        VLCCommand *toogleFullscreenCommand = [VLCCommand toogleFullscreenCommand];
-        [self.client performCommand:toogleFullscreenCommand completionHandler:nil];
+        VLCCommand *toggleFullscreenCommand = [VLCCommand toggleFullscreenCommand];
+        [self.client performCommand:toggleFullscreenCommand completionHandler:nil];
     }
 }
 
@@ -115,6 +115,7 @@
 
 #pragma mark - Configuring and Controlling Playback
 @dynamic randomPlayback;
+@dynamic loopingPlaylist;
 
 - (BOOL)isRandomPlayback {
     return [[self.state objectForKey:@"random"] boolValue];
@@ -122,20 +123,31 @@
 
 - (void)setRandomPlayback:(BOOL)randomPlayback {
     if ([self isRandomPlayback] != randomPlayback) {
-        VLCCommand *toogleRandomPlayback = [VLCCommand toogleRandomPlayback];
-        [self.client performCommand:toogleRandomPlayback completionHandler:nil];
+        VLCCommand *toggleRandomPlaybackCommand = [VLCCommand toggleRandomPlayback];
+        [self.client performCommand:toggleRandomPlaybackCommand completionHandler:nil];
+    }
+}
+
+- (BOOL)isLoopingPlaylist {
+    return [[self.state objectForKey:@"loop"] boolValue];
+}
+
+- (void)setLoopingPlaylist:(BOOL)loopingPlaylist {
+    if ([self isLoopingPlaylist] != loopingPlaylist) {
+        VLCCommand *toggleLoopCommand= [VLCCommand toggleLoopCommand];
+        [self.client performCommand:toggleLoopCommand completionHandler:nil];
     }
 }
 
 - (void)play {
     if ([self playbackState] == VLCRemotePlayerPlaybackStatePaused) {
-        [self tooglePause];
+        [self togglePause];
     }
 }
 
 - (void)pause {
     if ([self playbackState] == VLCRemotePlayerPlaybackStatePlaying) {
-        [self tooglePause];
+        [self togglePause];
     }
 }
 
@@ -144,9 +156,9 @@
     [self.client performCommand:stopCommand completionHandler:nil];
 }
 
-- (void)tooglePause {
-    VLCCommand *tooglePauseCommand = [VLCCommand tooglePauseCommand];
-    [self.client performCommand:tooglePauseCommand completionHandler:nil];
+- (void)togglePause {
+    VLCCommand *togglePauseCommand = [VLCCommand togglePauseCommand];
+    [self.client performCommand:togglePauseCommand completionHandler:nil];
 }
 
 #pragma mark - VLCCommand Protocol Methods
