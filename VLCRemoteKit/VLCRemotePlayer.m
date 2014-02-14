@@ -116,6 +116,7 @@
 #pragma mark - Configuring and Controlling Playback
 @dynamic randomPlayback;
 @dynamic loopingPlaylist;
+@dynamic repeating;
 
 - (BOOL)isRandomPlayback {
     return [[self.state objectForKey:@"random"] boolValue];
@@ -136,6 +137,17 @@
     if ([self isLoopingPlaylist] != loopingPlaylist) {
         VLCCommand *toggleLoopCommand= [VLCCommand toggleLoopCommand];
         [self.client performCommand:toggleLoopCommand completionHandler:nil];
+    }
+}
+
+- (BOOL)isRepeating {
+    return [[self.state objectForKey:@"repeat"] boolValue];
+}
+
+- (void)setRepeating:(BOOL)repeating {
+    if ([self isRepeating] != repeating) {
+        VLCCommand *toggleRepeatCommand= [VLCCommand toggleRepeatCommand];
+        [self.client performCommand:toggleRepeatCommand completionHandler:nil];
     }
 }
 

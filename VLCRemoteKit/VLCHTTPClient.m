@@ -169,6 +169,10 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
             urlComponents.path  = kVRKURLPathStatus;
             urlComponents.query = @"command=pl_random";
             break;
+        case VLCCommandNameToggleRepeat:
+            urlComponents.path  = kVRKURLPathStatus;
+            urlComponents.query = @"command=pl_repeat";
+            break;
         case VLCCommandNameVolume:
             urlComponents.path  = kVRKURLPathStatus;
             urlComponents.query = @"command=volume";

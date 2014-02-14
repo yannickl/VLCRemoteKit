@@ -35,12 +35,14 @@ typedef NS_ENUM(NSInteger, VLCCommandName) {
     VLCCommandNameStop,
     /** Toggles the fullscreen of the player. */
     VLCCommandNameToggleFullscreen,
-    /** Toggles the loop all medias in the playlist. */
+    /** Toggles the loop all items in the playlist. */
     VLCCommandNameToggleLoop,
     /** Toggles the pause of the player. */
     VLCCommandNameTogglePause,
     /** Toggles random playback. */
     VLCCommandNameToggleRandomPlayback,
+    /** Toggles the repeat of the current item in the plalist. */
+    VLCCommandNameToggleRepeat,
     /** Changes the volume of the playback. */
     VLCCommandNameVolume,
 };
@@ -111,6 +113,7 @@ typedef NS_ENUM(NSInteger, VLCCommandName) {
 
 /**
  * @abstract Creates and returns a command to toggle loop.
+ * @discussion The loop mode impact all items in the playlist.
  * @since 1.0.0
  */
 + (instancetype)toggleLoopCommand;
@@ -126,6 +129,13 @@ typedef NS_ENUM(NSInteger, VLCCommandName) {
  * @since 1.0.0
  */
 + (instancetype)toggleRandomPlayback;
+
+/**
+ * @abstract Creates and returns a command to toggle repeat.
+ * @discussion The repeat mode impact the current playing item.
+ * @since 1.0.0
+ */
++ (instancetype)toggleRepeatCommand;
 
 /**
  * @abstract Creates and returns a command to stop the current playback.

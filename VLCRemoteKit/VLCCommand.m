@@ -68,6 +68,10 @@
     return [[self alloc] initWithName:VLCCommandNameToggleRandomPlayback params:nil];
 }
 
++ (instancetype)toggleRepeatCommand {
+    return [[self alloc] initWithName:VLCCommandNameToggleRepeat params:nil];
+}
+
 + (instancetype)stopCommand {
     return [[self alloc] initWithName:VLCCommandNameStop params:nil];
 }
