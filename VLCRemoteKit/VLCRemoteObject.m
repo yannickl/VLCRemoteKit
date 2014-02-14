@@ -34,7 +34,7 @@
 
 - (id)initWithClient:(id<VLCClientProtocol>)client {
     if ((self = [super init])) {
-        NSAssert(client, @"A remote needs to be initialized with a client");
+        NSParameterAssert(client);
         
         self.state = 0;
         _client    = client;
@@ -50,20 +50,26 @@
 
 - (void)updateStateWithData:(NSData *)data {
     NSUInteger dataHash = [data hash];
-   
+
     if (self.stateHash != dataHash) {
         NSError *error      = nil;
         NSDictionary *state = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
         
         if (!error) {
-            self.stateHash = dataHash;
-            self.state     = state;
-            
-            if (_delegate) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [_delegate remoteObjectDidChanged:self];
-                });
-            }
+            [self updateWithState:state andHash:dataHash];
+        }
+    }
+}
+
+- (void)updateWithState:(NSDictionary *)state andHash:(NSUInteger)stateHash {
+    if (self.stateHash != stateHash && state != nil) {
+        self.stateHash = stateHash;
+        self.state     = state;
+        
+        if (_delegate) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [_delegate remoteObjectDidChanged:self];
+            });
         }
     }
 }
