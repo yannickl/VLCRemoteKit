@@ -26,6 +26,12 @@
 
 #import "VLCCommand.h"
 
+@interface VLCCommand ()
+@property (nonatomic, assign) VLCCommandName name;
+@property (nonatomic, strong) NSDictionary   *params;
+
+@end
+
 @implementation VLCCommand
 
 #pragma mark - Creating and Inializing Commands

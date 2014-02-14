@@ -60,12 +60,12 @@ typedef NS_ENUM(NSInteger, VLCCommandName) {
  * @abstract The command's name.
  * @since 1.0.0
  */
-@property (nonatomic, assign) VLCCommandName name;
+@property (nonatomic, assign, readonly) VLCCommandName name;
 /**
  * @abstract The command parameters.
  * @since 1.0.0
  */
-@property (nonatomic, strong) NSDictionary   *params;
+@property (nonatomic, strong, readonly) NSDictionary   *params;
 
 #pragma mark - Creating and Inializing Commands
 /** @name Creating and Inializing Commands */

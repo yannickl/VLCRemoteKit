@@ -22,6 +22,8 @@
 		F49FFA2018A17E97004BE640 /* NSURLSessionNiceMock.m in Sources */ = {isa = PBXBuildFile; fileRef = F49FFA1D18A17041004BE640 /* NSURLSessionNiceMock.m */; };
 		F49FFA2318A18FA7004BE640 /* NSHTTPURLResponseNiceMock.m in Sources */ = {isa = PBXBuildFile; fileRef = F49FFA2218A18FA7004BE640 /* NSHTTPURLResponseNiceMock.m */; };
 		F49FFA2418A1917E004BE640 /* NSHTTPURLResponseNiceMock.m in Sources */ = {isa = PBXBuildFile; fileRef = F49FFA2218A18FA7004BE640 /* NSHTTPURLResponseNiceMock.m */; };
+		F4B2C2C618AE907E00CDD413 /* VLCCommandTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B2C2C518AE907E00CDD413 /* VLCCommandTests.m */; };
+		F4B2C2C718AE90EE00CDD413 /* VLCCommandTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B2C2C518AE907E00CDD413 /* VLCCommandTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +49,7 @@
 		F49FFA2118A18FA7004BE640 /* NSHTTPURLResponseNiceMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSHTTPURLResponseNiceMock.h; sourceTree = "<group>"; };
 		F49FFA2218A18FA7004BE640 /* NSHTTPURLResponseNiceMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSHTTPURLResponseNiceMock.m; sourceTree = "<group>"; };
 		F49FFA3418A2944F004BE640 /* VLCHTTPClient_UnitTestAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCHTTPClient_UnitTestAdditions.h; sourceTree = "<group>"; };
+		F4B2C2C518AE907E00CDD413 /* VLCCommandTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCCommandTests.m; sourceTree = "<group>"; };
 		F4FA21ADAE07455FB41C2D9F /* Pods-ios.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios.xcconfig"; path = "Pods/Pods-ios.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -151,6 +154,7 @@
 				F49FFA1B18A17041004BE640 /* Mocks */,
 				F49FFA3318A2944F004BE640 /* Privates */,
 				F45889071895927E005B529C /* VLCHTTPClientTests.m */,
+				F4B2C2C518AE907E00CDD413 /* VLCCommandTests.m */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -343,6 +347,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F4B2C2C718AE90EE00CDD413 /* VLCCommandTests.m in Sources */,
 				F49FFA2418A1917E004BE640 /* NSHTTPURLResponseNiceMock.m in Sources */,
 				F49FFA07189EECCA004BE640 /* FBTestBlocker.m in Sources */,
 				F49FFA2018A17E97004BE640 /* NSURLSessionNiceMock.m in Sources */,
@@ -354,6 +359,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F4B2C2C618AE907E00CDD413 /* VLCCommandTests.m in Sources */,
 				F49FFA2318A18FA7004BE640 /* NSHTTPURLResponseNiceMock.m in Sources */,
 				F49FFA06189EECCA004BE640 /* FBTestBlocker.m in Sources */,
 				F49FFA1E18A17041004BE640 /* NSURLSessionNiceMock.m in Sources */,
