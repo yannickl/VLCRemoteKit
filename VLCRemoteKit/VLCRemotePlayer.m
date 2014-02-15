@@ -157,6 +157,11 @@
     }
 }
 
+- (void)playItemWithId:(NSInteger)itemIdentifier {
+    VLCCommand *playCommand= [VLCCommand playCommandWithItemWithIdentifier:itemIdentifier];
+    [self.client performCommand:playCommand completionHandler:nil];
+}
+
 - (void)pause {
     if ([self playbackState] == VLCRemotePlayerPlaybackStatePlaying) {
         [self togglePause];
@@ -171,12 +176,6 @@
 - (void)togglePause {
     VLCCommand *togglePauseCommand = [VLCCommand togglePauseCommand];
     [self.client performCommand:togglePauseCommand completionHandler:nil];
-}
-
-#pragma mark - VLCCommand Protocol Methods
-
-- (void)playItemWithId:(NSInteger)itemIdentifier {
-
 }
 
 @end

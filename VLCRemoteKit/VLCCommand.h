@@ -27,6 +27,8 @@
 #import <Foundation/Foundation.h>
 
 typedef NS_ENUM(NSInteger, VLCCommandName) {
+    /** Plays a specific playlist item. */
+    VLCCommandNamePlay,
     /** Seeks to a particular point in the current playback. */
     VLCCommandNameSeek,
     /** Retrieves the player status informations. */
@@ -91,18 +93,34 @@ typedef NS_ENUM(NSInteger, VLCCommandName) {
 /**@name Convenience Constructors */
 
 /**
+ * @abstract Creates and returns a command to play an item with a given
+ * identifier.
+ * @param itemIdentifier The specified playlist item identifier.
+ * @discussion If the playlist item identifier is equal to -1 it plays the
+ * last active item.
+ * @since 1.0.0
+ */
++ (instancetype)playCommandWithItemWithIdentifier:(NSInteger)itemIdentifier;
+
+/**
+ * @abstract Creates and returns a command to seek through the media to a given
+ * time position.
+ * @param timePosition A time position to seek.
+ * @since 1.0.0
+ */
++ (instancetype)seekCommandWithTimePosition:(NSTimeInterval)timePosition;
+
+/**
  * @abstract Creates and returns a command to retrieve the current VLC status.
  * @since 1.0.0
  */
 + (instancetype)statusCommand;
 
 /**
- * @abstract Creates and returns a command to seek in the media to a given time
- * position.
- * @param timePosition A time position to seek.
+ * @abstract Creates and returns a command to stop the current playback.
  * @since 1.0.0
  */
-+ (instancetype)seekCommandWithTimePosition:(NSTimeInterval)timePosition;
++ (instancetype)stopCommand;
 
 /**
  * @abstract Creates and returns a command to toggle the fullscreen mode of the
@@ -136,12 +154,6 @@ typedef NS_ENUM(NSInteger, VLCCommandName) {
  * @since 1.0.0
  */
 + (instancetype)toggleRepeatCommand;
-
-/**
- * @abstract Creates and returns a command to stop the current playback.
- * @since 1.0.0
- */
-+ (instancetype)stopCommand;
 
 /**
  * @abstract Creates and returns a command to change the volume of the 

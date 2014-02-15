@@ -50,12 +50,21 @@
 
 #pragma mark - Convenience Constructors
 
-+ (instancetype)statusCommand {
-    return [[self alloc] initWithName:VLCCommandNameStatus params:nil];
++ (instancetype)playCommandWithItemWithIdentifier:(NSInteger)itemIdentifier {
+    NSDictionary *params = (itemIdentifier == -1) ? @{} : @{ @"id": @(itemIdentifier) };
+    return [[self alloc] initWithName:VLCCommandNamePlay params:params];
 }
 
 + (instancetype)seekCommandWithTimePosition:(NSTimeInterval)timePosition {
     return [[self alloc] initWithName:VLCCommandNameSeek params:@{ @"val": @((NSInteger)timePosition) }];
+}
+
++ (instancetype)statusCommand {
+    return [[self alloc] initWithName:VLCCommandNameStatus params:nil];
+}
+
++ (instancetype)stopCommand {
+    return [[self alloc] initWithName:VLCCommandNameStop params:nil];
 }
 
 + (instancetype)toggleFullscreenCommand {
@@ -76,10 +85,6 @@
 
 + (instancetype)toggleRepeatCommand {
     return [[self alloc] initWithName:VLCCommandNameToggleRepeat params:nil];
-}
-
-+ (instancetype)stopCommand {
-    return [[self alloc] initWithName:VLCCommandNameStop params:nil];
 }
 
 + (instancetype)volumeCommandWithValue:(NSInteger)volume {

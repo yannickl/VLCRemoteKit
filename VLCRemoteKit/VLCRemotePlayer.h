@@ -139,20 +139,29 @@ typedef NS_ENUM(NSInteger, VLCRemotePlayerPlaybackState) {
 @property (nonatomic, getter = isRepeating) BOOL repeating;
 
 /**
- * @abstract Resumes playback.
+ * @abstract Resumes the playback.
  * @since 1.0.0
  */
 - (void)play;
 
 /**
- * @abstract Pauses playback; the media remains ready to resume playback from
+ * @abstract Plays the item with a given identifier.
+ * @param itemIdentifier A playlist item identifier.
+ * @discussion If the given playlist item identifier is equal to -1 it play the 
+ * last active item.
+ * @since 1.0.0
+ */
+- (void)playItemWithId:(NSInteger)itemIdentifier;
+
+/**
+ * @abstract Pauses the playback; the media remains ready to resume playback from
  * where it left off.
  * @since 1.0.0
  */
 - (void)pause;
 
 /**
- * @abstract Stops playback.
+ * @abstract Stops the playback.
  * @since 1.0.0
  */
 - (void)stop;
@@ -164,15 +173,5 @@ typedef NS_ENUM(NSInteger, VLCRemotePlayerPlaybackState) {
  * @since 1.0.0
  */
 - (void)togglePause;
-
-#pragma mark - Commands
-/** @name Commands */
-
-/**
- * @abstract Starts the playback for the item with a given identifier.
- * @param itemIdentifier An item identifier.
- * @since 1.0.0
- */
-- (void)playItemWithId:(NSInteger)itemIdentifier;
 
 @end
