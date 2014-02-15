@@ -50,6 +50,10 @@
 
 #pragma mark - Convenience Constructors
 
++ (instancetype)nextCommand {
+    return [[self alloc] initWithName:VLCCommandNameNext params:nil];
+}
+
 + (instancetype)playCommandWithItemWithIdentifier:(NSInteger)itemIdentifier {
     NSDictionary *params = (itemIdentifier == -1) ? @{} : @{ @"id": @(itemIdentifier) };
     return [[self alloc] initWithName:VLCCommandNamePlay params:params];

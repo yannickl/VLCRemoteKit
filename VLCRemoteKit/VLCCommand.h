@@ -27,6 +27,8 @@
 #import <Foundation/Foundation.h>
 
 typedef NS_ENUM(NSInteger, VLCCommandName) {
+    /** Jumps to next playlist item. */
+    VLCCommandNameNext,
     /** Plays a specific playlist item. */
     VLCCommandNamePlay,
     /** Seeks to a particular point in the current playback. */
@@ -91,6 +93,12 @@ typedef NS_ENUM(NSInteger, VLCCommandName) {
 
 #pragma mark - Convenience Constructors
 /**@name Convenience Constructors */
+
+/**
+ * @abstract Creates and returns a command to jump to the next playlist item.
+ * @since 1.0.0
+ */
++ (instancetype)nextCommand;
 
 /**
  * @abstract Creates and returns a command to play an item with a given

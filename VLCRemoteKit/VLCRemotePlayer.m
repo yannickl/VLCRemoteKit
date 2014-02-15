@@ -151,6 +151,11 @@
     }
 }
 
+- (void)next {
+    VLCCommand *nextCommand= [VLCCommand nextCommand];
+    [self.client performCommand:nextCommand completionHandler:nil];
+}
+
 - (void)play {
     if ([self playbackState] == VLCRemotePlayerPlaybackStatePaused) {
         [self togglePause];

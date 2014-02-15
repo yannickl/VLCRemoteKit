@@ -139,6 +139,12 @@ typedef NS_ENUM(NSInteger, VLCRemotePlayerPlaybackState) {
 @property (nonatomic, getter = isRepeating) BOOL repeating;
 
 /**
+ * @abstract Jumps to the next playlist item.
+ * @since 1.0.0
+ */
+- (void)next;
+
+/**
  * @abstract Resumes the playback.
  * @since 1.0.0
  */
