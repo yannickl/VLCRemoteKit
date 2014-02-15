@@ -59,6 +59,10 @@
     return [[self alloc] initWithName:VLCCommandNamePlay params:params];
 }
 
++ (instancetype)previousCommand {
+    return [[self alloc] initWithName:VLCCommandNamePrevious params:nil];
+}
+
 + (instancetype)seekCommandWithTimePosition:(NSTimeInterval)timePosition {
     return [[self alloc] initWithName:VLCCommandNameSeek params:@{ @"val": @((NSInteger)timePosition) }];
 }

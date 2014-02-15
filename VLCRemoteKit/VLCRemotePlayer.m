@@ -162,6 +162,11 @@
     }
 }
 
+- (void)previous {
+    VLCCommand *previousCommand= [VLCCommand previousCommand];
+    [self.client performCommand:previousCommand completionHandler:nil];
+}
+
 - (void)playItemWithId:(NSInteger)itemIdentifier {
     VLCCommand *playCommand= [VLCCommand playCommandWithItemWithIdentifier:itemIdentifier];
     [self.client performCommand:playCommand completionHandler:nil];

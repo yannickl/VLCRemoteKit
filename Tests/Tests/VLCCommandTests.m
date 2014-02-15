@@ -76,6 +76,21 @@
 
 #pragma mark Convenience Constructors
 
+- (void)testNext {
+    VLCCommand *nextCommand = [VLCCommand nextCommand];
+    [self expectCommand:nextCommand hasName:VLCCommandNameNext params:nil];
+}
+
+- (void)testPlayItemWithIdentifier {
+    VLCCommand *playCommand = [VLCCommand playCommandWithItemWithIdentifier:4];
+    [self expectCommand:playCommand hasName:VLCCommandNamePlay params:@{ @"id": @(4) }];
+}
+
+- (void)testPrevious {
+    VLCCommand *previousCommand = [VLCCommand previousCommand];
+    [self expectCommand:previousCommand hasName:VLCCommandNamePrevious params:nil];
+}
+
 - (void)testSeek {
     VLCCommand *seekCommand = [VLCCommand seekCommandWithTimePosition:43];
     [self expectCommand:seekCommand hasName:VLCCommandNameSeek params:@{ @"val": @(43) }];
