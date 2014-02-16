@@ -38,14 +38,15 @@
 
 - (VLCRemotePlayerPlaybackState)playbackState {
     NSString *state = [self.state objectForKey:@"state"];
-    if ([state isEqualToString:@"stopped"]) {
-        return VLCRemotePlayerPlaybackStateStopped;
+    
+    if ([state isEqualToString:@"paused"]) {
+        return VLCRemotePlayerPlaybackStatePaused;
     }
     else if ([state isEqualToString:@"playing"]) {
         return VLCRemotePlayerPlaybackStatePlaying;
     }
     else {
-        return VLCRemotePlayerPlaybackStatePaused;
+        return VLCRemotePlayerPlaybackStateStopped;
     }
 }
 
@@ -76,7 +77,7 @@
 }
 
 - (float)volume {
-    return [[self.state objectForKey:@"volume"] floatValue] / 256.0f;
+    return MAX(([[self.state objectForKey:@"volume"] floatValue] / 256.0f), 0.0f);
 }
 
 - (void)setVolume:(float)volume {

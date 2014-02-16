@@ -68,7 +68,7 @@
     VLCCommand *command = [VLCCommand commandWithName:VLCCommandNameStatus params:nil];
     [self expectCommand:command hasName:VLCCommandNameStatus params:nil];
     
-    NSDictionary *fooParams = @{ @"key": @"val"};
+    NSDictionary *fooParams = @{ @"key": @"val" };
     VLCCommand *fooCommand  = [VLCCommand commandWithName:-1 params:fooParams];
     [self expectCommand:fooCommand hasName:-1 params:fooParams];
     expect(fooCommand.params).to.equal(fooParams);

@@ -36,7 +36,7 @@
     // Creates the session stub
     id urlSessionMock = [OCMockObject niceMockForClass:[NSURLSession class]];
     [[[urlSessionMock stub] andDo:^(NSInvocation *invocation) {
-        //the block we will invoke
+        // The block we will invoke
         void (^handler)(NSData *data, NSURLResponse *response, NSError *error) = nil;
         
         // 0 and 1 are reserved for invocation object

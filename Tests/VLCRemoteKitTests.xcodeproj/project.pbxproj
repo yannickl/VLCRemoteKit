@@ -24,6 +24,10 @@
 		F49FFA2418A1917E004BE640 /* NSHTTPURLResponseNiceMock.m in Sources */ = {isa = PBXBuildFile; fileRef = F49FFA2218A18FA7004BE640 /* NSHTTPURLResponseNiceMock.m */; };
 		F4B2C2C618AE907E00CDD413 /* VLCCommandTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B2C2C518AE907E00CDD413 /* VLCCommandTests.m */; };
 		F4B2C2C718AE90EE00CDD413 /* VLCCommandTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B2C2C518AE907E00CDD413 /* VLCCommandTests.m */; };
+		F4B2C2CA18AE97F200CDD413 /* VLCRemoteObjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B2C2C918AE97F200CDD413 /* VLCRemoteObjectTests.m */; };
+		F4B2C2CB18AE985B00CDD413 /* VLCRemoteObjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B2C2C918AE97F200CDD413 /* VLCRemoteObjectTests.m */; };
+		F4B2C2CE18B1240300CDD413 /* VLCRemotePlayerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B2C2CD18B1240300CDD413 /* VLCRemotePlayerTests.m */; };
+		F4B2C2CF18B1240300CDD413 /* VLCRemotePlayerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B2C2CD18B1240300CDD413 /* VLCRemotePlayerTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +54,8 @@
 		F49FFA2218A18FA7004BE640 /* NSHTTPURLResponseNiceMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSHTTPURLResponseNiceMock.m; sourceTree = "<group>"; };
 		F49FFA3418A2944F004BE640 /* VLCHTTPClient_UnitTestAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCHTTPClient_UnitTestAdditions.h; sourceTree = "<group>"; };
 		F4B2C2C518AE907E00CDD413 /* VLCCommandTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCCommandTests.m; sourceTree = "<group>"; };
+		F4B2C2C918AE97F200CDD413 /* VLCRemoteObjectTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCRemoteObjectTests.m; sourceTree = "<group>"; };
+		F4B2C2CD18B1240300CDD413 /* VLCRemotePlayerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCRemotePlayerTests.m; sourceTree = "<group>"; };
 		F4FA21ADAE07455FB41C2D9F /* Pods-ios.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios.xcconfig"; path = "Pods/Pods-ios.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -155,6 +161,8 @@
 				F49FFA3318A2944F004BE640 /* Privates */,
 				F45889071895927E005B529C /* VLCHTTPClientTests.m */,
 				F4B2C2C518AE907E00CDD413 /* VLCCommandTests.m */,
+				F4B2C2C918AE97F200CDD413 /* VLCRemoteObjectTests.m */,
+				F4B2C2CD18B1240300CDD413 /* VLCRemotePlayerTests.m */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -347,10 +355,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F4B2C2CB18AE985B00CDD413 /* VLCRemoteObjectTests.m in Sources */,
 				F4B2C2C718AE90EE00CDD413 /* VLCCommandTests.m in Sources */,
 				F49FFA2418A1917E004BE640 /* NSHTTPURLResponseNiceMock.m in Sources */,
 				F49FFA07189EECCA004BE640 /* FBTestBlocker.m in Sources */,
 				F49FFA2018A17E97004BE640 /* NSURLSessionNiceMock.m in Sources */,
+				F4B2C2CF18B1240300CDD413 /* VLCRemotePlayerTests.m in Sources */,
 				F45889091895928D005B529C /* VLCHTTPClientTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -359,10 +369,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F4B2C2CA18AE97F200CDD413 /* VLCRemoteObjectTests.m in Sources */,
 				F4B2C2C618AE907E00CDD413 /* VLCCommandTests.m in Sources */,
 				F49FFA2318A18FA7004BE640 /* NSHTTPURLResponseNiceMock.m in Sources */,
 				F49FFA06189EECCA004BE640 /* FBTestBlocker.m in Sources */,
 				F49FFA1E18A17041004BE640 /* NSURLSessionNiceMock.m in Sources */,
+				F4B2C2CE18B1240300CDD413 /* VLCRemotePlayerTests.m in Sources */,
 				F458891E1895964C005B529C /* VLCHTTPClientTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -425,6 +437,8 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
+				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OSXTests/OSXTests-Prefix.pch";
@@ -473,6 +487,8 @@
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
+				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OSXTests/OSXTests-Prefix.pch";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -515,6 +531,8 @@
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
+				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iOSTests/iOSTests-Prefix.pch";
@@ -564,6 +582,8 @@
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
+				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iOSTests/iOSTests-Prefix.pch";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
