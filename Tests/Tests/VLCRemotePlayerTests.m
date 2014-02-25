@@ -157,6 +157,17 @@
 
 #pragma mark Accessing the Media Duration
 
+- (void)testGetDuration {
+    _remotePlayer.state = @{ @"length": @(0) };
+    expect(_remotePlayer.duration).to.equal(0);
+    
+    _remotePlayer.state = @{ @"length": @(1230) };
+    expect(_remotePlayer.duration).to.equal(1230);
+    
+    _remotePlayer.state = @{ @"length": @(-1) };
+    expect(_remotePlayer.duration).to.equal(0);
+}
+
 #pragma mark - Accessing the Media Metadatas
 
 @end

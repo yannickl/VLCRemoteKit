@@ -90,7 +90,7 @@
 @dynamic currentTime;
 
 - (NSTimeInterval)duration {
-    return [[self.state objectForKey:@"length"] doubleValue];
+    return MAX([[self.state objectForKey:@"length"] doubleValue], 0);
 }
 
 - (NSTimeInterval)currentTime {
