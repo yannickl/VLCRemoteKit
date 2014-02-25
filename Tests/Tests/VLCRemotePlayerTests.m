@@ -133,9 +133,30 @@
 }
 
 - (void)testSetVolume {
+    [[[_clientMock stub] andDo:^(NSInvocation *invocation) {
+        // The VLCCommand
+        __autoreleasing VLCCommand *volumeCommand;
+        
+        // 0 and 1 are reserved for invocation object
+        // 2 would be the command
+        [invocation getArgument:&volumeCommand atIndex:2];
+        
+        // Toogle the fullscreen
+        _remotePlayer.state = @{ @"volume": [volumeCommand.params objectForKey:@"val"] };
+    }] performCommand:[OCMArg any] completionHandler:nil];
     
+    _remotePlayer.volume = 0.0f;
+    expect(_remotePlayer.volume).to.equal(0.0f);
+    
+    _remotePlayer.volume = 1.0f;
+    expect(_remotePlayer.volume).to.equal(1.0f);
+    
+    _remotePlayer.volume = 2.0f;
+    expect(_remotePlayer.volume).to.equal(2.0f);
 }
 
 #pragma mark Accessing the Media Duration
+
+#pragma mark - Accessing the Media Metadatas
 
 @end
