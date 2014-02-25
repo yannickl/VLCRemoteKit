@@ -141,7 +141,7 @@
         // 2 would be the command
         [invocation getArgument:&volumeCommand atIndex:2];
         
-        // Toogle the fullscreen
+        // Set the volume
         _remotePlayer.state = @{ @"volume": [volumeCommand.params objectForKey:@"val"] };
     }] performCommand:[OCMArg any] completionHandler:nil];
     
@@ -158,6 +158,8 @@
 #pragma mark Accessing the Media Duration
 
 - (void)testGetDuration {
+    expect(_remotePlayer.duration).to.equal(0);
+    
     _remotePlayer.state = @{ @"length": @(0) };
     expect(_remotePlayer.duration).to.equal(0);
     
@@ -166,6 +168,46 @@
     
     _remotePlayer.state = @{ @"length": @(-1) };
     expect(_remotePlayer.duration).to.equal(0);
+}
+
+- (void)testGetCurrentTime {
+    expect(_remotePlayer.currentTime).to.equal(0);
+    
+    _remotePlayer.state = @{ @"time": @(0) };
+    expect(_remotePlayer.currentTime).to.equal(0);
+    
+    _remotePlayer.state = @{ @"time": @(12) };
+    expect(_remotePlayer.currentTime).to.equal(0);
+    
+    _remotePlayer.state = @{ @"time": @(12), @"length": @(1230) };
+    expect(_remotePlayer.currentTime).to.equal(12);
+    
+    _remotePlayer.state = @{ @"time": @(1230), @"length": @(1230) };
+    expect(_remotePlayer.currentTime).to.equal(1230);
+    
+    _remotePlayer.state = @{ @"time": @(1500), @"length": @(1230) };
+    expect(_remotePlayer.currentTime).to.equal(1230);
+}
+
+- (void)testSetCurrentTime {
+    [[[_clientMock stub] andDo:^(NSInvocation *invocation) {
+        // The VLCCommand
+        __autoreleasing VLCCommand *seekCommand;
+        
+        // 0 and 1 are reserved for invocation object
+        // 2 would be the command
+        [invocation getArgument:&seekCommand atIndex:2];
+        
+        // Set the current time
+        NSNumber *seekValue = [seekCommand.params objectForKey:@"val"];
+        _remotePlayer.state = @{ @"time": seekValue, @"length": seekValue };
+    }] performCommand:[OCMArg any] completionHandler:nil];
+    
+    _remotePlayer.currentTime = 0;
+    expect(_remotePlayer.currentTime).to.equal(0.0f);
+    
+    _remotePlayer.currentTime = 1234;
+    expect(_remotePlayer.currentTime).to.equal(1234);
 }
 
 #pragma mark - Accessing the Media Metadatas

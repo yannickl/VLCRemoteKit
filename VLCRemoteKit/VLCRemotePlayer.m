@@ -94,7 +94,8 @@
 }
 
 - (NSTimeInterval)currentTime {
-    return [[self.state objectForKey:@"time"] doubleValue];
+    NSTimeInterval duration = [self duration];
+    return MIN(MAX([[self.state objectForKey:@"time"] doubleValue], 0), duration);
 }
 
 - (void)setCurrentTime:(NSTimeInterval)currentTime {
