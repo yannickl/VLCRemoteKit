@@ -109,10 +109,7 @@
 @dynamic filename;
 
 - (NSString *)filename {
-    if ([self playbackState] != VLCRemotePlayerPlaybackStateStopped) {
-        return [[[[self.state objectForKey:@"information"] objectForKey:@"category"] objectForKey:@"meta"] objectForKey:@"filename"];
-    }
-    return nil;
+    return [[[[self.state objectForKey:@"information"] objectForKey:@"category"] objectForKey:@"meta"] objectForKey:@"filename"];
 }
 
 #pragma mark - Configuring and Controlling Playback

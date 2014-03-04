@@ -212,4 +212,13 @@
 
 #pragma mark - Accessing the Media Metadatas
 
+- (void)testGetFilename {
+    expect(_remotePlayer.filename).to.equal(nil);
+    
+    _remotePlayer.state = @{ @"information": @{ @"category": @{ @"meta": @{ @"filename": @"matrix" } } } };
+    expect(_remotePlayer.filename).to.equal(@"matrix");
+}
+
+#pragma mark - Configuring and Controlling Playback
+
 @end
