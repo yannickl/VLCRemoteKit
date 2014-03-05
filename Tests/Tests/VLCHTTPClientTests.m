@@ -25,7 +25,7 @@
  */
 
 #import <XCTest/XCTest.h>
-#import <VLCRemoteKit/VLCRemoteKit.h>
+#import "VLCRemoteKit.h"
 
 #import "NSURLSessionNiceMock.h"
 #import "NSHTTPURLResponseNiceMock.h"

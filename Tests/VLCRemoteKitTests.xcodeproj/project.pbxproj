@@ -9,6 +9,18 @@
 /* Begin PBXBuildFile section */
 		11870A4FEA224F1B931CB59D /* libPods-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ED73AC9896AC41F8B94D9301 /* libPods-ios.a */; };
 		1C697485E80945DD954E6B74 /* libPods-osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 69566C369F6D4C14BA961D4B /* libPods-osx.a */; };
+		F44169FD18C7DAC700E5675C /* NSError+VLC.m in Sources */ = {isa = PBXBuildFile; fileRef = F44169EE18C7DAC700E5675C /* NSError+VLC.m */; };
+		F44169FE18C7DAC700E5675C /* NSError+VLC.m in Sources */ = {isa = PBXBuildFile; fileRef = F44169EE18C7DAC700E5675C /* NSError+VLC.m */; };
+		F44169FF18C7DAC700E5675C /* VLCCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = F44169F118C7DAC700E5675C /* VLCCommand.m */; };
+		F4416A0018C7DAC700E5675C /* VLCCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = F44169F118C7DAC700E5675C /* VLCCommand.m */; };
+		F4416A0118C7DAC700E5675C /* VLCHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = F44169F318C7DAC700E5675C /* VLCHTTPClient.m */; };
+		F4416A0218C7DAC700E5675C /* VLCHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = F44169F318C7DAC700E5675C /* VLCHTTPClient.m */; };
+		F4416A0318C7DAC700E5675C /* VLCRemoteObject.m in Sources */ = {isa = PBXBuildFile; fileRef = F44169F618C7DAC700E5675C /* VLCRemoteObject.m */; };
+		F4416A0418C7DAC700E5675C /* VLCRemoteObject.m in Sources */ = {isa = PBXBuildFile; fileRef = F44169F618C7DAC700E5675C /* VLCRemoteObject.m */; };
+		F4416A0518C7DAC700E5675C /* VLCRemotePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F44169F918C7DAC700E5675C /* VLCRemotePlayer.m */; };
+		F4416A0618C7DAC700E5675C /* VLCRemotePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F44169F918C7DAC700E5675C /* VLCRemotePlayer.m */; };
+		F4416A0718C7DAC700E5675C /* VLCRemotePlaylist.m in Sources */ = {isa = PBXBuildFile; fileRef = F44169FB18C7DAC700E5675C /* VLCRemotePlaylist.m */; };
+		F4416A0818C7DAC700E5675C /* VLCRemotePlaylist.m in Sources */ = {isa = PBXBuildFile; fileRef = F44169FB18C7DAC700E5675C /* VLCRemotePlaylist.m */; };
 		F45888F7189591F4005B529C /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F45888E0189591D9005B529C /* XCTest.framework */; };
 		F45888FD189591F4005B529C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F45888FB189591F4005B529C /* InfoPlist.strings */; };
 		F45889091895928D005B529C /* VLCHTTPClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F45889071895927E005B529C /* VLCHTTPClientTests.m */; };
@@ -34,6 +46,22 @@
 		69566C369F6D4C14BA961D4B /* libPods-osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-osx.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDF0149F94454A0AAC3AC368 /* Pods-osx.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-osx.xcconfig"; path = "Pods/Pods-osx.xcconfig"; sourceTree = "<group>"; };
 		ED73AC9896AC41F8B94D9301 /* libPods-ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ios.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F44169ED18C7DAC700E5675C /* NSError+VLC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+VLC.h"; sourceTree = "<group>"; };
+		F44169EE18C7DAC700E5675C /* NSError+VLC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+VLC.m"; sourceTree = "<group>"; };
+		F44169EF18C7DAC700E5675C /* VLCClientProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCClientProtocol.h; sourceTree = "<group>"; };
+		F44169F018C7DAC700E5675C /* VLCCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCCommand.h; sourceTree = "<group>"; };
+		F44169F118C7DAC700E5675C /* VLCCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCCommand.m; sourceTree = "<group>"; };
+		F44169F218C7DAC700E5675C /* VLCHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCHTTPClient.h; sourceTree = "<group>"; };
+		F44169F318C7DAC700E5675C /* VLCHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCHTTPClient.m; sourceTree = "<group>"; };
+		F44169F418C7DAC700E5675C /* VLCRemoteKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCRemoteKit.h; sourceTree = "<group>"; };
+		F44169F518C7DAC700E5675C /* VLCRemoteObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCRemoteObject.h; sourceTree = "<group>"; };
+		F44169F618C7DAC700E5675C /* VLCRemoteObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCRemoteObject.m; sourceTree = "<group>"; };
+		F44169F718C7DAC700E5675C /* VLCRemoteObject_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCRemoteObject_Private.h; sourceTree = "<group>"; };
+		F44169F818C7DAC700E5675C /* VLCRemotePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCRemotePlayer.h; sourceTree = "<group>"; };
+		F44169F918C7DAC700E5675C /* VLCRemotePlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCRemotePlayer.m; sourceTree = "<group>"; };
+		F44169FA18C7DAC700E5675C /* VLCRemotePlaylist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCRemotePlaylist.h; sourceTree = "<group>"; };
+		F44169FB18C7DAC700E5675C /* VLCRemotePlaylist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCRemotePlaylist.m; sourceTree = "<group>"; };
+		F44169FC18C7DAC700E5675C /* VLCRemoteProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCRemoteProtocol.h; sourceTree = "<group>"; };
 		F45888E0189591D9005B529C /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		F45888E2189591D9005B529C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		F45888E4189591D9005B529C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -83,9 +111,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F44169EC18C7DAC700E5675C /* VLCRemoteKit */ = {
+			isa = PBXGroup;
+			children = (
+				F44169ED18C7DAC700E5675C /* NSError+VLC.h */,
+				F44169EE18C7DAC700E5675C /* NSError+VLC.m */,
+				F44169EF18C7DAC700E5675C /* VLCClientProtocol.h */,
+				F44169F018C7DAC700E5675C /* VLCCommand.h */,
+				F44169F118C7DAC700E5675C /* VLCCommand.m */,
+				F44169F218C7DAC700E5675C /* VLCHTTPClient.h */,
+				F44169F318C7DAC700E5675C /* VLCHTTPClient.m */,
+				F44169F418C7DAC700E5675C /* VLCRemoteKit.h */,
+				F44169F518C7DAC700E5675C /* VLCRemoteObject.h */,
+				F44169F618C7DAC700E5675C /* VLCRemoteObject.m */,
+				F44169F718C7DAC700E5675C /* VLCRemoteObject_Private.h */,
+				F44169F818C7DAC700E5675C /* VLCRemotePlayer.h */,
+				F44169F918C7DAC700E5675C /* VLCRemotePlayer.m */,
+				F44169FA18C7DAC700E5675C /* VLCRemotePlaylist.h */,
+				F44169FB18C7DAC700E5675C /* VLCRemotePlaylist.m */,
+				F44169FC18C7DAC700E5675C /* VLCRemoteProtocol.h */,
+			);
+			name = VLCRemoteKit;
+			path = ../VLCRemoteKit;
+			sourceTree = "<group>";
+		};
 		F45888D218959024005B529C = {
 			isa = PBXGroup;
 			children = (
+				F44169EC18C7DAC700E5675C /* VLCRemoteKit */,
 				F45889061895927E005B529C /* Tests */,
 				F49FFA03189EECCA004BE640 /* ThirdParty */,
 				F45888E6189591D9005B529C /* iOSTests */,
@@ -357,10 +410,16 @@
 			files = (
 				F4B2C2CB18AE985B00CDD413 /* VLCRemoteObjectTests.m in Sources */,
 				F4B2C2C718AE90EE00CDD413 /* VLCCommandTests.m in Sources */,
+				F4416A0218C7DAC700E5675C /* VLCHTTPClient.m in Sources */,
+				F4416A0018C7DAC700E5675C /* VLCCommand.m in Sources */,
+				F4416A0818C7DAC700E5675C /* VLCRemotePlaylist.m in Sources */,
 				F49FFA2418A1917E004BE640 /* NSHTTPURLResponseNiceMock.m in Sources */,
+				F44169FE18C7DAC700E5675C /* NSError+VLC.m in Sources */,
 				F49FFA07189EECCA004BE640 /* FBTestBlocker.m in Sources */,
 				F49FFA2018A17E97004BE640 /* NSURLSessionNiceMock.m in Sources */,
 				F4B2C2CF18B1240300CDD413 /* VLCRemotePlayerTests.m in Sources */,
+				F4416A0418C7DAC700E5675C /* VLCRemoteObject.m in Sources */,
+				F4416A0618C7DAC700E5675C /* VLCRemotePlayer.m in Sources */,
 				F45889091895928D005B529C /* VLCHTTPClientTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -371,10 +430,16 @@
 			files = (
 				F4B2C2CA18AE97F200CDD413 /* VLCRemoteObjectTests.m in Sources */,
 				F4B2C2C618AE907E00CDD413 /* VLCCommandTests.m in Sources */,
+				F4416A0118C7DAC700E5675C /* VLCHTTPClient.m in Sources */,
+				F44169FF18C7DAC700E5675C /* VLCCommand.m in Sources */,
+				F4416A0718C7DAC700E5675C /* VLCRemotePlaylist.m in Sources */,
 				F49FFA2318A18FA7004BE640 /* NSHTTPURLResponseNiceMock.m in Sources */,
+				F44169FD18C7DAC700E5675C /* NSError+VLC.m in Sources */,
 				F49FFA06189EECCA004BE640 /* FBTestBlocker.m in Sources */,
 				F49FFA1E18A17041004BE640 /* NSURLSessionNiceMock.m in Sources */,
 				F4B2C2CE18B1240300CDD413 /* VLCRemotePlayerTests.m in Sources */,
+				F4416A0318C7DAC700E5675C /* VLCRemoteObject.m in Sources */,
+				F4416A0518C7DAC700E5675C /* VLCRemotePlayer.m in Sources */,
 				F458891E1895964C005B529C /* VLCHTTPClientTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -437,8 +502,8 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_GENERATE_TEST_COVERAGE_FILES = NO;
-				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = NO;
+				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
+				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OSXTests/OSXTests-Prefix.pch";
@@ -487,8 +552,8 @@
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_GENERATE_TEST_COVERAGE_FILES = NO;
-				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = NO;
+				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
+				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OSXTests/OSXTests-Prefix.pch";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -531,8 +596,8 @@
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_GENERATE_TEST_COVERAGE_FILES = NO;
-				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = NO;
+				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
+				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iOSTests/iOSTests-Prefix.pch";
@@ -582,8 +647,8 @@
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_GENERATE_TEST_COVERAGE_FILES = NO;
-				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = NO;
+				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
+				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iOSTests/iOSTests-Prefix.pch";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;

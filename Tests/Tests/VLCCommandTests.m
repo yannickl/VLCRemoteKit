@@ -25,7 +25,7 @@
  */
 
 #import <XCTest/XCTest.h>
-#import <VLCRemoteKit/VLCRemoteKit.h>
+#import "VLCRemoteKit.h"
 
 #define EXP_SHORTHAND
 #import "Expecta.h"
