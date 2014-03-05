@@ -215,6 +215,12 @@
 - (void)testGetFilename {
     expect(_remotePlayer.filename).to.equal(nil);
     
+    _remotePlayer.state = @{ @"information": @{} };
+    expect(_remotePlayer.filename).to.equal(nil);
+    
+    _remotePlayer.state = @{ @"information": @"wrong params" };
+    XCTAssertThrows(_remotePlayer.filename);
+    
     _remotePlayer.state = @{ @"information": @{ @"category": @{ @"meta": @{ @"filename": @"matrix" } } } };
     expect(_remotePlayer.filename).to.equal(@"matrix");
 }

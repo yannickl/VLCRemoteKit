@@ -34,10 +34,7 @@
 
 - (id)initWithClient:(id<VLCClientProtocol>)client {
     if ((self = [super init])) {
-        NSLog(@"client: %@", client);
         NSParameterAssert(client);
-        NSLog(@"client: %@", client);
-        NSAssert(client, @"dds");
         
         self.state = 0;
         _client    = client;

@@ -4,12 +4,12 @@ namespace :test do
 
   desc "Run the VLCRemoteKit Tests for iOS"
   task :ios => :prepare do
-    $ios_success = system("xctool test -workspace Tests/VLCRemoteKitTests.xcworkspace -scheme 'iOSTests' -sdk iphonesimulator -configuration Release ONLY_ACTIVE_ARCH=NO")
+    $ios_success = system("xctool test -workspace Tests/VLCRemoteKitTests.xcworkspace -scheme 'iOSTests' -sdk iphonesimulator -configuration Debug ONLY_ACTIVE_ARCH=NO")
   end
 
   desc "Run the VLCRemoteKit Tests for Mac OS X"
   task :osx => :prepare do
-    $osx_success = system("xctool test -workspace Tests/VLCRemoteKitTests.xcworkspace -scheme 'OSXTests' -sdk macosx -configuration Release ONLY_ACTIVE_ARCH=NO")
+    $osx_success = system("xctool test -workspace Tests/VLCRemoteKitTests.xcworkspace -scheme 'OSXTests' -sdk macosx -configuration Debug ONLY_ACTIVE_ARCH=NO")
   end
 end
 
