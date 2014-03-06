@@ -227,4 +227,40 @@
 
 #pragma mark - Configuring and Controlling Playback
 
+- (void)testIsRandomPlayback {
+    expect(_remotePlayer.randomPlayback).to.beFalsy();
+    
+    _remotePlayer.state = @{ @"random": @(NO) };
+    expect(_remotePlayer.randomPlayback).to.beFalsy();
+    
+    _remotePlayer.state = @{ @"random": @(YES) };
+    expect(_remotePlayer.randomPlayback).to.beTruthy();
+}
+
+- (void)testSetRandomPlayback {
+    [[[_clientMock stub] andDo:^(NSInvocation *invocation) {
+        // The VLCCommand
+        __autoreleasing VLCCommand *toogleRandomPlaybackCommand;
+        
+        // 0 and 1 are reserved for invocation object
+        // 2 would be the command
+        [invocation getArgument:&toogleRandomPlaybackCommand atIndex:2];
+        
+        // Toogle the randomPlayback
+        if (_remotePlayer.randomPlayback) {
+            _remotePlayer.state = @{ @"random": @"false" };
+        }
+        else {
+            _remotePlayer.state = @{ @"random": @"true" };
+        }
+    }] performCommand:[OCMArg any] completionHandler:nil];
+    
+    _remotePlayer.state          = @{ @"random": @(NO) };
+    _remotePlayer.randomPlayback = YES;
+    expect(_remotePlayer.randomPlayback).to.beTruthy();
+    
+    _remotePlayer.randomPlayback = NO;
+    expect(_remotePlayer.randomPlayback).to.beFalsy();
+}
+
 @end
