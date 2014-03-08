@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		11870A4FEA224F1B931CB59D /* libPods-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ED73AC9896AC41F8B94D9301 /* libPods-ios.a */; };
 		1C697485E80945DD954E6B74 /* libPods-osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 69566C369F6D4C14BA961D4B /* libPods-osx.a */; };
+		F404A03618CBB18200B78A97 /* VLCTestObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = F404A03518CBB18200B78A97 /* VLCTestObserver.m */; };
+		F404A03718CBB1AC00B78A97 /* VLCTestObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = F404A03518CBB18200B78A97 /* VLCTestObserver.m */; };
 		F44169FD18C7DAC700E5675C /* NSError+VLC.m in Sources */ = {isa = PBXBuildFile; fileRef = F44169EE18C7DAC700E5675C /* NSError+VLC.m */; };
 		F44169FE18C7DAC700E5675C /* NSError+VLC.m in Sources */ = {isa = PBXBuildFile; fileRef = F44169EE18C7DAC700E5675C /* NSError+VLC.m */; };
 		F44169FF18C7DAC700E5675C /* VLCCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = F44169F118C7DAC700E5675C /* VLCCommand.m */; };
@@ -46,6 +48,7 @@
 		69566C369F6D4C14BA961D4B /* libPods-osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-osx.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDF0149F94454A0AAC3AC368 /* Pods-osx.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-osx.xcconfig"; path = "Pods/Pods-osx.xcconfig"; sourceTree = "<group>"; };
 		ED73AC9896AC41F8B94D9301 /* libPods-ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ios.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F404A03518CBB18200B78A97 /* VLCTestObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCTestObserver.m; sourceTree = "<group>"; };
 		F44169ED18C7DAC700E5675C /* NSError+VLC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+VLC.h"; sourceTree = "<group>"; };
 		F44169EE18C7DAC700E5675C /* NSError+VLC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+VLC.m"; sourceTree = "<group>"; };
 		F44169EF18C7DAC700E5675C /* VLCClientProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCClientProtocol.h; sourceTree = "<group>"; };
@@ -216,6 +219,7 @@
 				F4B2C2C518AE907E00CDD413 /* VLCCommandTests.m */,
 				F4B2C2C918AE97F200CDD413 /* VLCRemoteObjectTests.m */,
 				F4B2C2CD18B1240300CDD413 /* VLCRemotePlayerTests.m */,
+				F404A03518CBB18200B78A97 /* VLCTestObserver.m */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -419,6 +423,7 @@
 				F49FFA2018A17E97004BE640 /* NSURLSessionNiceMock.m in Sources */,
 				F4B2C2CF18B1240300CDD413 /* VLCRemotePlayerTests.m in Sources */,
 				F4416A0418C7DAC700E5675C /* VLCRemoteObject.m in Sources */,
+				F404A03718CBB1AC00B78A97 /* VLCTestObserver.m in Sources */,
 				F4416A0618C7DAC700E5675C /* VLCRemotePlayer.m in Sources */,
 				F45889091895928D005B529C /* VLCHTTPClientTests.m in Sources */,
 			);
@@ -439,6 +444,7 @@
 				F49FFA1E18A17041004BE640 /* NSURLSessionNiceMock.m in Sources */,
 				F4B2C2CE18B1240300CDD413 /* VLCRemotePlayerTests.m in Sources */,
 				F4416A0318C7DAC700E5675C /* VLCRemoteObject.m in Sources */,
+				F404A03618CBB18200B78A97 /* VLCTestObserver.m in Sources */,
 				F4416A0518C7DAC700E5675C /* VLCRemotePlayer.m in Sources */,
 				F458891E1895964C005B529C /* VLCHTTPClientTests.m in Sources */,
 			);

@@ -88,6 +88,14 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
 
 @implementation VLCHTTPClient
 
+#ifdef DEBUG
+// Unit Tests on 64-bit iOS Simulator does not work rdar://15107228
++ (void)load {
+    [[NSUserDefaults standardUserDefaults] setValue:@"XCTestLog,VLCTestObserver"
+                                             forKey:@"XCTestObserverClass"];
+}
+#endif
+
 - (void)dealloc {
     [_urlSession invalidateAndCancel];
     
