@@ -50,17 +50,6 @@
     }
 }
 
-- (BOOL)isPaused {
-    return [[self.state objectForKey:@"state"] isEqualToString:@"paused"];
-}
-
-- (void)setPaused:(BOOL)paused {
-    if (paused != [self isPaused]) {
-        VLCCommand *togglePauseCommand = [VLCCommand togglePauseCommand];
-        [self.client performCommand:togglePauseCommand completionHandler:nil];
-    }
-}
-
 - (BOOL)isPlaying {
     return [self playbackState] == VLCRemotePlayerPlaybackStatePlaying;
 }
