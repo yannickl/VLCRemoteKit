@@ -103,7 +103,8 @@
 }
 
 - (NSInteger)currentPlaybackId {
-    return [[self.state objectForKey:@"currentplid"] integerValue];
+    NSNumber *currentPlaybackId = [self.state objectForKey:@"currentplid"] ?: @(-1);
+    return [currentPlaybackId integerValue];
 }
 
 #pragma mark - Configuring and Controlling Playback

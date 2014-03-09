@@ -225,6 +225,16 @@
     expect(_remotePlayer.filename).to.equal(@"matrix");
 }
 
+- (void)testGetCurrentPlaybackIdentifier {
+    expect(_remotePlayer.currentPlaybackId).to.equal(-1);
+    
+    _remotePlayer.state = @{ @"currentplid": @(-1) };
+    expect(_remotePlayer.currentPlaybackId).to.equal(-1);
+    
+    _remotePlayer.state = @{ @"currentplid": @(12) };
+    expect(_remotePlayer.currentPlaybackId).to.equal(12);
+}
+
 #pragma mark - Configuring and Controlling Playback
 
 - (void)testIsRandomPlayback {
@@ -318,12 +328,14 @@
         // 2 would be the command
         [invocation getArgument:&toggleRepeatCommand atIndex:2];
         
-        // Toogle the randomPlayback
-        if (_remotePlayer.repeating) {
-            _remotePlayer.state = @{ @"repeat": @"false" };
-        }
-        else {
-            _remotePlayer.state = @{ @"repeat": @"true" };
+        if (toggleRepeatCommand.name == VLCCommandNameToggleRepeat) {
+            // Toogle the randomPlayback
+            if (_remotePlayer.repeating) {
+                _remotePlayer.state = @{ @"repeat": @"false" };
+            }
+            else {
+                _remotePlayer.state = @{ @"repeat": @"true" };
+            }
         }
     }] performCommand:[OCMArg any] completionHandler:nil];
     
@@ -333,6 +345,29 @@
     
     _remotePlayer.repeating = NO;
     expect(_remotePlayer.repeating).to.beFalsy();
+}
+
+- (void)testNext {
+    [[[_clientMock stub] andDo:^(NSInvocation *invocation) {
+        // The VLCCommand
+        __autoreleasing VLCCommand *nextCommand;
+        
+        // 0 and 1 are reserved for invocation object
+        // 2 would be the command
+        [invocation getArgument:&nextCommand atIndex:2];
+        
+        if (nextCommand.name == VLCCommandNameNext) {
+            NSInteger currentPlaybackId = [[_remotePlayer.state objectForKey:@"currentplid"] integerValue];
+            _remotePlayer.state = @{ @"currentplid": @(currentPlaybackId + 1) };
+        }
+    }] performCommand:[OCMArg any] completionHandler:nil];
+
+    _remotePlayer.state = @{ @"currentplid": @(1) };
+    expect(_remotePlayer.currentPlaybackId).to.equal(1);
+    
+    [_remotePlayer next];
+    
+    expect(_remotePlayer.currentPlaybackId).to.equal(2);
 }
 
 @end

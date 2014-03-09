@@ -38,8 +38,8 @@
 
 - (id)initWithName:(VLCCommandName)name params:(NSDictionary *)params {
     if ((self = [super init])) {
-        _name   = name;
-        _params = params;
+        self.name   = name;
+        self.params = params;
     }
     return self;
 }
