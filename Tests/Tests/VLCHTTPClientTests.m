@@ -37,18 +37,13 @@
 #import "OCMock.h"
 #import "FBTestBlocker.h"
 
+static NSString * const dummyHost = @"1.2.3.4";
+static NSInteger const dummyPort  = 1111;
+
 @interface VLCHTTPClientTests : XCTestCase
 @end
 
 @implementation VLCHTTPClientTests
-
-- (void)setUp {
-    [super setUp];
-}
-
-- (void)tearDown {
-    [super tearDown];
-}
 
 #pragma mark - Private
 
@@ -59,7 +54,7 @@
     id mockDelegate = [OCMockObject niceMockForProtocol:@protocol(VLCClientDelegate)];
     
     // Create the client
-    VLCHTTPClient *httpClient = [VLCHTTPClient clientWithHostname:@"1.2.3.4" port:8080 username:nil password:@"password"];
+    VLCHTTPClient *httpClient = [VLCHTTPClient clientWithHostname:dummyHost port:dummyPort username:nil password:@"password"];
     httpClient.delegate       = mockDelegate;
     
     // Check that the connection status is disconnected
@@ -91,7 +86,7 @@
     id mockDelegate = [OCMockObject  niceMockForProtocol:@protocol(VLCClientDelegate)];
     
     // Create the client
-    VLCHTTPClient *httpClient = [VLCHTTPClient clientWithHostname:@"1.2.3.4" port:8080 username:nil password:@"password"];
+    VLCHTTPClient *httpClient = [VLCHTTPClient clientWithHostname:dummyHost port:dummyPort username:nil password:@"password"];
     
     __block VLCClientConnectionStatus returnedStatus = httpClient.connectionStatus;
     [httpClient setConnectionStatusChangeBlock:^(VLCClientConnectionStatus status) {
@@ -124,10 +119,42 @@
 
 #pragma mark Methods
 
+#pragma mark  URL Components From Commands
+
+- (void)testURLComponentsFromNilCommand {
+    VLCHTTPClient *httpClient = [VLCHTTPClient clientWithHostname:dummyHost port:dummyPort username:nil password:@"password"];
+    
+    NSURLComponents *nilComponents = [httpClient urlComponentsFromCommand:nil];
+    expect(nilComponents).to.beNil();
+}
+
+- (void)testURLComponentsFromDummyCommand {
+    VLCHTTPClient *httpClient = [VLCHTTPClient clientWithHostname:dummyHost port:dummyPort username:nil password:@"password"];
+    
+    VLCCommand *dummyCommand         = [VLCCommand commandWithName:-1 params:nil];
+    NSURLComponents *dummyComponents = [httpClient urlComponentsFromCommand:dummyCommand];
+    expect(dummyComponents).to.beNil();
+}
+
+- (void)testURLComponentsFromStatusCommand {
+    VLCHTTPClient *httpClient = [VLCHTTPClient clientWithHostname:dummyHost port:dummyPort username:nil password:@"password"];
+    
+    VLCCommand *statusCommand         = [VLCCommand statusCommand];
+    NSURLComponents *statusComponents = [httpClient urlComponentsFromCommand:statusCommand];
+    
+    expect(statusComponents).toNot.beNil();
+    expect(statusComponents.host).to.equal(dummyHost);
+    expect(statusComponents.port).to.equal(dummyPort);
+    expect(statusComponents.path).to.equal(_kVRKURLPathStatus);
+    expect(statusComponents.query).to.beNil();
+}
+
+#pragma mark Requests
+
 - (void)testPerformRequestWith200StatusCode {
     id urlSessionMock   = [NSURLSessionNiceMock mockWithReturnedStatusCode:200];
     
-    VLCHTTPClient *httpClient = [VLCHTTPClient clientWithHostname:@"1.2.3.4" port:8080 username:nil password:@"password"];
+    VLCHTTPClient *httpClient = [VLCHTTPClient clientWithHostname:dummyHost port:dummyPort username:nil password:@"password"];
     httpClient.urlSession     = urlSessionMock;
     
     __block NSData *returnedData   = nil;
@@ -146,7 +173,7 @@
 - (void)testPerformRequestWith401StatusCode {
     id urlSessionMock   = [NSURLSessionNiceMock mockWithReturnedStatusCode:401];
     
-    VLCHTTPClient *httpClient = [VLCHTTPClient clientWithHostname:@"1.2.3.4" port:8080 username:nil password:@"password"];
+    VLCHTTPClient *httpClient = [VLCHTTPClient clientWithHostname:dummyHost port:dummyPort username:nil password:@"password"];
     httpClient.urlSession     = urlSessionMock;
     
     __block NSData *returnedData   = nil;
@@ -166,7 +193,7 @@
 - (void)testPerformRequestWithError {
     id urlSessionMock   = [NSURLSessionNiceMock mockWithReturnedStatusCode:1001];
     
-    VLCHTTPClient *httpClient = [VLCHTTPClient clientWithHostname:@"1.2.3.4" port:8080 username:nil password:@"password"];
+    VLCHTTPClient *httpClient = [VLCHTTPClient clientWithHostname:dummyHost port:dummyPort username:nil password:@"password"];
     httpClient.urlSession     = urlSessionMock;
     
     __block NSData *returnedData   = nil;
@@ -184,7 +211,7 @@
 }
 
 - (void)testAuthorizationHeaderRequests {
-    VLCHTTPClient *httpClient = [VLCHTTPClient clientWithHostname:@"1.2.3.4" port:8080 username:nil password:@"password"];
+    VLCHTTPClient *httpClient = [VLCHTTPClient clientWithHostname:dummyHost port:dummyPort username:nil password:@"password"];
     
     VLCCommand *command   = [VLCCommand statusCommand];
     NSURLRequest *request = [httpClient urlRequestWithCommand:command];
@@ -231,7 +258,7 @@
 
     id mockDelegate = [OCMockObject niceMockForProtocol:@protocol(VLCClientDelegate)];
     
-    VLCHTTPClient *httpClient = [VLCHTTPClient clientWithHostname:@"1.2.3.4" port:8080 username:nil password:@"password"];
+    VLCHTTPClient *httpClient = [VLCHTTPClient clientWithHostname:dummyHost port:dummyPort username:nil password:@"password"];
     httpClient.urlSession     = urlSessionMock;
     httpClient.delegate       = mockDelegate;
 
@@ -240,6 +267,7 @@
         returnedStatus = status;
     }];
     
+    // Try connection
     __block NSData *returnedData   = nil;
     __block NSError *returnedError = nil;
     [httpClient connectWithCompletionHandler:^(NSData *data, NSError *error) {
@@ -254,6 +282,7 @@
     expect(returnedData).toNot.beNil();
     expect(returnedError).to.beNil();
     
+    // Try reconnection
     [httpClient connectWithCompletionHandler:^(NSData *data, NSError *error) {
         returnedData  = data;
         returnedError = error;
@@ -273,7 +302,7 @@
     
     id mockDelegate = [OCMockObject niceMockForProtocol:@protocol(VLCClientDelegate)];
     
-    VLCHTTPClient *httpClient = [VLCHTTPClient clientWithHostname:@"1.2.3.4" port:8080 username:nil password:@"password"];
+    VLCHTTPClient *httpClient = [VLCHTTPClient clientWithHostname:dummyHost port:dummyPort username:nil password:@"password"];
     httpClient.urlSession     = urlSessionMock;
     httpClient.delegate       = mockDelegate;
     
@@ -308,10 +337,12 @@
     expect(returnedError).to.beNil();
 }
 
-- (void)testPerformCommand {
+#pragma mark Perform VLC Commands
+
+- (void)testPerformCommandWithoutConnection {
     id urlSessionMock = [NSURLSessionNiceMock mockWithReturnedStatusCode:200];
     
-    VLCHTTPClient *httpClient = [VLCHTTPClient clientWithHostname:@"1.2.3.4" port:8080 username:nil password:@"password"];
+    VLCHTTPClient *httpClient = [VLCHTTPClient clientWithHostname:dummyHost port:dummyPort username:nil password:@"password"];
     httpClient.urlSession     = urlSessionMock;
     
     VLCCommand *statusCommand      = [VLCCommand statusCommand];
@@ -327,16 +358,29 @@
     // We can't perform a command if we are not connected
     expect(returnedData).to.beNil();
     expect(returnedError).toNot.beNil();
+    expect(returnedError.domain).to.equal(kVLCClientErrorDomain);
     expect(returnedError.code).to.equal(VLCClientErrorCodeNotConnected);
+}
+
+- (void)testPerformDummyCommand {
+    id urlSessionMock = [NSURLSessionNiceMock mockWithReturnedStatusCode:200];
     
+    VLCHTTPClient *httpClient = [VLCHTTPClient clientWithHostname:dummyHost port:dummyPort username:nil password:@"password"];
+    httpClient.urlSession     = urlSessionMock;
+
     // So we make the connection
     [httpClient connectWithCompletionHandler:NULL];
+    
+    VLCCommand *statusCommand      = [VLCCommand statusCommand];
+    __block NSData *returnedData   = nil;
+    __block NSError *returnedError = nil;
     [httpClient performCommand:statusCommand completionHandler:^(NSData *data, NSError *error) {
         returnedData  = data;
         returnedError = error;
     }];
     
     [[[FBTestBlocker alloc] init] waitWithTimeout:0.1f];
+    
     expect(returnedData).toNot.beNil();
     expect(returnedError).to.beNil();
 }

@@ -75,6 +75,8 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
 
 #pragma mark Private Methods
 
+/** Creates and returns an URL components from a given command. */
+- (NSURLComponents *)urlComponentsFromCommand:(VLCCommand *)command;
 /** Creates and returns an HTTP request for a given commmand. */
 - (NSURLRequest *)urlRequestWithCommand:(VLCCommand *)command;
 /** Load and starts an HTTP GET task using a given, then calls a handler upon completion. */
@@ -153,6 +155,10 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
 #pragma mark - Private Methods
 
 - (NSURLComponents *)urlComponentsFromCommand:(VLCCommand *)command {
+    if (!command) {
+        return nil;
+    }
+    
     NSURLComponents *urlComponents = [_urlComponents copy];
     
     switch (command.name) {
