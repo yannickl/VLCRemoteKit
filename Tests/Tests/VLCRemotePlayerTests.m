@@ -263,4 +263,40 @@
     expect(_remotePlayer.randomPlayback).to.beFalsy();
 }
 
+- (void)testIsLoopingPlaylist {
+    expect(_remotePlayer.loopingPlaylist).to.beFalsy();
+    
+    _remotePlayer.state = @{ @"loop": @(NO) };
+    expect(_remotePlayer.loopingPlaylist).to.beFalsy();
+    
+    _remotePlayer.state = @{ @"loop": @(YES) };
+    expect(_remotePlayer.loopingPlaylist).to.beTruthy();
+}
+
+- (void)testSetLoopingPlaylist {
+    [[[_clientMock stub] andDo:^(NSInvocation *invocation) {
+        // The VLCCommand
+        __autoreleasing VLCCommand *toggleLoopCommand;
+        
+        // 0 and 1 are reserved for invocation object
+        // 2 would be the command
+        [invocation getArgument:&toggleLoopCommand atIndex:2];
+        
+        // Toogle the randomPlayback
+        if (_remotePlayer.loopingPlaylist) {
+            _remotePlayer.state = @{ @"loop": @"false" };
+        }
+        else {
+            _remotePlayer.state = @{ @"loop": @"true" };
+        }
+    }] performCommand:[OCMArg any] completionHandler:nil];
+    
+    _remotePlayer.state           = @{ @"loop": @(NO) };
+    _remotePlayer.loopingPlaylist = YES;
+    expect(_remotePlayer.loopingPlaylist).to.beTruthy();
+    
+    _remotePlayer.loopingPlaylist = NO;
+    expect(_remotePlayer.loopingPlaylist).to.beFalsy();
+}
+
 @end

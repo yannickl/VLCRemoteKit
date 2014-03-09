@@ -14,14 +14,13 @@
 
 @implementation VLCTestObserver
 
-extern void __gcov_flush(void);
-
-- (void)stopObserving
-{
+#ifdef _IPHONE_OS_VERSION_MAX_ALLOWED
+- (void)stopObserving {
     [super stopObserving];
 
     extern void __gcov_flush(void);
     __gcov_flush();
 }
+#endif
 
 @end
