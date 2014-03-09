@@ -111,6 +111,16 @@
                 NSInteger currentPlaybackId = [[_remotePlayer.state objectForKey:@"currentplid"] integerValue];
                 _remotePlayer.state = @{ @"currentplid": @(currentPlaybackId - 1) };
             } break;
+            case VLCCommandNameTogglePause:
+            {
+                NSString *state = [_remotePlayer.state objectForKey:@"state"] ?: @"stopped";
+                if ([state isEqualToString:@"playing"]) {
+                    _remotePlayer.state = @{ @"state" : @"paused" };
+                }
+                else {
+                    _remotePlayer.state = @{ @"state" : @"playing" };
+                }
+            } break;
             default:
                 break;
         }
@@ -336,6 +346,19 @@
     [_remotePlayer previous];
     
     expect(_remotePlayer.currentPlaybackId).to.equal(0);
+}
+
+- (void)testPlay {
+    _remotePlayer.state = @{ @"state": @"paused" };
+    expect(_remotePlayer.playbackState).to.equal(VLCRemotePlayerPlaybackStatePaused);
+    
+    [_remotePlayer play];
+    
+    expect(_remotePlayer.playbackState).to.equal(VLCRemotePlayerPlaybackStatePlaying);
+    
+    [_remotePlayer play];
+    
+    expect(_remotePlayer.playbackState).to.equal(VLCRemotePlayerPlaybackStatePlaying);
 }
 
 @end

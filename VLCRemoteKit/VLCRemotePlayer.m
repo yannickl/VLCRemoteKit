@@ -156,7 +156,7 @@
 }
 
 - (void)play {
-    if ([self playbackState] == VLCRemotePlayerPlaybackStatePaused) {
+    if ([self playbackState] != VLCRemotePlayerPlaybackStatePlaying) {
         [self togglePause];
     }
 }
