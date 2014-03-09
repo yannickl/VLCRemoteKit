@@ -149,6 +149,54 @@ static NSInteger const dummyPort  = 1111;
     expect(components.query).to.equal(@"command=pl_next");
 }
 
+- (void)testURLComponentsFromPlayCommand {
+    VLCHTTPClient *httpClient = [VLCHTTPClient clientWithHostname:dummyHost port:dummyPort username:nil password:@"password"];
+    
+    VLCCommand *playCommand     = [VLCCommand playCommandWithItemWithIdentifier:2];
+    NSURLComponents *components = [httpClient urlComponentsFromCommand:playCommand];
+    
+    expect(components).toNot.beNil();
+    expect(components.host).to.equal(dummyHost);
+    expect(components.port).to.equal(dummyPort);
+    expect(components.path).to.equal(_kVRKURLPathStatus);
+    expect(components.query).to.equal(@"command=pl_play&id=2");
+    
+    playCommand = [VLCCommand playCommandWithItemWithIdentifier:-1];
+    components  = [httpClient urlComponentsFromCommand:playCommand];
+    
+    expect(components).toNot.beNil();
+    expect(components.host).to.equal(dummyHost);
+    expect(components.port).to.equal(dummyPort);
+    expect(components.path).to.equal(_kVRKURLPathStatus);
+    expect(components.query).to.equal(@"command=pl_play");
+}
+
+- (void)testURLComponentsFromPreviousCommand {
+    VLCHTTPClient *httpClient = [VLCHTTPClient clientWithHostname:dummyHost port:dummyPort username:nil password:@"password"];
+    
+    VLCCommand *previousCommand = [VLCCommand previousCommand];
+    NSURLComponents *components = [httpClient urlComponentsFromCommand:previousCommand];
+    
+    expect(components).toNot.beNil();
+    expect(components.host).to.equal(dummyHost);
+    expect(components.port).to.equal(dummyPort);
+    expect(components.path).to.equal(_kVRKURLPathStatus);
+    expect(components.query).to.equal(@"command=pl_previous");
+}
+
+- (void)testURLComponentsFromSeekCommand {
+    VLCHTTPClient *httpClient = [VLCHTTPClient clientWithHostname:dummyHost port:dummyPort username:nil password:@"password"];
+    
+    VLCCommand *seekCommand     = [VLCCommand seekCommandWithTimePosition:345];
+    NSURLComponents *components = [httpClient urlComponentsFromCommand:seekCommand];
+    
+    expect(components).toNot.beNil();
+    expect(components.host).to.equal(dummyHost);
+    expect(components.port).to.equal(dummyPort);
+    expect(components.path).to.equal(_kVRKURLPathStatus);
+    expect(components.query).to.equal(@"command=seek&val=345");
+}
+
 - (void)testURLComponentsFromStatusCommand {
     VLCHTTPClient *httpClient = [VLCHTTPClient clientWithHostname:dummyHost port:dummyPort username:nil password:@"password"];
     
