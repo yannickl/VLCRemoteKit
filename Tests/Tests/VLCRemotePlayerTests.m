@@ -385,4 +385,17 @@
     expect(_remotePlayer.currentPlaybackId).to.equal(-1);
 }
 
+- (void)testPause {
+    _remotePlayer.state = @{ @"state": @"playing" };
+    expect(_remotePlayer.playbackState).to.equal(VLCRemotePlayerPlaybackStatePlaying);
+    
+    [_remotePlayer pause];
+    
+    expect(_remotePlayer.playbackState).to.equal(VLCRemotePlayerPlaybackStatePaused);
+    
+    [_remotePlayer pause];
+    
+    expect(_remotePlayer.playbackState).to.equal(VLCRemotePlayerPlaybackStatePaused);
+}
+
 @end
