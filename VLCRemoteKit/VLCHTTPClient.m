@@ -314,7 +314,7 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
         else if (completionHandler) {
             NSDictionary *userInfo = @{
                                        NSLocalizedDescriptionKey: NSLocalizedString(@"Connection failed.", nil),
-                                       NSLocalizedFailureReasonErrorKey: NSLocalizedString(@"An connection is already open.", nil)
+                                       NSLocalizedFailureReasonErrorKey: NSLocalizedString(@"A connection is already open.", nil)
                                        };
             NSError *error = [NSError errorWithDomain:kVLCClientErrorDomain code:VLCClientErrorCodeConnectionAlreadyOpened userInfo:userInfo];
             completionHandler(nil, error);

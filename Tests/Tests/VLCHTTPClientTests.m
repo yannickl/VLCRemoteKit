@@ -253,6 +253,19 @@
     expect(returnedStatus).to.equal(VLCClientConnectionStatusConnected);
     expect(returnedData).toNot.beNil();
     expect(returnedError).to.beNil();
+    
+    [httpClient connectWithCompletionHandler:^(NSData *data, NSError *error) {
+        returnedData  = data;
+        returnedError = error;
+    }];
+    
+    [[[FBTestBlocker alloc] init] waitWithTimeout:0.1f];
+    
+    expect(returnedStatus).to.equal(VLCClientConnectionStatusConnected);
+    expect(returnedData).to.beNil();
+    expect(returnedError).notTo.beNil();
+    expect(returnedError.domain).to.equal(kVLCClientErrorDomain);
+    expect(returnedError.code).to.equal(VLCClientErrorCodeConnectionAlreadyOpened);
 }
 
 - (void)testDisconnection {
