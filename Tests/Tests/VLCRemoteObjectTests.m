@@ -45,7 +45,7 @@
     [super setUp];
     
     id clientMock = [OCMockObject niceMockForProtocol:@protocol(VLCClientProtocol)];
-    _remoteObject = [VLCRemoteObject remoteWithClient:clientMock];
+    _remoteObject = [VLCRemoteObject remoteWithVLCClient:clientMock];
 }
 
 - (void)tearDown {
@@ -59,13 +59,13 @@
 #pragma mark Creating and Initializing a Remote Client
 
 - (void)testInitializationWithEmptyClient {
-    XCTAssertThrows([[VLCRemoteObject alloc] initWithClient:nil], @"A remote object needs have a client to work");
+    XCTAssertThrows([[VLCRemoteObject alloc] initWithVLCClient:nil], @"A remote object needs have a client to work");
 }
 
 - (void)testInitializationWithClient {
     id clientMock = [OCMockObject niceMockForProtocol:@protocol(VLCClientProtocol)];
 
-    XCTAssertNoThrow([[VLCRemoteObject alloc] initWithClient:clientMock], @"A remote object must have a client");
+    XCTAssertNoThrow([[VLCRemoteObject alloc] initWithVLCClient:clientMock], @"A remote object must have a client");
 }
 
 - (void)testInitialState {

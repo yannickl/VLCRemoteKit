@@ -46,7 +46,7 @@
     [super setUp];
 
     _clientMock   = [OCMockObject niceMockForProtocol:@protocol(VLCClientProtocol)];
-    _remotePlayer = [VLCRemotePlayer remoteWithClient:_clientMock];
+    _remotePlayer = [VLCRemotePlayer remoteWithVLCClient:_clientMock];
 }
 
 - (void)tearDown {

@@ -63,7 +63,7 @@
  * @param client The receiver client.
  * @since 1.0.0
  */
-- (id)initWithClient:(id<VLCClientProtocol>)client;
+- (id)initWithVLCClient:(id<VLCClientProtocol>)client;
 
 /**
  * @abstract Creates and returns a remote-object with a given client serving to
@@ -71,7 +71,7 @@
  * @param client The receiver client.
  * @since 1.0.0
  */
-+ (instancetype)remoteWithClient:(id<VLCClientProtocol>)client;
++ (instancetype)remoteWithVLCClient:(id<VLCClientProtocol>)client;
 
 #pragma mark - Getting the Client
 /** @name Getting the Client */

@@ -32,7 +32,7 @@
 
 #pragma mark - Creating and Initializing a Remote Client
 
-- (id)initWithClient:(id<VLCClientProtocol>)client {
+- (id)initWithVLCClient:(id<VLCClientProtocol>)client {
     if ((self = [super init])) {
         NSParameterAssert(client);
         
@@ -42,8 +42,8 @@
     return self;
 }
 
-+ (instancetype)remoteWithClient:(id<VLCClientProtocol>)client {
-    return [[self alloc] initWithClient:client];
++ (instancetype)remoteWithVLCClient:(id<VLCClientProtocol>)client {
+    return [[self alloc] initWithVLCClient:client];
 }
 
 #pragma mark - Private Methods

@@ -142,8 +142,8 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
         _urlComponents    = urlComponents;
         _headers          = headers;
         _urlSession       = urlSession;
-        _player           = [VLCRemotePlayer remoteWithClient:self];
-        _playlist         = [VLCRemotePlaylist remoteWithClient:self];
+        _player           = [VLCRemotePlayer remoteWithVLCClient:self];
+        _playlist         = [VLCRemotePlaylist remoteWithVLCClient:self];
         
         [self addObserver:self forKeyPath:@"connectionStatus" options:NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew context:nil];
     }
