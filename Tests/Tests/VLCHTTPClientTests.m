@@ -124,29 +124,42 @@ static NSInteger const dummyPort  = 1111;
 - (void)testURLComponentsFromNilCommand {
     VLCHTTPClient *httpClient = [VLCHTTPClient clientWithHostname:dummyHost port:dummyPort username:nil password:@"password"];
     
-    NSURLComponents *nilComponents = [httpClient urlComponentsFromCommand:nil];
-    expect(nilComponents).to.beNil();
+    NSURLComponents *components = [httpClient urlComponentsFromCommand:nil];
+    expect(components).to.beNil();
 }
 
 - (void)testURLComponentsFromDummyCommand {
     VLCHTTPClient *httpClient = [VLCHTTPClient clientWithHostname:dummyHost port:dummyPort username:nil password:@"password"];
     
-    VLCCommand *dummyCommand         = [VLCCommand commandWithName:-1 params:nil];
-    NSURLComponents *dummyComponents = [httpClient urlComponentsFromCommand:dummyCommand];
-    expect(dummyComponents).to.beNil();
+    VLCCommand *dummyCommand    = [VLCCommand commandWithName:-1 params:nil];
+    NSURLComponents *components = [httpClient urlComponentsFromCommand:dummyCommand];
+    expect(components).to.beNil();
+}
+
+- (void)testURLComponentsFromNextCommand {
+    VLCHTTPClient *httpClient = [VLCHTTPClient clientWithHostname:dummyHost port:dummyPort username:nil password:@"password"];
+    
+    VLCCommand *nextCommand     = [VLCCommand nextCommand];
+    NSURLComponents *components = [httpClient urlComponentsFromCommand:nextCommand];
+    
+    expect(components).toNot.beNil();
+    expect(components.host).to.equal(dummyHost);
+    expect(components.port).to.equal(dummyPort);
+    expect(components.path).to.equal(_kVRKURLPathStatus);
+    expect(components.query).to.equal(@"command=pl_next");
 }
 
 - (void)testURLComponentsFromStatusCommand {
     VLCHTTPClient *httpClient = [VLCHTTPClient clientWithHostname:dummyHost port:dummyPort username:nil password:@"password"];
     
-    VLCCommand *statusCommand         = [VLCCommand statusCommand];
-    NSURLComponents *statusComponents = [httpClient urlComponentsFromCommand:statusCommand];
+    VLCCommand *statusCommand   = [VLCCommand statusCommand];
+    NSURLComponents *components = [httpClient urlComponentsFromCommand:statusCommand];
     
-    expect(statusComponents).toNot.beNil();
-    expect(statusComponents.host).to.equal(dummyHost);
-    expect(statusComponents.port).to.equal(dummyPort);
-    expect(statusComponents.path).to.equal(_kVRKURLPathStatus);
-    expect(statusComponents.query).to.beNil();
+    expect(components).toNot.beNil();
+    expect(components.host).to.equal(dummyHost);
+    expect(components.port).to.equal(dummyPort);
+    expect(components.path).to.equal(_kVRKURLPathStatus);
+    expect(components.query).to.beNil();
 }
 
 #pragma mark Requests
