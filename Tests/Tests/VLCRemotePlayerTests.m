@@ -410,8 +410,24 @@
     expect(_remotePlayer.playbackState).to.equal(VLCRemotePlayerPlaybackStateStopped);
    
     _remotePlayer.state = @{ @"state": @"paused" };
+    expect(_remotePlayer.playbackState).to.equal(VLCRemotePlayerPlaybackStatePaused);
+    
     [_remotePlayer stop];
+    
     expect(_remotePlayer.playbackState).to.equal(VLCRemotePlayerPlaybackStateStopped);
+}
+
+- (void)testTogglePause {
+    _remotePlayer.state = @{ @"state": @"stopped" };
+    expect(_remotePlayer.playbackState).to.equal(VLCRemotePlayerPlaybackStateStopped);
+    
+    [_remotePlayer togglePause];
+    
+    expect(_remotePlayer.playbackState).to.equal(VLCRemotePlayerPlaybackStatePlaying);
+    
+    [_remotePlayer togglePause];
+    
+    expect(_remotePlayer.playbackState).to.equal(VLCRemotePlayerPlaybackStatePaused);
 }
 
 @end
