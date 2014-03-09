@@ -299,4 +299,40 @@
     expect(_remotePlayer.loopingPlaylist).to.beFalsy();
 }
 
+- (void)testIsRepeating {
+    expect(_remotePlayer.repeating).to.beFalsy();
+    
+    _remotePlayer.state = @{ @"repeat": @(NO) };
+    expect(_remotePlayer.repeating).to.beFalsy();
+    
+    _remotePlayer.state = @{ @"repeat": @(YES) };
+    expect(_remotePlayer.repeating).to.beTruthy();
+}
+
+- (void)testSetRepeating {
+    [[[_clientMock stub] andDo:^(NSInvocation *invocation) {
+        // The VLCCommand
+        __autoreleasing VLCCommand *toggleRepeatCommand;
+        
+        // 0 and 1 are reserved for invocation object
+        // 2 would be the command
+        [invocation getArgument:&toggleRepeatCommand atIndex:2];
+        
+        // Toogle the randomPlayback
+        if (_remotePlayer.repeating) {
+            _remotePlayer.state = @{ @"repeat": @"false" };
+        }
+        else {
+            _remotePlayer.state = @{ @"repeat": @"true" };
+        }
+    }] performCommand:[OCMArg any] completionHandler:nil];
+    
+    _remotePlayer.state     = @{ @"repeat": @(NO) };
+    _remotePlayer.repeating = YES;
+    expect(_remotePlayer.repeating).to.beTruthy();
+    
+    _remotePlayer.repeating = NO;
+    expect(_remotePlayer.repeating).to.beFalsy();
+}
+
 @end
