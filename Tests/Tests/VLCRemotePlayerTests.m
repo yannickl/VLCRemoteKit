@@ -370,4 +370,27 @@
     expect(_remotePlayer.currentPlaybackId).to.equal(2);
 }
 
+- (void)testPrevious {
+    [[[_clientMock stub] andDo:^(NSInvocation *invocation) {
+        // The VLCCommand
+        __autoreleasing VLCCommand *previousCommand;
+        
+        // 0 and 1 are reserved for invocation object
+        // 2 would be the command
+        [invocation getArgument:&previousCommand atIndex:2];
+        
+        if (previousCommand.name == VLCCommandNamePrevious) {
+            NSInteger currentPlaybackId = [[_remotePlayer.state objectForKey:@"currentplid"] integerValue];
+            _remotePlayer.state = @{ @"currentplid": @(currentPlaybackId - 1) };
+        }
+    }] performCommand:[OCMArg any] completionHandler:nil];
+    
+    _remotePlayer.state = @{ @"currentplid": @(1) };
+    expect(_remotePlayer.currentPlaybackId).to.equal(1);
+    
+    [_remotePlayer previous];
+    
+    expect(_remotePlayer.currentPlaybackId).to.equal(0);
+}
+
 @end

@@ -150,15 +150,15 @@
     [self.client performCommand:nextCommand completionHandler:nil];
 }
 
+- (void)previous {
+    VLCCommand *previousCommand= [VLCCommand previousCommand];
+    [self.client performCommand:previousCommand completionHandler:nil];
+}
+
 - (void)play {
     if ([self playbackState] == VLCRemotePlayerPlaybackStatePaused) {
         [self togglePause];
     }
-}
-
-- (void)previous {
-    VLCCommand *previousCommand= [VLCCommand previousCommand];
-    [self.client performCommand:previousCommand completionHandler:nil];
 }
 
 - (void)playItemWithId:(NSInteger)itemIdentifier {

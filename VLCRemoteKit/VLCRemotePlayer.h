@@ -155,16 +155,16 @@ typedef NS_ENUM(NSInteger, VLCRemotePlayerPlaybackState) {
 - (void)next;
 
 /**
- * @abstract Resumes the playback.
- * @since 1.0.0
- */
-- (void)play;
-
-/**
  * @abstract Jumps to the previous playlist item.
  * @since 1.0.0
  */
 - (void)previous;
+
+/**
+ * @abstract Resumes the playback.
+ * @since 1.0.0
+ */
+- (void)play;
 
 /**
  * @abstract Plays the item with a given identifier.
