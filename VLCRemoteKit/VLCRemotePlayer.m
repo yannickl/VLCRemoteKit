@@ -96,9 +96,14 @@
 
 #pragma mark - Accessing the Media Metadatas
 @dynamic filename;
+@dynamic currentPlaybackId;
 
 - (NSString *)filename {
     return [[[[self.state objectForKey:@"information"] objectForKey:@"category"] objectForKey:@"meta"] objectForKey:@"filename"];
+}
+
+- (NSInteger)currentPlaybackId {
+    return [[self.state objectForKey:@"currentplid"] integerValue];
 }
 
 #pragma mark - Configuring and Controlling Playback

@@ -114,6 +114,16 @@ typedef NS_ENUM(NSInteger, VLCRemotePlayerPlaybackState) {
  */
 @property (nonatomic, readonly) NSString *filename;
 
+/**
+ * @abstract The current playback identifier. It returns -1 if no media is
+ * playing otherwise.
+ * @discussion Each media available in the playlist has an identifier, and this
+ * property returns the identifier of the current playback media.
+ * running.
+ * @since 1.0.0
+ */
+@property (nonatomic, readonly) NSInteger currentPlaybackId;
+
 #pragma mark - Configuring and Controlling Playback
 /** @name Configuring and Controlling Playback */
 
