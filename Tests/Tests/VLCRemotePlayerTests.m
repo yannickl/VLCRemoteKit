@@ -121,6 +121,16 @@
                     _remotePlayer.state = @{ @"state" : @"playing" };
                 }
             } break;
+            case VLCCommandNamePlay:
+            {
+                NSInteger playbackId = [[command.params objectForKey:@"id"] integerValue];
+                if (playbackId >= 0) {
+                    _remotePlayer.state = @{ @"state" : @"playing", @"currentplid": @(playbackId) };
+                }
+                else {
+                    _remotePlayer.state = @{ @"state" : @"stopped" };
+                }
+            } break;
             default:
                 break;
         }
@@ -359,6 +369,20 @@
     [_remotePlayer play];
     
     expect(_remotePlayer.playbackState).to.equal(VLCRemotePlayerPlaybackStatePlaying);
+}
+
+- (void)testPlayItemWithIdentifier {
+    _remotePlayer.state = @{ @"state": @"paused", @"currentplid": @(2) };
+    expect(_remotePlayer.playbackState).to.equal(VLCRemotePlayerPlaybackStatePaused);
+    expect(_remotePlayer.currentPlaybackId).to.equal(2);
+    
+    [_remotePlayer playItemWithId:8];
+    expect(_remotePlayer.playbackState).to.equal(VLCRemotePlayerPlaybackStatePlaying);
+    expect(_remotePlayer.currentPlaybackId).to.equal(8);
+    
+    [_remotePlayer playItemWithId:-2];
+    expect(_remotePlayer.playbackState).to.equal(VLCRemotePlayerPlaybackStateStopped);
+    expect(_remotePlayer.currentPlaybackId).to.equal(-1);
 }
 
 @end
