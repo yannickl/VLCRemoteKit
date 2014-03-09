@@ -131,6 +131,10 @@
                     _remotePlayer.state = @{ @"state" : @"stopped" };
                 }
             } break;
+            case VLCCommandNameStop:
+            {
+                _remotePlayer.state = @{ @"state" : @"stopped" };
+            } break;
             default:
                 break;
         }
@@ -396,6 +400,18 @@
     [_remotePlayer pause];
     
     expect(_remotePlayer.playbackState).to.equal(VLCRemotePlayerPlaybackStatePaused);
+}
+
+- (void)testStop {
+    _remotePlayer.state = @{ @"state": @"playing" };
+    expect(_remotePlayer.playbackState).to.equal(VLCRemotePlayerPlaybackStatePlaying);
+    
+    [_remotePlayer stop];
+    expect(_remotePlayer.playbackState).to.equal(VLCRemotePlayerPlaybackStateStopped);
+   
+    _remotePlayer.state = @{ @"state": @"paused" };
+    [_remotePlayer stop];
+    expect(_remotePlayer.playbackState).to.equal(VLCRemotePlayerPlaybackStateStopped);
 }
 
 @end
