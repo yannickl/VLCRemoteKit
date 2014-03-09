@@ -210,6 +210,97 @@ static NSInteger const dummyPort  = 1111;
     expect(components.query).to.beNil();
 }
 
+- (void)testURLComponentsFromStopCommand {
+    VLCHTTPClient *httpClient = [VLCHTTPClient clientWithHostname:dummyHost port:dummyPort username:nil password:@"password"];
+    
+    VLCCommand *stopCommand     = [VLCCommand stopCommand];
+    NSURLComponents *components = [httpClient urlComponentsFromCommand:stopCommand];
+    
+    expect(components).toNot.beNil();
+    expect(components.host).to.equal(dummyHost);
+    expect(components.port).to.equal(dummyPort);
+    expect(components.path).to.equal(_kVRKURLPathStatus);
+    expect(components.query).to.equal(@"command=pl_stop");
+}
+
+- (void)testURLComponentsFromToggleFullscreenCommand {
+    VLCHTTPClient *httpClient = [VLCHTTPClient clientWithHostname:dummyHost port:dummyPort username:nil password:@"password"];
+    
+    VLCCommand *toggleFullscreenCommand = [VLCCommand toggleFullscreenCommand];
+    NSURLComponents *components         = [httpClient urlComponentsFromCommand:toggleFullscreenCommand];
+    
+    expect(components).toNot.beNil();
+    expect(components.host).to.equal(dummyHost);
+    expect(components.port).to.equal(dummyPort);
+    expect(components.path).to.equal(_kVRKURLPathStatus);
+    expect(components.query).to.equal(@"command=fullscreen");
+}
+
+- (void)testURLComponentsFromToggleLoopCommand {
+    VLCHTTPClient *httpClient = [VLCHTTPClient clientWithHostname:dummyHost port:dummyPort username:nil password:@"password"];
+    
+    VLCCommand *toggleLoopCommand = [VLCCommand toggleLoopCommand];
+    NSURLComponents *components   = [httpClient urlComponentsFromCommand:toggleLoopCommand];
+    
+    expect(components).toNot.beNil();
+    expect(components.host).to.equal(dummyHost);
+    expect(components.port).to.equal(dummyPort);
+    expect(components.path).to.equal(_kVRKURLPathStatus);
+    expect(components.query).to.equal(@"command=pl_loop");
+}
+
+- (void)testURLComponentsFromTogglePauseCommand {
+    VLCHTTPClient *httpClient = [VLCHTTPClient clientWithHostname:dummyHost port:dummyPort username:nil password:@"password"];
+    
+    VLCCommand *togglePauseCommand = [VLCCommand togglePauseCommand];
+    NSURLComponents *components    = [httpClient urlComponentsFromCommand:togglePauseCommand];
+    
+    expect(components).toNot.beNil();
+    expect(components.host).to.equal(dummyHost);
+    expect(components.port).to.equal(dummyPort);
+    expect(components.path).to.equal(_kVRKURLPathStatus);
+    expect(components.query).to.equal(@"command=pl_pause");
+}
+
+- (void)testURLComponentsFromToggleRandomPlaybackCommand {
+    VLCHTTPClient *httpClient = [VLCHTTPClient clientWithHostname:dummyHost port:dummyPort username:nil password:@"password"];
+    
+    VLCCommand *toggleRandomPlaybackCommand = [VLCCommand toggleRandomPlayback];
+    NSURLComponents *components             = [httpClient urlComponentsFromCommand:toggleRandomPlaybackCommand];
+    
+    expect(components).toNot.beNil();
+    expect(components.host).to.equal(dummyHost);
+    expect(components.port).to.equal(dummyPort);
+    expect(components.path).to.equal(_kVRKURLPathStatus);
+    expect(components.query).to.equal(@"command=pl_random");
+}
+
+- (void)testURLComponentsFromToggleRepeatCommand {
+    VLCHTTPClient *httpClient = [VLCHTTPClient clientWithHostname:dummyHost port:dummyPort username:nil password:@"password"];
+    
+    VLCCommand *toggleRepeatCommand = [VLCCommand toggleRepeatCommand];
+    NSURLComponents *components     = [httpClient urlComponentsFromCommand:toggleRepeatCommand];
+    
+    expect(components).toNot.beNil();
+    expect(components.host).to.equal(dummyHost);
+    expect(components.port).to.equal(dummyPort);
+    expect(components.path).to.equal(_kVRKURLPathStatus);
+    expect(components.query).to.equal(@"command=pl_repeat");
+}
+
+- (void)testURLComponentsFromVolumeCommand {
+    VLCHTTPClient *httpClient = [VLCHTTPClient clientWithHostname:dummyHost port:dummyPort username:nil password:@"password"];
+    
+    VLCCommand *volumeCommand   = [VLCCommand volumeCommandWithValue:409];
+    NSURLComponents *components = [httpClient urlComponentsFromCommand:volumeCommand];
+    
+    expect(components).toNot.beNil();
+    expect(components.host).to.equal(dummyHost);
+    expect(components.port).to.equal(dummyPort);
+    expect(components.path).to.equal(_kVRKURLPathStatus);
+    expect(components.query).to.equal(@"command=volume&val=409");
+}
+
 #pragma mark Requests
 
 - (void)testPerformRequestWith200StatusCode {
