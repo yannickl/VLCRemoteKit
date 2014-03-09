@@ -44,9 +44,77 @@
 
 - (void)setUp {
     [super setUp];
-
+    
     _clientMock   = [OCMockObject niceMockForProtocol:@protocol(VLCClientProtocol)];
     _remotePlayer = [VLCRemotePlayer remoteWithVLCClient:_clientMock];
+    
+    [[[_clientMock stub] andDo:^(NSInvocation *invocation) {
+        // The VLCCommand
+        __autoreleasing VLCCommand *command;
+        
+        // 0 and 1 are reserved for invocation object
+        // 2 would be the command
+        [invocation getArgument:&command atIndex:2];
+        
+        switch (command.name) {
+            case VLCCommandNameToggleFullscreen:
+            {
+                if (_remotePlayer.fullscreen) {
+                    _remotePlayer.state = @{ @"fullscreen": @"false" };
+                }
+                else {
+                    _remotePlayer.state = @{ @"fullscreen": @"true" };
+                }
+            } break;
+            case VLCCommandNameVolume:
+            {
+                _remotePlayer.state = @{ @"volume": [command.params objectForKey:@"val"] };
+            } break;
+            case VLCCommandNameSeek:
+            {
+                NSNumber *seekValue = [command.params objectForKey:@"val"];
+                _remotePlayer.state = @{ @"time": seekValue, @"length": seekValue };
+            } break;
+            case VLCCommandNameToggleRandomPlayback:
+            {
+                if (_remotePlayer.randomPlayback) {
+                    _remotePlayer.state = @{ @"random": @"false" };
+                }
+                else {
+                    _remotePlayer.state = @{ @"random": @"true" };
+                }
+            } break;
+            case VLCCommandNameToggleLoop:
+            {
+                if (_remotePlayer.loopingPlaylist) {
+                    _remotePlayer.state = @{ @"loop": @"false" };
+                }
+                else {
+                    _remotePlayer.state = @{ @"loop": @"true" };
+                }
+            } break;
+            case VLCCommandNameToggleRepeat:
+            {
+                if (_remotePlayer.repeating) {
+                    _remotePlayer.state = @{ @"repeat": @"false" };
+                }
+                else {
+                    _remotePlayer.state = @{ @"repeat": @"true" };
+                }
+            } break;
+            case VLCCommandNameNext: {
+                NSInteger currentPlaybackId = [[_remotePlayer.state objectForKey:@"currentplid"] integerValue];
+                _remotePlayer.state = @{ @"currentplid": @(currentPlaybackId + 1) };
+            } break;
+            case VLCCommandNamePrevious:
+            {
+                NSInteger currentPlaybackId = [[_remotePlayer.state objectForKey:@"currentplid"] integerValue];
+                _remotePlayer.state = @{ @"currentplid": @(currentPlaybackId - 1) };
+            } break;
+            default:
+                break;
+        }
+    }] performCommand:[OCMArg any] completionHandler:nil];
 }
 
 - (void)tearDown {
@@ -91,23 +159,6 @@
 }
 
 - (void)testSetFullscreen {
-    [[[_clientMock stub] andDo:^(NSInvocation *invocation) {
-        // The VLCCommand
-        __autoreleasing VLCCommand *fullscreenCommand;
-        
-        // 0 and 1 are reserved for invocation object
-        // 2 would be the command
-        [invocation getArgument:&fullscreenCommand atIndex:2];
-        
-        // Toogle the fullscreen
-        if (_remotePlayer.fullscreen) {
-            _remotePlayer.state = @{ @"fullscreen": @"false" };
-        }
-        else {
-            _remotePlayer.state = @{ @"fullscreen": @"true" };
-        }
-    }] performCommand:[OCMArg any] completionHandler:nil];
-    
     _remotePlayer.state      = @{ @"fullscreen": @"false" };
     expect(_remotePlayer.fullscreen).to.beFalsy();
     
@@ -133,18 +184,6 @@
 }
 
 - (void)testSetVolume {
-    [[[_clientMock stub] andDo:^(NSInvocation *invocation) {
-        // The VLCCommand
-        __autoreleasing VLCCommand *volumeCommand;
-        
-        // 0 and 1 are reserved for invocation object
-        // 2 would be the command
-        [invocation getArgument:&volumeCommand atIndex:2];
-        
-        // Set the volume
-        _remotePlayer.state = @{ @"volume": [volumeCommand.params objectForKey:@"val"] };
-    }] performCommand:[OCMArg any] completionHandler:nil];
-    
     _remotePlayer.volume = 0.0f;
     expect(_remotePlayer.volume).to.equal(0.0f);
     
@@ -190,19 +229,6 @@
 }
 
 - (void)testSetCurrentTime {
-    [[[_clientMock stub] andDo:^(NSInvocation *invocation) {
-        // The VLCCommand
-        __autoreleasing VLCCommand *seekCommand;
-        
-        // 0 and 1 are reserved for invocation object
-        // 2 would be the command
-        [invocation getArgument:&seekCommand atIndex:2];
-        
-        // Set the current time
-        NSNumber *seekValue = [seekCommand.params objectForKey:@"val"];
-        _remotePlayer.state = @{ @"time": seekValue, @"length": seekValue };
-    }] performCommand:[OCMArg any] completionHandler:nil];
-    
     _remotePlayer.currentTime = 0;
     expect(_remotePlayer.currentTime).to.equal(0.0f);
     
@@ -248,23 +274,6 @@
 }
 
 - (void)testSetRandomPlayback {
-    [[[_clientMock stub] andDo:^(NSInvocation *invocation) {
-        // The VLCCommand
-        __autoreleasing VLCCommand *toogleRandomPlaybackCommand;
-        
-        // 0 and 1 are reserved for invocation object
-        // 2 would be the command
-        [invocation getArgument:&toogleRandomPlaybackCommand atIndex:2];
-        
-        // Toogle the randomPlayback
-        if (_remotePlayer.randomPlayback) {
-            _remotePlayer.state = @{ @"random": @"false" };
-        }
-        else {
-            _remotePlayer.state = @{ @"random": @"true" };
-        }
-    }] performCommand:[OCMArg any] completionHandler:nil];
-    
     _remotePlayer.state          = @{ @"random": @(NO) };
     _remotePlayer.randomPlayback = YES;
     expect(_remotePlayer.randomPlayback).to.beTruthy();
@@ -284,23 +293,6 @@
 }
 
 - (void)testSetLoopingPlaylist {
-    [[[_clientMock stub] andDo:^(NSInvocation *invocation) {
-        // The VLCCommand
-        __autoreleasing VLCCommand *toggleLoopCommand;
-        
-        // 0 and 1 are reserved for invocation object
-        // 2 would be the command
-        [invocation getArgument:&toggleLoopCommand atIndex:2];
-        
-        // Toogle the randomPlayback
-        if (_remotePlayer.loopingPlaylist) {
-            _remotePlayer.state = @{ @"loop": @"false" };
-        }
-        else {
-            _remotePlayer.state = @{ @"loop": @"true" };
-        }
-    }] performCommand:[OCMArg any] completionHandler:nil];
-    
     _remotePlayer.state           = @{ @"loop": @(NO) };
     _remotePlayer.loopingPlaylist = YES;
     expect(_remotePlayer.loopingPlaylist).to.beTruthy();
@@ -320,25 +312,6 @@
 }
 
 - (void)testSetRepeating {
-    [[[_clientMock stub] andDo:^(NSInvocation *invocation) {
-        // The VLCCommand
-        __autoreleasing VLCCommand *toggleRepeatCommand;
-        
-        // 0 and 1 are reserved for invocation object
-        // 2 would be the command
-        [invocation getArgument:&toggleRepeatCommand atIndex:2];
-        
-        if (toggleRepeatCommand.name == VLCCommandNameToggleRepeat) {
-            // Toogle the randomPlayback
-            if (_remotePlayer.repeating) {
-                _remotePlayer.state = @{ @"repeat": @"false" };
-            }
-            else {
-                _remotePlayer.state = @{ @"repeat": @"true" };
-            }
-        }
-    }] performCommand:[OCMArg any] completionHandler:nil];
-    
     _remotePlayer.state     = @{ @"repeat": @(NO) };
     _remotePlayer.repeating = YES;
     expect(_remotePlayer.repeating).to.beTruthy();
@@ -348,20 +321,6 @@
 }
 
 - (void)testNext {
-    [[[_clientMock stub] andDo:^(NSInvocation *invocation) {
-        // The VLCCommand
-        __autoreleasing VLCCommand *nextCommand;
-        
-        // 0 and 1 are reserved for invocation object
-        // 2 would be the command
-        [invocation getArgument:&nextCommand atIndex:2];
-        
-        if (nextCommand.name == VLCCommandNameNext) {
-            NSInteger currentPlaybackId = [[_remotePlayer.state objectForKey:@"currentplid"] integerValue];
-            _remotePlayer.state = @{ @"currentplid": @(currentPlaybackId + 1) };
-        }
-    }] performCommand:[OCMArg any] completionHandler:nil];
-
     _remotePlayer.state = @{ @"currentplid": @(1) };
     expect(_remotePlayer.currentPlaybackId).to.equal(1);
     
@@ -371,20 +330,6 @@
 }
 
 - (void)testPrevious {
-    [[[_clientMock stub] andDo:^(NSInvocation *invocation) {
-        // The VLCCommand
-        __autoreleasing VLCCommand *previousCommand;
-        
-        // 0 and 1 are reserved for invocation object
-        // 2 would be the command
-        [invocation getArgument:&previousCommand atIndex:2];
-        
-        if (previousCommand.name == VLCCommandNamePrevious) {
-            NSInteger currentPlaybackId = [[_remotePlayer.state objectForKey:@"currentplid"] integerValue];
-            _remotePlayer.state = @{ @"currentplid": @(currentPlaybackId - 1) };
-        }
-    }] performCommand:[OCMArg any] completionHandler:nil];
-    
     _remotePlayer.state = @{ @"currentplid": @(1) };
     expect(_remotePlayer.currentPlaybackId).to.equal(1);
     
