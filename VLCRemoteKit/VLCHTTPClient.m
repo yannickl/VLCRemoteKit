@@ -89,8 +89,12 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
 @implementation VLCHTTPClient
 
 #ifdef DEBUG
-// Unit Tests on 64-bit iOS Simulator does not work rdar://15107228
+// This hack will be remove in the future
+// It aims to retrieve the code coverage during the unit testing because of
+// a bug with Xcode5 and the iOS7 simulator:
+// http://stackoverflow.com/questions/19136767/generate-gcda-files-with-xcode5-ios7-simulator-and-xctest
 + (void)load {
+    // Register the test observer 
     [[NSUserDefaults standardUserDefaults] setValue:@"XCTestLog,VLCTestObserver"
                                              forKey:@"XCTestObserverClass"];
 }
