@@ -14,7 +14,7 @@
 
 @implementation VLCTestObserver
 
-#ifdef _IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef TARGET_OS_IPHONE
 - (void)stopObserving {
     [super stopObserving];
 
