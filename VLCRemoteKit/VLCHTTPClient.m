@@ -90,7 +90,7 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
 
 @implementation VLCHTTPClient
 
-#ifdef _IPHONE_OS_VERSION_MAX_ALLOWED
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000
 #ifdef DEBUG
 // This hack will be remove in the future
 // It aims to retrieve the code coverage during the unit testing because of
