@@ -90,7 +90,6 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
 
 @implementation VLCHTTPClient
 
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000
 #ifdef DEBUG
 // This hack will be remove in the future
 // It aims to retrieve the code coverage during the unit testing because of
@@ -101,7 +100,6 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
     [[NSUserDefaults standardUserDefaults] setValue:@"XCTestLog,VLCTestObserver"
                                              forKey:@"XCTestObserverClass"];
 }
-#endif
 #endif
 
 - (void)dealloc {
