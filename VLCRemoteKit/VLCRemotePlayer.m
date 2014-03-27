@@ -98,6 +98,14 @@
 @dynamic filename;
 @dynamic currentPlaybackId;
 
+- (NSString *)artist {
+    return [[[[self.state objectForKey:@"information"] objectForKey:@"category"] objectForKey:@"meta"] objectForKey:@"artist"];
+}
+
+- (NSString *)title {
+    return [[[[self.state objectForKey:@"information"] objectForKey:@"category"] objectForKey:@"meta"] objectForKey:@"title"];
+}
+
 - (NSString *)filename {
     return [[[[self.state objectForKey:@"information"] objectForKey:@"category"] objectForKey:@"meta"] objectForKey:@"filename"];
 }

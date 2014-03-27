@@ -262,6 +262,32 @@
 
 #pragma mark - Accessing the Media Metadatas
 
+- (void)testGetArtist {
+    expect(_remotePlayer.artist).to.equal(nil);
+    
+    _remotePlayer.state = @{ @"information": @{} };
+    expect(_remotePlayer.artist).to.equal(nil);
+    
+    _remotePlayer.state = @{ @"information": @"wrong params" };
+    XCTAssertThrows(_remotePlayer.artist);
+    
+    _remotePlayer.state = @{ @"information": @{ @"category": @{ @"meta": @{ @"artist": @"Lorya" } } } };
+    expect(_remotePlayer.artist).to.equal(@"Lorya");
+}
+
+- (void)testGetTitle {
+    expect(_remotePlayer.title).to.equal(nil);
+    
+    _remotePlayer.state = @{ @"information": @{} };
+    expect(_remotePlayer.title).to.equal(nil);
+    
+    _remotePlayer.state = @{ @"information": @"wrong params" };
+    XCTAssertThrows(_remotePlayer.title);
+    
+    _remotePlayer.state = @{ @"information": @{ @"category": @{ @"meta": @{ @"title": @"Be Yourself" } } } };
+    expect(_remotePlayer.title).to.equal(@"Be Yourself");
+}
+
 - (void)testGetFilename {
     expect(_remotePlayer.filename).to.equal(nil);
     

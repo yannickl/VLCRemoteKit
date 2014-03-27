@@ -109,6 +109,20 @@ typedef NS_ENUM(NSInteger, VLCRemotePlayerPlaybackState) {
 /** @name Accessing the Media Metadatas */
 
 /**
+ * @abstract The artist of the music which is currently playing.
+ * @discussion Returns nil if the file which is currently playing is a video
+ * or if there is no file playling.
+ * @since 1.0.0
+ */
+@property (nonatomic, readonly) NSString *artist;
+
+/**
+ * @abstract The title of the file which is currently playing.
+ * @since 1.0.0
+ */
+@property (nonatomic, readonly) NSString *title;
+
+/**
  * @abstract The filename which is currently playing.
  * @since 1.0.0
  */
