@@ -32,7 +32,8 @@
 
 #pragma mark - Creating and Initializing a Remote Client
 
-- (id)initWithVLCClient:(id<VLCClientProtocol>)client {
+- (id)initWithVLCClient:(id<VLCClientProtocol>)client
+{
     if ((self = [super init])) {
         NSParameterAssert(client);
         
@@ -42,13 +43,15 @@
     return self;
 }
 
-+ (instancetype)remoteWithVLCClient:(id<VLCClientProtocol>)client {
++ (instancetype)remoteWithVLCClient:(id<VLCClientProtocol>)client
+{
     return [[self alloc] initWithVLCClient:client];
 }
 
 #pragma mark - Private Methods
 
-- (void)updateStateWithData:(NSData *)data {
+- (void)updateStateWithData:(NSData *)data
+{
     NSUInteger dataHash = [data hash];
 
     if (self.stateHash != dataHash) {
@@ -61,7 +64,8 @@
     }
 }
 
-- (void)updateWithState:(NSDictionary *)state andHash:(NSUInteger)stateHash {
+- (void)updateWithState:(NSDictionary *)state andHash:(NSUInteger)stateHash
+{
     if (self.stateHash != stateHash && state != nil) {
         self.stateHash = stateHash;
         self.state     = state;

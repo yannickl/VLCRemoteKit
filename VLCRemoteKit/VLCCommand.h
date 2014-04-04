@@ -59,6 +59,7 @@ typedef NS_ENUM(NSInteger, VLCCommandName) {
  */
 @interface VLCCommand : NSObject
 
+
 #pragma mark - Configuring the Command
 /** @name Configuring the Command */
 
@@ -72,6 +73,7 @@ typedef NS_ENUM(NSInteger, VLCCommandName) {
  * @since 1.0.0
  */
 @property (nonatomic, strong, readonly) NSDictionary   *params;
+
 
 #pragma mark - Creating and Inializing Commands
 /** @name Creating and Inializing Commands */
@@ -92,6 +94,7 @@ typedef NS_ENUM(NSInteger, VLCCommandName) {
  * @since 1.0.0
  */
 + (instancetype)commandWithName:(VLCCommandName)name params:(NSDictionary *)params;
+
 
 #pragma mark - Convenience Constructors
 /**@name Convenience Constructors */

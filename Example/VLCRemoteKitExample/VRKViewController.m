@@ -38,13 +38,15 @@ static NSString * const CONFIGURATION_SEGUE_NAME = @"VRKConfigurationSegue";
 
 @implementation VRKViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     
     [self client:nil connectionStatusDidChanged:VLCClientConnectionStatusDisconnected];
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
     if ([[segue identifier] isEqualToString:CONFIGURATION_SEGUE_NAME]) {
         if ([segue isKindOfClass:[UIStoryboardPopoverSegue class]]) {
             _popover                   = [(UIStoryboardPopoverSegue *)segue popoverController];
@@ -59,7 +61,8 @@ static NSString * const CONFIGURATION_SEGUE_NAME = @"VRKConfigurationSegue";
 
 #pragma mark - Public Methods
 
-- (IBAction)connectAction:(id)sender {
+- (IBAction)connectAction:(id)sender
+{
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSString *ip                 = [userDefaults stringForKey:@"ip"];
     NSString *password           = [userDefaults stringForKey:@"password"];
@@ -77,21 +80,25 @@ static NSString * const CONFIGURATION_SEGUE_NAME = @"VRKConfigurationSegue";
     }
 }
 
-- (void)disconnectAction:(id)sender {
+- (void)disconnectAction:(id)sender
+{
     if (_vlcClient.connectionStatus != VLCClientConnectionStatusDisconnected) {
         [_vlcClient disconnectWithCompletionHandler:NULL];
     }
 }
 
-- (IBAction)playAction:(id)sender {
+- (IBAction)playAction:(id)sender
+{
     [_vlcClient.player playItemWithId:5];
 }
 
-- (IBAction)stopAction:(id)sender {
+- (IBAction)stopAction:(id)sender
+{
     [_vlcClient.player stop];
 }
 
-- (IBAction)togglePauseAction:(id)sender {
+- (IBAction)togglePauseAction:(id)sender
+{
     if ([_vlcClient.player isPlaying]) {
         [_vlcClient.player pause];
     }
@@ -100,16 +107,19 @@ static NSString * const CONFIGURATION_SEGUE_NAME = @"VRKConfigurationSegue";
     }
 }
 
-- (IBAction)toggleFullScreenAction:(id)sender {
+- (IBAction)toggleFullScreenAction:(id)sender
+{
     _vlcClient.player.fullscreen = ![_vlcClient.player isFullscreen];
 }
 
-- (IBAction)seekAction:(id)sender {
+- (IBAction)seekAction:(id)sender
+{
     NSTimeInterval seekTime       = _vlcClient.player.duration * _progressSlider.value;
     _vlcClient.player.currentTime = seekTime;
 }
 
-- (IBAction)volumeAction:(id)sender {
+- (IBAction)volumeAction:(id)sender
+{
     _vlcClient.player.volume = _volumeSlider.value;
 }
 
@@ -117,13 +127,15 @@ static NSString * const CONFIGURATION_SEGUE_NAME = @"VRKConfigurationSegue";
 
 #pragma mark - UIPopoverController Delegate Methods
 
-- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController {
+- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
+{
     _editBarButtonItem.enabled = YES;
 }
 
 #pragma mark - VRKConfiguration Delegate Methods
 
-- (void)configurationDidChanged {
+- (void)configurationDidChanged
+{
     if (_popover) {
         _editBarButtonItem.enabled = YES;
         [_popover dismissPopoverAnimated:YES];
@@ -135,13 +147,15 @@ static NSString * const CONFIGURATION_SEGUE_NAME = @"VRKConfigurationSegue";
     [self disconnectAction:_connectButton];
 }
 
-- (void)needsDismissConfiguration {
+- (void)needsDismissConfiguration
+{
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 #pragma mark - VLCRemoteClient Delegate Methods
 
-- (void)client:(id)client connectionStatusDidChanged:(VLCClientConnectionStatus)status {
+- (void)client:(id)client connectionStatusDidChanged:(VLCClientConnectionStatus)status
+{
     switch (status) {
         case VLCClientConnectionStatusDisconnected:
             _statusLabel.text            = @"Status: disconnected";
@@ -197,7 +211,8 @@ static NSString * const CONFIGURATION_SEGUE_NAME = @"VRKConfigurationSegue";
 
 #pragma mark - VLCRemote Delegate Methods
 
-- (void)remoteObjectDidChanged:(id<VLCRemoteProtocol>)remote {
+- (void)remoteObjectDidChanged:(id<VLCRemoteProtocol>)remote
+{
     if (_vlcClient.player == remote) {
         VLCRemotePlayer *player = _vlcClient.player;
         

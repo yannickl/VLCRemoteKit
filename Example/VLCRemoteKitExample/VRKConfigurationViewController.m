@@ -32,7 +32,8 @@
 
 @implementation VRKConfigurationViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
 	
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
@@ -45,7 +46,8 @@
 
 #pragma mark - Public Methods
 
-- (IBAction)saveAction:(id)sender {
+- (IBAction)saveAction:(id)sender
+{
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setObject:_ipTextField.text forKey:@"ip"];
     [userDefaults setObject:_passwordTextField.text forKey:@"password"];
@@ -56,7 +58,8 @@
     }
 }
 
-- (IBAction)cancelAction:(id)sender {
+- (IBAction)cancelAction:(id)sender
+{
     if (_delegate) {
         [_delegate needsDismissConfiguration];
     }
@@ -64,7 +67,8 @@
 
 #pragma mark - UITextField Delegate Methods
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
     if (textField == _ipTextField) {
         [_passwordTextField becomeFirstResponder];
         return NO;

@@ -73,6 +73,7 @@ typedef NS_ENUM(NSInteger, VLCClientConnectionStatus) {
  */
 @protocol VLCClientProtocol <NSObject>
 
+
 #pragma mark - Managing the Connection Status
 /** @name Managing the Connection Status */
 
@@ -98,6 +99,7 @@ typedef NS_ENUM(NSInteger, VLCClientConnectionStatus) {
  * @since 1.0.0
  */
 @property (nonatomic, weak) id<VLCClientDelegate> delegate;
+
 
 #pragma mark - Getting the Remote Objects
 /** @name Getting the Remote Objects */

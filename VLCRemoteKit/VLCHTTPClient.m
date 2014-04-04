@@ -96,21 +96,23 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
 // It aims to retrieve the code coverage during the unit testing because of
 // a bug with Xcode5 and the iOS7 simulator:
 // http://stackoverflow.com/questions/19136767/generate-gcda-files-with-xcode5-ios7-simulator-and-xctest
-+ (void)load {
++ (void)load
+{
     // Register the test observer 
-    [[NSUserDefaults standardUserDefaults] setValue:@"XCTestLog,VLCTestObserver"
-                                             forKey:@"XCTestObserverClass"];
+    [[NSUserDefaults standardUserDefaults] setValue:@"XCTestLog,VLCTestObserver" forKey:@"XCTestObserverClass"];
 }
 #endif
 #endif
 
-- (void)dealloc {
+- (void)dealloc
+{
     [_urlSession invalidateAndCancel];
     
     [self removeObserver:self forKeyPath:@"connectionStatus"];
 }
 
-- (id)initWithHostname:(NSString *)hostname port:(NSInteger)port username:(NSString *)username password:(NSString *)password {
+- (id)initWithHostname:(NSString *)hostname port:(NSInteger)port username:(NSString *)username password:(NSString *)password
+{
     NSURLComponents *baseURLComponent = [[NSURLComponents alloc] init];
     baseURLComponent.scheme           = @"http";
     baseURLComponent.host             = hostname;
@@ -123,11 +125,13 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
     return [self initWithURLComponents:baseURLComponent headers:@{ @"Authorization": authorization }];
 }
 
-+ (instancetype)clientWithHostname:(NSString *)hostname port:(NSInteger)port username:(NSString *)username password:(NSString *)password {
++ (instancetype)clientWithHostname:(NSString *)hostname port:(NSInteger)port username:(NSString *)username password:(NSString *)password
+{
     return [[self alloc] initWithHostname:hostname port:port username:username password:password];
 }
 
-- (id)initWithURLComponents:(NSURLComponents *)urlComponents headers:(NSDictionary *)headers {
+- (id)initWithURLComponents:(NSURLComponents *)urlComponents headers:(NSDictionary *)headers
+{
     NSURLSessionConfiguration *configuration    = [NSURLSessionConfiguration defaultSessionConfiguration];
     configuration.HTTPShouldUsePipelining       = YES;
     configuration.HTTPMaximumConnectionsPerHost = 3;
@@ -138,7 +142,8 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
     return [self initWithURLComponents:urlComponents headers:headers urlSession:urlSession];
 }
 
-- (id)initWithURLComponents:(NSURLComponents *)urlComponents headers:(NSDictionary *)headers urlSession:(NSURLSession *)urlSession  {
+- (id)initWithURLComponents:(NSURLComponents *)urlComponents headers:(NSDictionary *)headers urlSession:(NSURLSession *)urlSession
+{
     if ((self = [super init])) {
         _connectionStatus = VLCClientConnectionStatusDisconnected;
         _urlSession       = urlSession;
@@ -155,7 +160,8 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
 
 #pragma mark - Private Methods
 
-- (NSURLComponents *)urlComponentsFromCommand:(VLCCommand *)command {
+- (NSURLComponents *)urlComponentsFromCommand:(VLCCommand *)command
+{
     if (!command) {
         return nil;
     }
@@ -225,7 +231,8 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
     return urlComponents;
 }
 
-- (NSURLRequest *)urlRequestWithCommand:(VLCCommand *)command {
+- (NSURLRequest *)urlRequestWithCommand:(VLCCommand *)command
+{
     NSURLComponents *commandComponents = [self urlComponentsFromCommand:command];
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[commandComponents URL]];
@@ -238,7 +245,8 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
     return request;
 }
 
-- (void)updatingRemote:(VLCHTTPClientRemote)remote withRequest:(NSURLRequest *)urlRequest completionHandler:(void (^)(NSData *data, NSError *))completionHandler {
+- (void)updatingRemote:(VLCHTTPClientRemote)remote withRequest:(NSURLRequest *)urlRequest completionHandler:(void (^)(NSData *data, NSError *))completionHandler
+{
     if (_connectionStatus != VLCClientConnectionStatusDisconnected) {
         __weak typeof(self) weakSelf = self;
         [self performRequest:urlRequest completionHandler:^(NSData *data, NSError *error) {
@@ -274,7 +282,8 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
     }
 }
 
-- (void)performRequest:(NSURLRequest *)request completionHandler:(void (^) (NSData *data, NSError *error))completionHandler {
+- (void)performRequest:(NSURLRequest *)request completionHandler:(void (^) (NSData *data, NSError *error))completionHandler
+{
     NSURLSessionDataTask *task = [_urlSession dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (completionHandler) {
             if (error) {
@@ -308,7 +317,8 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
 
 #pragma mark - VLCRemoteClientProtocol Methods
 
-- (void)connectWithCompletionHandler:(void (^)(NSData *data, NSError *))completionHandler {
+- (void)connectWithCompletionHandler:(void (^)(NSData *data, NSError *))completionHandler
+{
     @synchronized (self) {
         if (_connectionStatus == VLCClientConnectionStatusDisconnected) {
             self.connectionStatus = VLCClientConnectionStatusConnecting;
@@ -317,6 +327,7 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
             NSURLRequest *statusRequest = [self urlRequestWithCommand:statusCommand];
             
             [self updatingRemote:VLCHTTPClientRemotePlayer withRequest:statusRequest completionHandler:completionHandler];
+            [self updatingRemote:VLCHTTPClientRemotePlaylist withRequest:statusRequest completionHandler:completionHandler];
         }
         else if (completionHandler) {
             NSDictionary *userInfo = @{
@@ -329,7 +340,8 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
     }
 }
 
-- (void)disconnectWithCompletionHandler:(void (^) (NSError *error))completionHandler {
+- (void)disconnectWithCompletionHandler:(void (^) (NSError *error))completionHandler
+{
     @synchronized (self ) {
         self.connectionStatus = VLCClientConnectionStatusDisconnected;
         
@@ -339,7 +351,8 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
     }
 }
 
-- (void)performCommand:(VLCCommand *)command completionHandler:(void (^) (NSData *data, NSError *error))completionHandler {
+- (void)performCommand:(VLCCommand *)command completionHandler:(void (^) (NSData *data, NSError *error))completionHandler
+{
     if (_connectionStatus == VLCClientConnectionStatusConnected) {
         NSURLRequest *commandURLRequest = [self urlRequestWithCommand:command];
 
@@ -357,7 +370,8 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
 
 #pragma mark - Key-Value Observing Delegate Methods
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
     if ([keyPath isEqualToString:@"connectionStatus"]) {
         if (![[change objectForKey:@"new"] isEqual:[change objectForKey:@"old"]]) {
             if (_connectionStatusChangeBlock) {
