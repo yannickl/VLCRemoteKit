@@ -2,6 +2,8 @@
 
 VLCRemoteKit is a library that lets you remotely control your VLC Media Player via the HTTP interface in Objective-C (iOS and/or Mac OS X).
 
+It has been designed by following the `Proxy` pattern in order to prodive you simple way to manipulate the VLC player. 
+
 ### Installation
 
 The recommended approach to use _VLCRemoteKit_ in your project is using the [CocoaPods](http://cocoapods.org/) package manager, as it provides flexible dependency management and dead simple installation.
