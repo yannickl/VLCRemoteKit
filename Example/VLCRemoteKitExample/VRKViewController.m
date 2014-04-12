@@ -34,6 +34,7 @@ static NSString * const CONFIGURATION_SEGUE_NAME = @"VRKConfigurationSegue";
 @property (nonatomic, strong) UIPopoverController *popover;
 @property (nonatomic, strong) VLCHTTPClient       *vlcClient;
 @property (nonatomic, strong) VLCRemotePlayer     *player;
+@property (nonatomic, strong) VLCRemotePlaylist   *playlist;
 
 @end
 
@@ -73,6 +74,8 @@ static NSString * const CONFIGURATION_SEGUE_NAME = @"VRKConfigurationSegue";
         _vlcClient.delegate = self;
         _player             = _vlcClient.player;
         _player.delegate    = self;
+        _playlist           = _vlcClient.playlist;
+        _playlist.delegate  = self;
         
         [_vlcClient connectWithCompletionHandler:NULL];
     }
@@ -242,6 +245,9 @@ static NSString * const CONFIGURATION_SEGUE_NAME = @"VRKConfigurationSegue";
         _volumeLabel.text     = [NSString stringWithFormat:@"Volume: %d%%", (int)(_player.volume * 100)];
         _volumeSlider.value   = _player.volume;
         _volumeSlider.enabled = _progressSlider.enabled;
+    }
+    else if (_playlist == remote) {
+        NSLog(@"playlist did changed");
     }
 }
 

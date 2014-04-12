@@ -53,7 +53,7 @@
 - (void)updateStateWithData:(NSData *)data
 {
     NSUInteger dataHash = [data hash];
-
+    
     if (self.stateHash != dataHash) {
         NSError *error      = nil;
         NSDictionary *state = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
