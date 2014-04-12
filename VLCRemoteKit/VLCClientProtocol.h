@@ -101,6 +101,22 @@ typedef NS_ENUM(NSInteger, VLCClientConnectionStatus) {
 @property (nonatomic, weak) id<VLCClientDelegate> delegate;
 
 
+#pragma mark - Getting the Remote Objects
+/** @name Getting the Remote Objects */
+
+/**
+ * @abstract Returns the remote player object associated to the client.
+ * @since 1.0.0
+ */
+- (VLCRemotePlayer *)player;
+
+/**
+ * @abstract Returns the remote playlist object associated to the client.
+ * @since 1.0.0
+ */
+- (VLCRemotePlaylist *)playlist;
+
+
 #pragma mark - Communicating With VLC
 /** @name Communicating With VLC */
 

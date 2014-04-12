@@ -69,11 +69,10 @@ static NSString * const CONFIGURATION_SEGUE_NAME = @"VRKConfigurationSegue";
     NSString *password           = [userDefaults stringForKey:@"password"];
     
     if (_vlcClient.connectionStatus == VLCClientConnectionStatusDisconnected && ip && password) {
-        _vlcClient                   = [VLCHTTPClient clientWithHostname:ip port:8080 username:nil password:password];
-        _vlcClient.delegate          = self;
-        
-        _player          = [VLCRemotePlayer remoteWithVLCClient:_vlcClient];
-        _player.delegate = self;
+        _vlcClient          = [VLCHTTPClient clientWithHostname:ip port:8080 username:nil password:password];
+        _vlcClient.delegate = self;
+        _player             = _vlcClient.player;
+        _player.delegate    = self;
         
         [_vlcClient connectWithCompletionHandler:NULL];
     }
