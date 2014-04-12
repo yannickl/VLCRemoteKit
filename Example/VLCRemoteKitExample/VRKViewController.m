@@ -33,6 +33,7 @@ static NSString * const CONFIGURATION_SEGUE_NAME = @"VRKConfigurationSegue";
 @interface VRKViewController ()
 @property (nonatomic, strong) UIPopoverController *popover;
 @property (nonatomic, strong) VLCHTTPClient       *vlcClient;
+@property (nonatomic, strong) VLCRemotePlayer     *player;
 
 @end
 
@@ -70,8 +71,10 @@ static NSString * const CONFIGURATION_SEGUE_NAME = @"VRKConfigurationSegue";
     if (_vlcClient.connectionStatus == VLCClientConnectionStatusDisconnected && ip && password) {
         _vlcClient                   = [VLCHTTPClient clientWithHostname:ip port:8080 username:nil password:password];
         _vlcClient.delegate          = self;
-        _vlcClient.player.delegate   = self;
-        _vlcClient.playlist.delegate = self;
+        
+        _player          = [VLCRemotePlayer remoteWithVLCClient:_vlcClient];
+        _player.delegate = self;
+        
         [_vlcClient connectWithCompletionHandler:NULL];
     }
     else if (!ip || !password) {
@@ -89,38 +92,38 @@ static NSString * const CONFIGURATION_SEGUE_NAME = @"VRKConfigurationSegue";
 
 - (IBAction)playAction:(id)sender
 {
-    [_vlcClient.player playItemWithId:5];
+    [_player playItemWithId:5];
 }
 
 - (IBAction)stopAction:(id)sender
 {
-    [_vlcClient.player stop];
+    [_player stop];
 }
 
 - (IBAction)togglePauseAction:(id)sender
 {
-    if ([_vlcClient.player isPlaying]) {
-        [_vlcClient.player pause];
+    if ([_player isPlaying]) {
+        [_player pause];
     }
     else {
-        [_vlcClient.player play];
+        [_player play];
     }
 }
 
 - (IBAction)toggleFullScreenAction:(id)sender
 {
-    _vlcClient.player.fullscreen = ![_vlcClient.player isFullscreen];
+    _player.fullscreen = ![_player isFullscreen];
 }
 
 - (IBAction)seekAction:(id)sender
 {
-    NSTimeInterval seekTime       = _vlcClient.player.duration * _progressSlider.value;
-    _vlcClient.player.currentTime = seekTime;
+    NSTimeInterval seekTime       = _player.duration * _progressSlider.value;
+    _player.currentTime = seekTime;
 }
 
 - (IBAction)volumeAction:(id)sender
 {
-    _vlcClient.player.volume = _volumeSlider.value;
+    _player.volume = _volumeSlider.value;
 }
 
 #pragma mark - Private Methods
@@ -213,23 +216,21 @@ static NSString * const CONFIGURATION_SEGUE_NAME = @"VRKConfigurationSegue";
 
 - (void)remoteObjectDidChanged:(id<VLCRemoteProtocol>)remote
 {
-    if (_vlcClient.player == remote) {
-        VLCRemotePlayer *player = _vlcClient.player;
-        
-        NSString *fullscreenTitle = (player.fullscreen) ? @"Exit Full-Screen Mode" : @"Enter Full-Screen Mode";
+    if (_player == remote) {
+        NSString *fullscreenTitle = (_player.fullscreen) ? @"Exit Full-Screen Mode" : @"Enter Full-Screen Mode";
         [_toggleFullscreenButton setTitle:fullscreenTitle forState:UIControlStateNormal];
         
-        NSString *pauseTitle = (player.playing) ? @"Pause Playback" : @"Resume Playback";
+        NSString *pauseTitle = (_player.playing) ? @"Pause Playback" : @"Resume Playback";
         [_toogePauseButton setTitle:pauseTitle forState:UIControlStateNormal];
         
-        _filenameLabel.text = player.filename ?: @"No Media Currently Playing";
+        _filenameLabel.text = _player.filename ?: @"No Media Currently Playing";
         
-        NSInteger currentTime = (NSInteger)player.currentTime;
+        NSInteger currentTime = (NSInteger)_player.currentTime;
         NSInteger ctSeconds   = currentTime % 60;
         NSInteger ctMinutes   = (currentTime / 60) % 60;
         NSInteger ctHours     = (currentTime / 3600);
         
-        NSInteger duration = player.duration;
+        NSInteger duration = _player.duration;
         NSInteger dSeconds = duration % 60;
         NSInteger dMinutes = (duration / 60) % 60;
         NSInteger dHours   = (duration / 3600);
@@ -237,10 +238,10 @@ static NSString * const CONFIGURATION_SEGUE_NAME = @"VRKConfigurationSegue";
         _currentTimeLabel.text  = [NSString stringWithFormat:@"%02ld:%02ld:%02ld", (long)ctHours, (long)ctMinutes, (long)ctSeconds];
         _durationLabel.text     = [NSString stringWithFormat:@"%02ld:%02ld:%02ld", (long)dHours, (long)dMinutes, (long)dSeconds];
         _progressSlider.value   = currentTime / (duration * 1.0f);
-        _progressSlider.enabled = !(player.playbackState == VLCRemotePlayerPlaybackStateStopped);
+        _progressSlider.enabled = !(_player.playbackState == VLCRemotePlayerPlaybackStateStopped);
         
-        _volumeLabel.text     = [NSString stringWithFormat:@"Volume: %d%%", (int)(player.volume * 100)];
-        _volumeSlider.value   = player.volume;
+        _volumeLabel.text     = [NSString stringWithFormat:@"Volume: %d%%", (int)(_player.volume * 100)];
+        _volumeSlider.value   = _player.volume;
         _volumeSlider.enabled = _progressSlider.enabled;
     }
 }

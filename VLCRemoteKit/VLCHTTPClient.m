@@ -45,7 +45,7 @@ typedef NS_ENUM(NSInteger, VLCHTTPClientRemote) {
 };
 
 /** The recommended time interval to use to pull the status. */
-NSTimeInterval const kVRKRefreshInterval           = 0.8f;
+NSTimeInterval const kVRKRefreshInterval           = 0.3f;
 /** The timeout interval to use when waiting for data. */
 NSTimeInterval const kVRKTimeoutIntervalForRequest = 1.5f;
 
@@ -81,8 +81,12 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
 - (NSURLRequest *)urlRequestWithCommand:(VLCCommand *)command;
 /** Load and starts an HTTP GET task using a given, then calls a handler upon completion. */
 - (void)performRequest:(NSURLRequest *)request completionHandler:(void (^) (NSData *data, NSError *error))completionHandler;
+/** Starts the loop which will retrieve the state of the remote objets. */
+- (void)startUpdatingRemoteObjectsWithCompletionHandler:(void (^)(NSData *data, NSError *))completionHandler;
+/** Stops the loop which retrieve the state of the remote objets. */
+- (void)stopUpdatingRemoteObjectsWithCompletionHandler:(void (^) (NSError *error))completionHandler;
 /** Runs a loop to execute a given request that populates a given remote-object. */
-- (void)updatingRemote:(VLCHTTPClientRemote)remote withRequest:(NSURLRequest *)urlRequest completionHandler:(void (^)(NSData *data, NSError *))completionHandler;
+- (void)updateRemote:(VLCHTTPClientRemote)remote withRequest:(NSURLRequest *)urlRequest completionHandler:(void (^)(NSData *data, NSError *))completionHandler;
 
 @end
 
@@ -245,7 +249,22 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
     return request;
 }
 
-- (void)updatingRemote:(VLCHTTPClientRemote)remote withRequest:(NSURLRequest *)urlRequest completionHandler:(void (^)(NSData *data, NSError *))completionHandler
+- (void)startUpdatingRemoteObjectsWithCompletionHandler:(void (^)(NSData *data, NSError *))completionHandler
+{
+    VLCCommand *statusCommand   = [VLCCommand statusCommand];
+    NSURLRequest *statusRequest = [self urlRequestWithCommand:statusCommand];
+    
+    [self updateRemote:VLCHTTPClientRemotePlayer withRequest:statusRequest completionHandler:completionHandler];
+}
+
+- (void)stopUpdatingRemoteObjectsWithCompletionHandler:(void (^) (NSError *error))completionHandler
+{
+    if (completionHandler) {
+        completionHandler(nil);
+    }
+}
+
+- (void)updateRemote:(VLCHTTPClientRemote)remote withRequest:(NSURLRequest *)urlRequest completionHandler:(void (^)(NSData *data, NSError *))completionHandler
 {
     if (_connectionStatus != VLCClientConnectionStatusDisconnected) {
         __weak typeof(self) weakSelf = self;
@@ -275,7 +294,8 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
                 }
                 
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, kVRKRefreshInterval * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-                    [self updatingRemote:remote withRequest:urlRequest completionHandler:nil];
+                    VLCHTTPClientRemote nextRemote = (remote == VLCHTTPClientRemotePlayer) ? VLCHTTPClientRemotePlaylist : VLCHTTPClientRemotePlayer;
+                    [self updateRemote:nextRemote withRequest:urlRequest completionHandler:nil];
                 });
             }
         }];
@@ -296,11 +316,9 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
                 if (statusCode != 200) {
                     NSDictionary *userInfo = nil;
                     if (statusCode == 401) {
-                        userInfo = @{
-                                     NSLocalizedDescriptionKey: NSLocalizedString(@"Request failed", nil),
-                                     NSLocalizedFailureReasonErrorKey: NSLocalizedString(@"Unauthorized", nil),
-                                     NSLocalizedRecoverySuggestionErrorKey: NSLocalizedString(@"Check the client or VLC credentials", nil)
-                                     };
+                        userInfo = @{ NSLocalizedDescriptionKey: NSLocalizedString(@"Request failed", nil),
+                                      NSLocalizedFailureReasonErrorKey: NSLocalizedString(@"Unauthorized", nil),
+                                      NSLocalizedRecoverySuggestionErrorKey: NSLocalizedString(@"Check the client or VLC credentials", nil) };
                     }
                     
                     NSError *error = [NSError errorWithDomain:kVLCClientErrorDomain code:statusCode userInfo:userInfo];
@@ -323,17 +341,11 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
         if (_connectionStatus == VLCClientConnectionStatusDisconnected) {
             self.connectionStatus = VLCClientConnectionStatusConnecting;
             
-            VLCCommand *statusCommand   = [VLCCommand statusCommand];
-            NSURLRequest *statusRequest = [self urlRequestWithCommand:statusCommand];
-            
-            [self updatingRemote:VLCHTTPClientRemotePlayer withRequest:statusRequest completionHandler:completionHandler];
-            [self updatingRemote:VLCHTTPClientRemotePlaylist withRequest:statusRequest completionHandler:completionHandler];
+            [self startUpdatingRemoteObjectsWithCompletionHandler:completionHandler];
         }
         else if (completionHandler) {
-            NSDictionary *userInfo = @{
-                                       NSLocalizedDescriptionKey: NSLocalizedString(@"Connection failed.", nil),
-                                       NSLocalizedFailureReasonErrorKey: NSLocalizedString(@"A connection is already open.", nil)
-                                       };
+            NSDictionary *userInfo = @{ NSLocalizedDescriptionKey: NSLocalizedString(@"Connection failed.", nil),
+                                        NSLocalizedFailureReasonErrorKey: NSLocalizedString(@"A connection is already open.", nil) };
             NSError *error = [NSError errorWithDomain:kVLCClientErrorDomain code:VLCClientErrorCodeConnectionAlreadyOpened userInfo:userInfo];
             completionHandler(nil, error);
         }
@@ -345,9 +357,7 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
     @synchronized (self ) {
         self.connectionStatus = VLCClientConnectionStatusDisconnected;
         
-        if (completionHandler) {
-            completionHandler(nil);
-        }
+        [self stopUpdatingRemoteObjectsWithCompletionHandler:completionHandler];
     }
 }
 
@@ -359,10 +369,8 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
         [self performRequest:commandURLRequest completionHandler:completionHandler];
     }
     else if (completionHandler) {
-        NSDictionary *userInfo = @{
-                                   NSLocalizedDescriptionKey: NSLocalizedString(@"Command failed.", nil),
-                                   NSLocalizedFailureReasonErrorKey: NSLocalizedString(@"The client is not connected.", nil)
-                                   };
+        NSDictionary *userInfo = @{ NSLocalizedDescriptionKey: NSLocalizedString(@"Command failed.", nil),
+                                    NSLocalizedFailureReasonErrorKey: NSLocalizedString(@"The client is not connected.", nil) };
         NSError *error = [NSError errorWithDomain:kVLCClientErrorDomain code:VLCClientErrorCodeNotConnected userInfo:userInfo];
         completionHandler(nil, error);
     }
