@@ -17,6 +17,7 @@
 		F4276E05189437DF0031772F /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4276E03189437DF0031772F /* Main_iPad.storyboard */; };
 		F4276E08189437DF0031772F /* VRKViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4276E07189437DF0031772F /* VRKViewController.m */; };
 		F4276E0A189437DF0031772F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4276E09189437DF0031772F /* Images.xcassets */; };
+		F43620AB18FAF2F300A1C2FF /* VRKPlaylistViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F43620AA18FAF2F300A1C2FF /* VRKPlaylistViewController.m */; };
 		F46EC9EE18A4FE7000CE4DDC /* NSError+VLC.m in Sources */ = {isa = PBXBuildFile; fileRef = F46EC9DF18A4FE7000CE4DDC /* NSError+VLC.m */; };
 		F46EC9EF18A4FE7000CE4DDC /* VLCCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = F46EC9E218A4FE7000CE4DDC /* VLCCommand.m */; };
 		F46EC9F018A4FE7000CE4DDC /* VLCHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = F46EC9E418A4FE7000CE4DDC /* VLCHTTPClient.m */; };
@@ -44,6 +45,8 @@
 		F4276E07189437DF0031772F /* VRKViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VRKViewController.m; sourceTree = "<group>"; };
 		F4276E09189437DF0031772F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		F4276E10189437DF0031772F /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		F43620A918FAF2F300A1C2FF /* VRKPlaylistViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VRKPlaylistViewController.h; sourceTree = "<group>"; };
+		F43620AA18FAF2F300A1C2FF /* VRKPlaylistViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VRKPlaylistViewController.m; sourceTree = "<group>"; };
 		F46EC9DE18A4FE7000CE4DDC /* NSError+VLC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+VLC.h"; sourceTree = "<group>"; };
 		F46EC9DF18A4FE7000CE4DDC /* NSError+VLC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+VLC.m"; sourceTree = "<group>"; };
 		F46EC9E018A4FE7000CE4DDC /* VLCClientProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCClientProtocol.h; sourceTree = "<group>"; };
@@ -122,6 +125,8 @@
 				F4276E07189437DF0031772F /* VRKViewController.m */,
 				F49FFA3518A2D1E3004BE640 /* VRKConfigurationViewController.h */,
 				F49FFA3618A2D1E3004BE640 /* VRKConfigurationViewController.m */,
+				F43620A918FAF2F300A1C2FF /* VRKPlaylistViewController.h */,
+				F43620AA18FAF2F300A1C2FF /* VRKPlaylistViewController.m */,
 				F4276E09189437DF0031772F /* Images.xcassets */,
 			);
 			path = VLCRemoteKitExample;
@@ -258,6 +263,7 @@
 				F49FFA3F18A3A2D5004BE640 /* Colours.m in Sources */,
 				F46EC9F018A4FE7000CE4DDC /* VLCHTTPClient.m in Sources */,
 				F46EC9EE18A4FE7000CE4DDC /* NSError+VLC.m in Sources */,
+				F43620AB18FAF2F300A1C2FF /* VRKPlaylistViewController.m in Sources */,
 				F46EC9F318A4FE7000CE4DDC /* VLCRemotePlaylist.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
