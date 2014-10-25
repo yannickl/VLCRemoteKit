@@ -49,11 +49,6 @@ NSTimeInterval const kVRKRefreshInterval           = 0.3f;
 /** The timeout interval to use when waiting for data. */
 NSTimeInterval const kVRKTimeoutIntervalForRequest = 1.5f;
 
-/** Absolute URL path to the status of VLC. */
-NSString * const kVRKURLPathStatus   = @"/requests/status.json";
-/** Absolute URL path to the playlist of VLC. */
-NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
-
 @interface VLCHTTPClient ()
 /** The HTTP headers used to build the requests. */
 @property (nonatomic, strong) NSDictionary *headers;
@@ -75,8 +70,6 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
 
 #pragma mark Private Methods
 
-/** Creates and returns an URL components from a given command. */
-- (NSURLComponents *)urlComponentsFromCommand:(VLCCommand *)command;
 /** Creates and returns an HTTP request for a given commmand. */
 - (NSURLRequest *)urlRequestWithCommand:(VLCCommand *)command;
 /** Load and starts an HTTP GET task using a given, then calls a handler upon completion. */
@@ -164,80 +157,11 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
 
 #pragma mark - Private Methods
 
-- (NSURLComponents *)urlComponentsFromCommand:(VLCCommand *)command
-{
-    if (!command) {
-        return nil;
-    }
-    
-    NSURLComponents *urlComponents = [_urlComponents copy];
-    
-    switch (command.name) {
-        case VLCCommandNameNext:
-            urlComponents.path  = kVRKURLPathStatus;
-            urlComponents.query = @"command=pl_next";
-            break;
-        case VLCCommandNamePlay:
-            urlComponents.path  = kVRKURLPathStatus;
-            urlComponents.query = @"command=pl_play";
-            break;
-        case VLCCommandNamePrevious:
-            urlComponents.path  = kVRKURLPathStatus;
-            urlComponents.query = @"command=pl_previous";
-            break;
-        case VLCCommandNameSeek:
-            urlComponents.path  = kVRKURLPathStatus;
-            urlComponents.query = @"command=seek";
-            break;
-        case VLCCommandNameStatus:
-            urlComponents.path = kVRKURLPathStatus;
-            break;
-        case VLCCommandNameStop:
-            urlComponents.path  = kVRKURLPathStatus;
-            urlComponents.query = @"command=pl_stop";
-            break;
-        case VLCCommandNameToggleFullscreen:
-            urlComponents.path  = kVRKURLPathStatus;
-            urlComponents.query = @"command=fullscreen";
-            break;
-        case VLCCommandNameToggleLoop:
-            urlComponents.path  = kVRKURLPathStatus;
-            urlComponents.query = @"command=pl_loop";
-            break;
-        case VLCCommandNameTogglePause:
-            urlComponents.path  = kVRKURLPathStatus;
-            urlComponents.query = @"command=pl_pause";
-            break;
-        case VLCCommandNameToggleRandomPlayback:
-            urlComponents.path  = kVRKURLPathStatus;
-            urlComponents.query = @"command=pl_random";
-            break;
-        case VLCCommandNameToggleRepeat:
-            urlComponents.path  = kVRKURLPathStatus;
-            urlComponents.query = @"command=pl_repeat";
-            break;
-        case VLCCommandNameVolume:
-            urlComponents.path  = kVRKURLPathStatus;
-            urlComponents.query = @"command=volume";
-            break;
-        default:
-            return nil;
-    }
-    
-    NSMutableString *additionalQuery = [NSMutableString string];
-    for (NSString *key in command.params) {
-        [additionalQuery appendString:[NSString stringWithFormat:@"&%@=%@", key, command.params[key]]];
-    }
-    if (additionalQuery.length > 0) {
-        urlComponents.query = [NSString stringWithFormat:@"%@%@", urlComponents.query, additionalQuery];
-    }
-    
-    return urlComponents;
-}
-
 - (NSURLRequest *)urlRequestWithCommand:(VLCCommand *)command
 {
-    NSURLComponents *commandComponents = [self urlComponentsFromCommand:command];
+    NSURLComponents *commandComponents = [_urlComponents copy];
+    commandComponents.path             = command.pathComponent;
+    commandComponents.query            = command.queryComponent;
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[commandComponents URL]];
     request.timeoutInterval      = kVRKTimeoutIntervalForRequest;

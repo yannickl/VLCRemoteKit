@@ -187,3 +187,22 @@ typedef NS_ENUM(NSInteger, VLCCommandName) {
 + (instancetype)volumeCommandWithValue:(NSInteger)volume;
 
 @end
+
+@interface VLCCommand (HTTP)
+
+#pragma mark - Managing URL Components
+/** Managing URL Components */
+
+/**
+ * @abstract The command path string.
+ * @since 1.0.0
+ */
+@property (nonatomic, strong, readonly) NSString *pathComponent;
+
+/**
+ * @abstract The command query string representation.
+ * @since 1.0.0
+ */
+@property (nonatomic, strong, readonly) NSString *queryComponent;
+
+@end

@@ -26,9 +26,16 @@
 
 #import "VLCCommand.h"
 
+/** Absolute URL path to the status of VLC. */
+NSString * const kVRKURLPathStatus   = @"/requests/status.json";
+/** Absolute URL path to the playlist of VLC. */
+NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
+
 @interface VLCCommand ()
 @property (nonatomic, assign) VLCCommandName name;
 @property (nonatomic, strong) NSDictionary   *params;
+@property (nonatomic, strong) NSString       *pathComponent;
+@property (nonatomic, strong) NSString       *queryComponent;
 
 @end
 
@@ -40,6 +47,8 @@
     if ((self = [super init])) {
         self.name   = name;
         self.params = params;
+      
+        [self buildURLComponents];
     }
     return self;
 }
@@ -97,6 +106,70 @@
 
 + (instancetype)volumeCommandWithValue:(NSInteger)volume {
     return [[self alloc] initWithName:VLCCommandNameVolume params:@{ @"val": @(volume) }];
+}
+
+#pragma mark - Managing URL Components
+
+- (void)buildURLComponents {
+    switch (_name) {
+        case VLCCommandNameNext:
+            _pathComponent  = kVRKURLPathStatus;
+            _queryComponent = @"command=pl_next";
+            break;
+        case VLCCommandNamePlay:
+            _pathComponent  = kVRKURLPathStatus;
+            _queryComponent = @"command=pl_play";
+            break;
+        case VLCCommandNamePrevious:
+            _pathComponent  = kVRKURLPathStatus;
+            _queryComponent = @"command=pl_previous";
+            break;
+        case VLCCommandNameSeek:
+            _pathComponent  = kVRKURLPathStatus;
+            _queryComponent = @"command=seek";
+            break;
+        case VLCCommandNameStatus:
+            _pathComponent = kVRKURLPathStatus;
+            break;
+        case VLCCommandNameStop:
+            _pathComponent  = kVRKURLPathStatus;
+            _queryComponent = @"command=pl_stop";
+            break;
+        case VLCCommandNameToggleFullscreen:
+            _pathComponent  = kVRKURLPathStatus;
+            _queryComponent = @"command=fullscreen";
+            break;
+        case VLCCommandNameToggleLoop:
+            _pathComponent  = kVRKURLPathStatus;
+            _queryComponent = @"command=pl_loop";
+            break;
+        case VLCCommandNameTogglePause:
+            _pathComponent  = kVRKURLPathStatus;
+            _queryComponent = @"command=pl_pause";
+            break;
+        case VLCCommandNameToggleRandomPlayback:
+            _pathComponent  = kVRKURLPathStatus;
+            _queryComponent = @"command=pl_random";
+            break;
+        case VLCCommandNameToggleRepeat:
+            _pathComponent  = kVRKURLPathStatus;
+            _queryComponent = @"command=pl_repeat";
+            break;
+        case VLCCommandNameVolume:
+            _pathComponent  = kVRKURLPathStatus;
+            _queryComponent = @"command=volume";
+            break;
+        default:
+            return;
+    }
+    
+    NSMutableString *additionalQuery = [NSMutableString string];
+    for (NSString *key in _params) {
+        [additionalQuery appendString:[NSString stringWithFormat:@"&%@=%@", key, _params[key]]];
+    }
+    if (additionalQuery.length > 0) {
+        _queryComponent = [NSString stringWithFormat:@"%@%@", _queryComponent, additionalQuery];
+    }
 }
 
 @end
