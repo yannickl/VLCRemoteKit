@@ -70,7 +70,7 @@
 
 - (void)testInitialState {
     expect(_remoteObject).toNot.beNil();
-    expect(_remoteObject.stateHash).to.equal(0);
+    expect(_remoteObject.stateDescription).to.beNil();
     XCTAssertNil(_remoteObject.state, @"The initial state must be unknown");
 }
 
@@ -79,35 +79,35 @@
 - (void)testUpdateStateWithData {
     // Test with no data
     [_remoteObject updateStateWithData:nil];
-    expect(_remoteObject.stateHash).to.equal(0);
+    expect(_remoteObject.stateDescription).to.beNil();
     expect(_remoteObject.state).to.beNil();
     
     // Test with data, but not valid JSON
     [_remoteObject updateStateWithData:[NSData data]];
-    expect(_remoteObject.stateHash).to.equal(0);
+    expect(_remoteObject.stateDescription).to.beNil();
     expect(_remoteObject.state).to.beNil();
     
     // Test with a valid JSON
     NSData *data = [@"{}" dataUsingEncoding:NSUTF8StringEncoding];
     [_remoteObject updateStateWithData:data];
-    expect(_remoteObject.stateHash).to.equal([data hash]);
+    expect(_remoteObject.stateDescription).to.equal([data description]);
     expect(_remoteObject.state).notTo.beNil();
 }
 
 - (void)testUpdateWithStateAndHash {
     // Test with no state
-    [_remoteObject updateWithState:nil andHash:1];
-    expect(_remoteObject.stateHash).to.equal(0);
+    [_remoteObject updateWithState:nil andDescription:@"0"];
+    expect(_remoteObject.stateDescription).to.beNil();
     expect(_remoteObject.state).to.beNil();
     
     // Test with same hash
-    [_remoteObject updateWithState:@{} andHash:0];
-    expect(_remoteObject.stateHash).to.equal(0);
+    [_remoteObject updateWithState:@{} andDescription:nil];
+    expect(_remoteObject.stateDescription).to.beNil();
     expect(_remoteObject.state).to.beNil();
     
     // Test with new state and hash
-    [_remoteObject updateWithState:@{} andHash:1];
-    expect(_remoteObject.stateHash).to.equal(1);
+    [_remoteObject updateWithState:@{} andDescription:@"1"];
+    expect(_remoteObject.stateDescription).to.equal(@"1");
     expect(_remoteObject.state).notTo.beNil();
 }
 
@@ -120,24 +120,24 @@
     
     // Setup the mocks
     _remoteObject.delegate = delegateMock;
-    [_remoteObject updateWithState:stateMock andHash:1];
+    [_remoteObject updateWithState:stateMock andDescription:@"1"];
     
     // Check
     [[delegateMock expect] remoteObjectDidChanged:_remoteObject];
     [FBTestBlocker waitForVerifiedMock:delegateMock delay:0.1f];
     
     // If the state does not change
-    [_remoteObject updateWithState:stateMock andHash:1];
+    [_remoteObject updateWithState:stateMock andDescription:@"1"];
     [[delegateMock reject] remoteObjectDidChanged:[OCMArg any]];
     [FBTestBlocker waitForVerifiedMock:delegateMock delay:0.1f];
     
     // If no state is passed
-    [_remoteObject updateWithState:stateMock andHash:2];
+    [_remoteObject updateWithState:stateMock andDescription:@"2"];
     [[delegateMock reject] remoteObjectDidChanged:[OCMArg any]];
     [FBTestBlocker waitForVerifiedMock:delegateMock delay:0.1f];
     
     // If state changed
-    [_remoteObject updateWithState:stateMock andHash:2];
+    [_remoteObject updateWithState:stateMock andDescription:@"2"];
     [[delegateMock reject] remoteObjectDidChanged:_remoteObject];
     [FBTestBlocker waitForVerifiedMock:delegateMock delay:0.1f];
 }

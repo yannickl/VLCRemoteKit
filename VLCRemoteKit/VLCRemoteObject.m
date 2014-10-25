@@ -52,21 +52,23 @@
 
 - (void)updateStateWithData:(NSData *)data
 {
-    NSString *dataDescription = data.description;
-    
-    if (![self.stateDescription isEqualToString:dataDescription]) {
-        NSError *error      = nil;
-        NSDictionary *state = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+    if (data) {
+        NSString *dataDescription = data.description;
         
-        if (!error) {
-            [self updateWithState:state andDescription:dataDescription];
+        if (![self.stateDescription isEqualToString:dataDescription]) {
+            NSError *error      = nil;
+            NSDictionary *state = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+            
+            if (!error) {
+                [self updateWithState:state andDescription:dataDescription];
+            }
         }
     }
 }
 
 - (void)updateWithState:(NSDictionary *)state andDescription:(NSString *)stateDescription
 {
-    if (![self.stateDescription isEqualToString:stateDescription] && state != nil) {
+    if (stateDescription && ![self.stateDescription isEqualToString:stateDescription] && state != nil) {
         self.stateDescription = stateDescription;
         self.state            = state;
         
