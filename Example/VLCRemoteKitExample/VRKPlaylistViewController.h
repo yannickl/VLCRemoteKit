@@ -26,6 +26,22 @@
 
 #import <UIKit/UIKit.h>
 
-@interface VRKPlaylistViewController : UITableViewController
+@class VLCRemotePlaylist;
+@class VLCPlaylistItem;
+@protocol VRKPlaylistViewControllerDelegate;
+
+@interface VRKPlaylistViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+
+@property (nonatomic, weak) id<VRKPlaylistViewControllerDelegate> delegate;
+@property (nonatomic, strong) VLCRemotePlaylist                   *playlist;
+
+- (IBAction)doneAction:(id)sender;
+
+@end
+
+@protocol VRKPlaylistViewControllerDelegate <NSObject>
+
+- (void)itemDidSelected:(VLCPlaylistItem *)item;
 
 @end

@@ -52,23 +52,23 @@
 
 - (void)updateStateWithData:(NSData *)data
 {
-    NSUInteger dataHash = [data hash];
+    NSString *dataDescription = data.description;
     
-    if (self.stateHash != dataHash) {
+    if (![self.stateDescription isEqualToString:dataDescription]) {
         NSError *error      = nil;
         NSDictionary *state = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
         
         if (!error) {
-            [self updateWithState:state andHash:dataHash];
+            [self updateWithState:state andDescription:dataDescription];
         }
     }
 }
 
-- (void)updateWithState:(NSDictionary *)state andHash:(NSUInteger)stateHash
+- (void)updateWithState:(NSDictionary *)state andDescription:(NSString *)stateDescription
 {
-    if (self.stateHash != stateHash && state != nil) {
-        self.stateHash = stateHash;
-        self.state     = state;
+    if (![self.stateDescription isEqualToString:stateDescription] && state != nil) {
+        self.stateDescription = stateDescription;
+        self.state            = state;
         
         if (_delegate) {
             dispatch_async(dispatch_get_main_queue(), ^{

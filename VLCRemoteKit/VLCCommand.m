@@ -57,7 +57,7 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
     return [[self alloc] initWithName:name params:params];
 }
 
-#pragma mark - Convenience Constructors
+#pragma mark - Player Convenience Constructors
 
 + (instancetype)nextCommand {
     return [[self alloc] initWithName:VLCCommandNameNext params:nil];
@@ -108,6 +108,12 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
     return [[self alloc] initWithName:VLCCommandNameVolume params:@{ @"val": @(volume) }];
 }
 
+#pragma mark - Playlist Convenience Constructors
+
++ (instancetype)playlistStatusCommand {
+    return [[self alloc] initWithName:VLCCommandNamePlaylistStatus params:nil];
+}
+
 #pragma mark - Managing URL Components
 
 - (void)buildURLComponents {
@@ -119,6 +125,9 @@ NSString * const kVRKURLPathPlaylist = @"/requests/playlist.json";
         case VLCCommandNamePlay:
             _pathComponent  = kVRKURLPathStatus;
             _queryComponent = @"command=pl_play";
+            break;
+        case VLCCommandNamePlaylistStatus:
+            _pathComponent  = kVRKURLPathPlaylist;
             break;
         case VLCCommandNamePrevious:
             _pathComponent  = kVRKURLPathStatus;

@@ -27,6 +27,7 @@
 #import <UIKit/UIKit.h>
 #import "VLCClientProtocol.h"
 #import "VLCRemoteProtocol.h"
+#import "VLCRemotePlaylist.h"
 #import "VRKConfigurationViewController.h"
 
 @interface VRKViewController : UIViewController <UIPopoverControllerDelegate, VRKConfigurationDelegate, VLCClientDelegate, VLCRemoteDelegate>

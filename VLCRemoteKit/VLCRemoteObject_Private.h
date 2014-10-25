@@ -31,8 +31,8 @@
 #pragma mark - Managing the Internal State
 /** @name Managing the Internal State */
 
-/** The internal hash of the current state. */
-@property (assign) NSUInteger stateHash;
+/** The internal description of the current state. */
+@property (strong) NSString *stateDescription;
 /** The internal object state. */
 @property (strong) NSDictionary *state;
 /** The client used to perform the communication. */
@@ -52,9 +52,9 @@
  * @abstract Update the local state representation with a given state and the 
  * coresponding hash number.
  * @param state The data received by the client.
- * @param stateHash The hash associated to the given state.
+ * @param stateDescription The unique description associated to the given state.
  * @since 1.0.0
  */
-- (void)updateWithState:(NSDictionary *)state andHash:(NSUInteger)stateHash;
+- (void)updateWithState:(NSDictionary *)state andDescription:(NSString *)stateDescription;
 
 @end

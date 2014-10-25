@@ -27,10 +27,24 @@
 #import "VLCRemoteObject.h"
 
 /**
+ * A playlist item is a simple object to manipulate them easily.
+ */
+@interface VLCPlaylistItem : NSObject
+@property (nonatomic, readonly) NSInteger        identifier;
+@property (nonatomic, strong, readonly) NSString *name;
+
+- (id)initWithJSON:(NSDictionary *)JSONDict;
++ (instancetype)itemWithJSON:(NSDictionary *)JSONDict;
+
+@end
+
+/**
  * Facade to work with the remote VLC playlist.
  * When you update a property of the local object, the change is automatically
  * sent to the remote playlist object.
  */
 @interface VLCRemotePlaylist : VLCRemoteObject
+
+@property (nonatomic, strong, readonly) NSArray *items;
 
 @end

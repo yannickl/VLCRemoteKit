@@ -31,6 +31,8 @@ typedef NS_ENUM(NSInteger, VLCCommandName) {
     VLCCommandNameNext,
     /** Plays a specific playlist item. */
     VLCCommandNamePlay,
+    /** Retrieves the playlist status informations. */
+    VLCCommandNamePlaylistStatus,
     /** Jumps to previous playlist item. */
     VLCCommandNamePrevious,
     /** Seeks to a particular point in the current playback. */
@@ -96,8 +98,8 @@ typedef NS_ENUM(NSInteger, VLCCommandName) {
 + (instancetype)commandWithName:(VLCCommandName)name params:(NSDictionary *)params;
 
 
-#pragma mark - Convenience Constructors
-/**@name Convenience Constructors */
+#pragma mark - Player Convenience Constructors
+/**@name Player Convenience Constructors */
 
 /**
  * @abstract Creates and returns a command to jump to the next playlist item.
@@ -185,6 +187,16 @@ typedef NS_ENUM(NSInteger, VLCCommandName) {
  * @since 1.0.0
  */
 + (instancetype)volumeCommandWithValue:(NSInteger)volume;
+
+#pragma mark - Playlist Convenience Constructors
+/**@name Playlist Convenience Constructors */
+
+/**
+ * @abstract Creates and returns a command to retrieve the current VLC playlist
+ * status.
+ * @since 1.0.0
+ */
++ (instancetype)playlistStatusCommand;
 
 @end
 

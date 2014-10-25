@@ -219,7 +219,18 @@ NSTimeInterval const kVRKTimeoutIntervalForRequest = 1.5f;
                 
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, kVRKRefreshInterval * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
                     VLCHTTPClientRemote nextRemote = (remote == VLCHTTPClientRemotePlayer) ? VLCHTTPClientRemotePlaylist : VLCHTTPClientRemotePlayer;
-                    [self updateRemote:nextRemote withRequest:urlRequest completionHandler:nil];
+                    
+                    NSURLRequest *nextRequest;
+                    if (nextRemote == VLCHTTPClientRemotePlayer) {
+                        VLCCommand *command = [VLCCommand statusCommand];
+                        nextRequest         = [self urlRequestWithCommand:command];
+                    }
+                    else {
+                        VLCCommand *command = [VLCCommand playlistStatusCommand];
+                        nextRequest         = [self urlRequestWithCommand:command];
+                    }
+                    
+                    [self updateRemote:nextRemote withRequest:nextRequest completionHandler:nil];
                 });
             }
         }];

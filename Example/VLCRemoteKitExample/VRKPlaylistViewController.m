@@ -25,8 +25,9 @@
  */
 
 #import "VRKPlaylistViewController.h"
+#import "VLCRemoteKit.h"
 
-@interface VRKPlaylistViewController ()
+@interface VRKPlaylistViewController () <VLCRemoteDelegate>
 
 @end
 
@@ -35,28 +36,55 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    _playlist.delegate = self;
 }
 
-- (void)didReceiveMemoryWarning
+- (IBAction)doneAction:(id)sender
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    [self dismissViewControllerAnimated:true completion:nil];
 }
 
-#pragma mark - Table view data source
+#pragma mark - VLCRemote Delegate Methods
+
+- (void)remoteObjectDidChanged:(id<VLCRemoteProtocol>)remote
+{
+    [_tableView reloadData];
+}
+
+#pragma mark - UITableView DataSource Methods
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
+    return [_playlist.items count];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"VRKPlaylistCell"];
+    
+    VLCPlaylistItem *item = [_playlist.items objectAtIndex:indexPath.row];
+                             
+    cell.textLabel.text = [item name];
+    
+    return cell;
+}
+
+#pragma mark - UITableView Delegate Methods
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (_delegate) {
+        VLCPlaylistItem *item = [_playlist.items objectAtIndex:indexPath.row];
+        
+        [_delegate itemDidSelected:item];
+    }
+    else {
+        [self dismissViewControllerAnimated:true completion:nil];
+    }
 }
 
 @end

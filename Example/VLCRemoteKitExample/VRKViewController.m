@@ -25,16 +25,17 @@
  */
 
 #import "VRKViewController.h"
+#import "VRKPlaylistViewController.h"
 #import "VLCRemoteKit.h"
 #import "Colours.h"
 
 static NSString * const CONFIGURATION_SEGUE_NAME = @"VRKConfigurationSegue";
+static NSString * const PLAYLIST_SEGUE_NAME      = @"VRKPlaylistSegue";
 
-@interface VRKViewController ()
+@interface VRKViewController () <VRKPlaylistViewControllerDelegate>
 @property (nonatomic, strong) UIPopoverController *popover;
 @property (nonatomic, strong) VLCHTTPClient       *vlcClient;
 @property (nonatomic, strong) VLCRemotePlayer     *player;
-@property (nonatomic, strong) VLCRemotePlaylist   *playlist;
 
 @end
 
@@ -59,6 +60,11 @@ static NSString * const CONFIGURATION_SEGUE_NAME = @"VRKConfigurationSegue";
         VRKConfigurationViewController *configViewConfiguration = [segue destinationViewController];
         configViewConfiguration.delegate                        = self;
     }
+    else if ([[segue identifier] isEqualToString:PLAYLIST_SEGUE_NAME]) {
+        VRKPlaylistViewController *vc = segue.destinationViewController;
+        vc.playlist                   = _vlcClient.playlist;
+        vc.delegate                   = self;
+    }
 }
 
 #pragma mark - Public Methods
@@ -74,8 +80,6 @@ static NSString * const CONFIGURATION_SEGUE_NAME = @"VRKConfigurationSegue";
         _vlcClient.delegate = self;
         _player             = _vlcClient.player;
         _player.delegate    = self;
-        _playlist           = _vlcClient.playlist;
-        _playlist.delegate  = self;
         
         [_vlcClient connectWithCompletionHandler:NULL];
     }
@@ -246,9 +250,14 @@ static NSString * const CONFIGURATION_SEGUE_NAME = @"VRKConfigurationSegue";
         _volumeSlider.value   = _player.volume;
         _volumeSlider.enabled = _progressSlider.enabled;
     }
-    else if (_playlist == remote) {
-        NSLog(@"playlist did changed");
-    }
+}
+
+#pragma mark - VRKPlaylistViewController Delegate Methods
+
+- (void)itemDidSelected:(VLCPlaylistItem *)item {
+    [_player playItemWithId:item.identifier];
+    
+    [self dismissViewControllerAnimated:true completion:nil];
 }
 
 @end

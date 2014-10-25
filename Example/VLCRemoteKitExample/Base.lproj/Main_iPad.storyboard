@@ -1,68 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="B13-Jc-ud3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
     </dependencies>
     <scenes>
-        <!--Playlist-->
-        <scene sceneID="Fiz-i3-HnT">
-            <objects>
-                <tableViewController clearsSelectionOnViewWillAppear="NO" id="BGK-pn-7wZ" customClass="VRKPlaylistViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="nj0-Ue-Gp6">
-                        <rect key="frame" x="0.0" y="0.0" width="308" height="1024"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="VRKPlaylistCell" id="zAN-Yv-bX8">
-                                <rect key="frame" x="0.0" y="86" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zAN-Yv-bX8" id="Dvc-Sh-DDN">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="BGK-pn-7wZ" id="7O1-oF-4lX"/>
-                            <outlet property="delegate" destination="BGK-pn-7wZ" id="ErR-aY-Gie"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Playlist" id="raK-pe-LvO"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="5dG-A7-iOB" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-360" y="-902"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="3ay-QO-CpG">
-            <objects>
-                <navigationController id="leM-iN-3kU" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="MKe-PA-5HS">
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="BGK-pn-7wZ" kind="relationship" relationship="rootViewController" id="ADf-Wm-eTf"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="3Ed-7V-YDX" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-896" y="-903"/>
-        </scene>
-        <!--Split View Controller-->
-        <scene sceneID="FW5-4o-vos">
-            <objects>
-                <splitViewController id="B13-Jc-ud3" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <connections>
-                        <segue destination="leM-iN-3kU" kind="relationship" relationship="masterViewController" id="4Nf-93-6L7"/>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="detailViewController" id="gef-vm-mha"/>
-                    </connections>
-                </splitViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="AUI-pp-qKZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1876" y="-436"/>
-        </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -75,11 +17,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f9J-1v-tUt">
+                            <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f9J-1v-tUt">
                                 <rect key="frame" x="0.0" y="20" width="768" height="44"/>
                                 <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <items>
                                     <navigationItem title="VLC Remote Kit Test Application" id="gyb-iN-H26">
+                                        <barButtonItem key="leftBarButtonItem" title="Playlist" id="dhZ-Bc-H4j">
+                                            <connections>
+                                                <segue destination="ZPD-l7-s0h" kind="modal" identifier="VRKPlaylistSegue" id="MuG-iE-p8j"/>
+                                            </connections>
+                                        </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" systemItem="edit" id="RfF-Uh-p9V">
                                             <connections>
                                                 <segue destination="x6v-MK-G4Z" kind="popover" identifier="VRKConfigurationSegue" popoverAnchorBarButtonItem="RfF-Uh-p9V" id="7Jc-8a-0we">
@@ -379,7 +326,68 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fz0-xa-b58" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="49" y="514"/>
+            <point key="canvasLocation" x="-5" y="-114"/>
+        </scene>
+        <!--Playlist View Controller-->
+        <scene sceneID="3wx-a5-2zu">
+            <objects>
+                <viewController id="ZPD-l7-s0h" customClass="VRKPlaylistViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="FGC-ty-NNR"/>
+                        <viewControllerLayoutGuide type="bottom" id="FKf-Bi-f2r"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Ysb-aQ-hDR">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dXg-yq-KcU">
+                                <rect key="frame" x="0.0" y="28" width="768" height="44"/>
+                                <items>
+                                    <navigationItem title="Playlist" id="fEg-xv-Fdp">
+                                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="Cpz-rf-vfe">
+                                            <connections>
+                                                <action selector="doneAction:" destination="ZPD-l7-s0h" id="6AH-lp-ZSk"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Sa1-TC-hL8">
+                                <rect key="frame" x="0.0" y="72" width="768" height="952"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="VRKPlaylistCell" id="O2q-gh-kOS">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="O2q-gh-kOS" id="n8Q-8Q-Oos">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="ZPD-l7-s0h" id="D7u-o0-7f8"/>
+                                    <outlet property="delegate" destination="ZPD-l7-s0h" id="e5k-wV-L0S"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Sa1-TC-hL8" firstAttribute="leading" secondItem="Ysb-aQ-hDR" secondAttribute="leading" id="0Da-X6-aLo"/>
+                            <constraint firstItem="dXg-yq-KcU" firstAttribute="top" secondItem="FGC-ty-NNR" secondAttribute="bottom" constant="8" id="4Rl-7v-RY5"/>
+                            <constraint firstItem="Sa1-TC-hL8" firstAttribute="top" secondItem="dXg-yq-KcU" secondAttribute="bottom" id="8Hi-XF-s4D"/>
+                            <constraint firstItem="Sa1-TC-hL8" firstAttribute="leading" secondItem="dXg-yq-KcU" secondAttribute="leading" id="QMQ-kH-EBC"/>
+                            <constraint firstItem="Sa1-TC-hL8" firstAttribute="trailing" secondItem="dXg-yq-KcU" secondAttribute="trailing" id="XdE-VO-stk"/>
+                            <constraint firstItem="Sa1-TC-hL8" firstAttribute="bottom" secondItem="FKf-Bi-f2r" secondAttribute="top" id="lcv-NS-rd0"/>
+                            <constraint firstAttribute="trailing" secondItem="Sa1-TC-hL8" secondAttribute="trailing" id="tuT-R6-Y63"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="Sa1-TC-hL8" id="jbg-C7-zME"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ir9-mm-DYh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="248" y="766"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
