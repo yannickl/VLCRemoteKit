@@ -24,18 +24,7 @@
  *
  */
 
-#import "VLCHTTPClient.h"
+#import "VLCCommand.h"
 
-@interface VLCHTTPClient ()
-@property (nonatomic, strong) NSURLSession   *urlSession;
-@property (assign) VLCClientConnectionStatus connectionStatus;
-@property (nonatomic, copy) void (^connectionStatusChangeBlock) (VLCClientConnectionStatus status);
-
-#pragma mark - Private Methods
-
-/** Creates and returns an HTTP request for a given commmand. */
-- (NSURLRequest *)urlRequestWithCommand:(VLCCommand *)command;
-/** Load and starts an HTTP GET task using a given, then calls a handler upon completion. */
-- (void)performRequest:(NSURLRequest *)request completionHandler:(void (^) (NSData *data, NSError *error))completionHandler;
-
-@end
+NSString * const _kVRKURLPathStatus   = @"/requests/status.json";
+NSString * const _kVRKURLPathPlaylist = @"/requests/playlist.json";
