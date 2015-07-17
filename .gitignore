@@ -16,12 +16,3 @@ DerivedData
 .idea/
 *.hmap
 *.xccheckout
-
-#CocoaPods
-Pods
-Tests/Pods
-Tests/Podfile.lock
-Tests/VLCRemoteKitTests.xcworkspace
-
-#CocoaDocs
-documentation

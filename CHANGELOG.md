@@ -1,6 +1,6 @@
 ## Changelog
 
-### Version 1.0.0-a1 (Initial Version)
+### Version 1.0.0 (Objective-C)
 
 - Support the following commands of the API v3.0:
    - `VLCCommandNameNext`: Jumps to next playlist item.

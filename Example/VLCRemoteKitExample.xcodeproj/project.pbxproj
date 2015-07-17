@@ -7,195 +7,135 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F4276DEF189437DF0031772F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4276DEE189437DF0031772F /* Foundation.framework */; };
-		F4276DF1189437DF0031772F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4276DF0189437DF0031772F /* CoreGraphics.framework */; };
-		F4276DF3189437DF0031772F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4276DF2189437DF0031772F /* UIKit.framework */; };
-		F4276DF9189437DF0031772F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F4276DF7189437DF0031772F /* InfoPlist.strings */; };
-		F4276DFB189437DF0031772F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F4276DFA189437DF0031772F /* main.m */; };
-		F4276DFF189437DF0031772F /* VRKAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F4276DFE189437DF0031772F /* VRKAppDelegate.m */; };
-		F4276E02189437DF0031772F /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4276E00189437DF0031772F /* Main_iPhone.storyboard */; };
-		F4276E05189437DF0031772F /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4276E03189437DF0031772F /* Main_iPad.storyboard */; };
-		F4276E08189437DF0031772F /* VRKViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4276E07189437DF0031772F /* VRKViewController.m */; };
-		F4276E0A189437DF0031772F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4276E09189437DF0031772F /* Images.xcassets */; };
-		F43620AB18FAF2F300A1C2FF /* VRKPlaylistViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F43620AA18FAF2F300A1C2FF /* VRKPlaylistViewController.m */; };
-		F46EC9EE18A4FE7000CE4DDC /* NSError+VLC.m in Sources */ = {isa = PBXBuildFile; fileRef = F46EC9DF18A4FE7000CE4DDC /* NSError+VLC.m */; };
-		F46EC9EF18A4FE7000CE4DDC /* VLCCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = F46EC9E218A4FE7000CE4DDC /* VLCCommand.m */; };
-		F46EC9F018A4FE7000CE4DDC /* VLCHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = F46EC9E418A4FE7000CE4DDC /* VLCHTTPClient.m */; };
-		F46EC9F118A4FE7000CE4DDC /* VLCRemoteObject.m in Sources */ = {isa = PBXBuildFile; fileRef = F46EC9E718A4FE7000CE4DDC /* VLCRemoteObject.m */; };
-		F46EC9F218A4FE7000CE4DDC /* VLCRemotePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F46EC9EA18A4FE7000CE4DDC /* VLCRemotePlayer.m */; };
-		F46EC9F318A4FE7000CE4DDC /* VLCRemotePlaylist.m in Sources */ = {isa = PBXBuildFile; fileRef = F46EC9EC18A4FE7000CE4DDC /* VLCRemotePlaylist.m */; };
-		F49FFA3718A2D1E3004BE640 /* VRKConfigurationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F49FFA3618A2D1E3004BE640 /* VRKConfigurationViewController.m */; };
-		F49FFA3F18A3A2D5004BE640 /* Colours.m in Sources */ = {isa = PBXBuildFile; fileRef = F49FFA3E18A3A2D5004BE640 /* Colours.m */; };
+		CE9E1E531B593FE600A06130 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9E1E521B593FE600A06130 /* AppDelegate.swift */; };
+		CE9E1E551B593FE600A06130 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9E1E541B593FE600A06130 /* ViewController.swift */; };
+		CE9E1E581B593FE600A06130 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE9E1E561B593FE600A06130 /* Main.storyboard */; };
+		CE9E1E5A1B593FE600A06130 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE9E1E591B593FE600A06130 /* Images.xcassets */; };
+		CE9E1E5D1B593FE600A06130 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE9E1E5B1B593FE600A06130 /* LaunchScreen.xib */; };
+		CE9E1E761B59413B00A06130 /* VLCRemoteKitExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9E1E751B59413B00A06130 /* VLCRemoteKitExampleTests.swift */; };
+		CE9E1E7B1B59418000A06130 /* VLCRemoteKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9E1E7A1B59418000A06130 /* VLCRemoteKit.swift */; };
+		CE9E1E7C1B59418000A06130 /* VLCRemoteKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9E1E7A1B59418000A06130 /* VLCRemoteKit.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		CE9E1E631B593FE600A06130 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CE9E1E451B593FE500A06130 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CE9E1E4C1B593FE600A06130;
+			remoteInfo = VLCRemoteKitExample;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
-		F4276DEB189437DF0031772F /* VLCRemoteKitExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VLCRemoteKitExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		F4276DEE189437DF0031772F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		F4276DF0189437DF0031772F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		F4276DF2189437DF0031772F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		F4276DF6189437DF0031772F /* VLCRemoteKitExample-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "VLCRemoteKitExample-Info.plist"; sourceTree = "<group>"; };
-		F4276DF8189437DF0031772F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		F4276DFA189437DF0031772F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		F4276DFC189437DF0031772F /* VLCRemoteKitExample-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "VLCRemoteKitExample-Prefix.pch"; sourceTree = "<group>"; };
-		F4276DFD189437DF0031772F /* VRKAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VRKAppDelegate.h; sourceTree = "<group>"; };
-		F4276DFE189437DF0031772F /* VRKAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VRKAppDelegate.m; sourceTree = "<group>"; };
-		F4276E01189437DF0031772F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
-		F4276E04189437DF0031772F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
-		F4276E06189437DF0031772F /* VRKViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VRKViewController.h; sourceTree = "<group>"; };
-		F4276E07189437DF0031772F /* VRKViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VRKViewController.m; sourceTree = "<group>"; };
-		F4276E09189437DF0031772F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		F4276E10189437DF0031772F /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		F43620A918FAF2F300A1C2FF /* VRKPlaylistViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VRKPlaylistViewController.h; sourceTree = "<group>"; };
-		F43620AA18FAF2F300A1C2FF /* VRKPlaylistViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VRKPlaylistViewController.m; sourceTree = "<group>"; };
-		F46EC9DE18A4FE7000CE4DDC /* NSError+VLC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+VLC.h"; sourceTree = "<group>"; };
-		F46EC9DF18A4FE7000CE4DDC /* NSError+VLC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+VLC.m"; sourceTree = "<group>"; };
-		F46EC9E018A4FE7000CE4DDC /* VLCClientProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCClientProtocol.h; sourceTree = "<group>"; };
-		F46EC9E118A4FE7000CE4DDC /* VLCCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCCommand.h; sourceTree = "<group>"; };
-		F46EC9E218A4FE7000CE4DDC /* VLCCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCCommand.m; sourceTree = "<group>"; };
-		F46EC9E318A4FE7000CE4DDC /* VLCHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCHTTPClient.h; sourceTree = "<group>"; };
-		F46EC9E418A4FE7000CE4DDC /* VLCHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCHTTPClient.m; sourceTree = "<group>"; };
-		F46EC9E518A4FE7000CE4DDC /* VLCRemoteKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCRemoteKit.h; sourceTree = "<group>"; };
-		F46EC9E618A4FE7000CE4DDC /* VLCRemoteObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCRemoteObject.h; sourceTree = "<group>"; };
-		F46EC9E718A4FE7000CE4DDC /* VLCRemoteObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCRemoteObject.m; sourceTree = "<group>"; };
-		F46EC9E818A4FE7000CE4DDC /* VLCRemoteObject_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCRemoteObject_Private.h; sourceTree = "<group>"; };
-		F46EC9E918A4FE7000CE4DDC /* VLCRemotePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCRemotePlayer.h; sourceTree = "<group>"; };
-		F46EC9EA18A4FE7000CE4DDC /* VLCRemotePlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCRemotePlayer.m; sourceTree = "<group>"; };
-		F46EC9EB18A4FE7000CE4DDC /* VLCRemotePlaylist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCRemotePlaylist.h; sourceTree = "<group>"; };
-		F46EC9EC18A4FE7000CE4DDC /* VLCRemotePlaylist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCRemotePlaylist.m; sourceTree = "<group>"; };
-		F46EC9ED18A4FE7000CE4DDC /* VLCRemoteProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCRemoteProtocol.h; sourceTree = "<group>"; };
-		F49FFA3518A2D1E3004BE640 /* VRKConfigurationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VRKConfigurationViewController.h; sourceTree = "<group>"; };
-		F49FFA3618A2D1E3004BE640 /* VRKConfigurationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VRKConfigurationViewController.m; sourceTree = "<group>"; };
-		F49FFA3D18A3A2D4004BE640 /* Colours.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Colours.h; sourceTree = "<group>"; };
-		F49FFA3E18A3A2D5004BE640 /* Colours.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Colours.m; sourceTree = "<group>"; };
+		CE9E1E4D1B593FE600A06130 /* VLCRemoteKitExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VLCRemoteKitExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE9E1E511B593FE600A06130 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CE9E1E521B593FE600A06130 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		CE9E1E541B593FE600A06130 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		CE9E1E571B593FE600A06130 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		CE9E1E591B593FE600A06130 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		CE9E1E5C1B593FE600A06130 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		CE9E1E621B593FE600A06130 /* VLCRemoteKitExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VLCRemoteKitExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE9E1E671B593FE600A06130 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CE9E1E751B59413B00A06130 /* VLCRemoteKitExampleTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VLCRemoteKitExampleTests.swift; path = ../../Tests/VLCRemoteKitExampleTests.swift; sourceTree = "<group>"; };
+		CE9E1E7A1B59418000A06130 /* VLCRemoteKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VLCRemoteKit.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		F4276DE8189437DF0031772F /* Frameworks */ = {
+		CE9E1E4A1B593FE600A06130 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F4276DF1189437DF0031772F /* CoreGraphics.framework in Frameworks */,
-				F4276DF3189437DF0031772F /* UIKit.framework in Frameworks */,
-				F4276DEF189437DF0031772F /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CE9E1E5F1B593FE600A06130 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		F4276DE2189437DF0031772F = {
+		CE9E1E441B593FE500A06130 = {
 			isa = PBXGroup;
 			children = (
-				F46EC9DD18A4FE7000CE4DDC /* VLCRemoteKit */,
-				F4276DF4189437DF0031772F /* VLCRemoteKitExample */,
-				F4276DED189437DF0031772F /* Frameworks */,
-				F4276DEC189437DF0031772F /* Products */,
+				CE9E1E791B59418000A06130 /* VLCRemoteKit */,
+				CE9E1E4F1B593FE600A06130 /* VLCRemoteKitExample */,
+				CE9E1E651B593FE600A06130 /* VLCRemoteKitTests */,
+				CE9E1E4E1B593FE600A06130 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		F4276DEC189437DF0031772F /* Products */ = {
+		CE9E1E4E1B593FE600A06130 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				F4276DEB189437DF0031772F /* VLCRemoteKitExample.app */,
+				CE9E1E4D1B593FE600A06130 /* VLCRemoteKitExample.app */,
+				CE9E1E621B593FE600A06130 /* VLCRemoteKitExampleTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		F4276DED189437DF0031772F /* Frameworks */ = {
+		CE9E1E4F1B593FE600A06130 /* VLCRemoteKitExample */ = {
 			isa = PBXGroup;
 			children = (
-				F4276DEE189437DF0031772F /* Foundation.framework */,
-				F4276DF0189437DF0031772F /* CoreGraphics.framework */,
-				F4276DF2189437DF0031772F /* UIKit.framework */,
-				F4276E10189437DF0031772F /* XCTest.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		F4276DF4189437DF0031772F /* VLCRemoteKitExample */ = {
-			isa = PBXGroup;
-			children = (
-				F49FFA3B18A3A2D4004BE640 /* Libs */,
-				F4276DF5189437DF0031772F /* Supporting Files */,
-				F4276DFD189437DF0031772F /* VRKAppDelegate.h */,
-				F4276DFE189437DF0031772F /* VRKAppDelegate.m */,
-				F4276E00189437DF0031772F /* Main_iPhone.storyboard */,
-				F4276E03189437DF0031772F /* Main_iPad.storyboard */,
-				F4276E06189437DF0031772F /* VRKViewController.h */,
-				F4276E07189437DF0031772F /* VRKViewController.m */,
-				F49FFA3518A2D1E3004BE640 /* VRKConfigurationViewController.h */,
-				F49FFA3618A2D1E3004BE640 /* VRKConfigurationViewController.m */,
-				F43620A918FAF2F300A1C2FF /* VRKPlaylistViewController.h */,
-				F43620AA18FAF2F300A1C2FF /* VRKPlaylistViewController.m */,
-				F4276E09189437DF0031772F /* Images.xcassets */,
+				CE9E1E521B593FE600A06130 /* AppDelegate.swift */,
+				CE9E1E541B593FE600A06130 /* ViewController.swift */,
+				CE9E1E561B593FE600A06130 /* Main.storyboard */,
+				CE9E1E591B593FE600A06130 /* Images.xcassets */,
+				CE9E1E5B1B593FE600A06130 /* LaunchScreen.xib */,
+				CE9E1E501B593FE600A06130 /* Supporting Files */,
 			);
 			path = VLCRemoteKitExample;
 			sourceTree = "<group>";
 		};
-		F4276DF5189437DF0031772F /* Supporting Files */ = {
+		CE9E1E501B593FE600A06130 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				F4276DF6189437DF0031772F /* VLCRemoteKitExample-Info.plist */,
-				F4276DF7189437DF0031772F /* InfoPlist.strings */,
-				F4276DFA189437DF0031772F /* main.m */,
-				F4276DFC189437DF0031772F /* VLCRemoteKitExample-Prefix.pch */,
+				CE9E1E511B593FE600A06130 /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		F46EC9DD18A4FE7000CE4DDC /* VLCRemoteKit */ = {
+		CE9E1E651B593FE600A06130 /* VLCRemoteKitTests */ = {
 			isa = PBXGroup;
 			children = (
-				F46EC9DE18A4FE7000CE4DDC /* NSError+VLC.h */,
-				F46EC9DF18A4FE7000CE4DDC /* NSError+VLC.m */,
-				F46EC9E018A4FE7000CE4DDC /* VLCClientProtocol.h */,
-				F46EC9E118A4FE7000CE4DDC /* VLCCommand.h */,
-				F46EC9E218A4FE7000CE4DDC /* VLCCommand.m */,
-				F46EC9E318A4FE7000CE4DDC /* VLCHTTPClient.h */,
-				F46EC9E418A4FE7000CE4DDC /* VLCHTTPClient.m */,
-				F46EC9E518A4FE7000CE4DDC /* VLCRemoteKit.h */,
-				F46EC9E618A4FE7000CE4DDC /* VLCRemoteObject.h */,
-				F46EC9E718A4FE7000CE4DDC /* VLCRemoteObject.m */,
-				F46EC9E818A4FE7000CE4DDC /* VLCRemoteObject_Private.h */,
-				F46EC9E918A4FE7000CE4DDC /* VLCRemotePlayer.h */,
-				F46EC9EA18A4FE7000CE4DDC /* VLCRemotePlayer.m */,
-				F46EC9EB18A4FE7000CE4DDC /* VLCRemotePlaylist.h */,
-				F46EC9EC18A4FE7000CE4DDC /* VLCRemotePlaylist.m */,
-				F46EC9ED18A4FE7000CE4DDC /* VLCRemoteProtocol.h */,
+				CE9E1E661B593FE600A06130 /* Supporting Files */,
+				CE9E1E751B59413B00A06130 /* VLCRemoteKitExampleTests.swift */,
+			);
+			name = VLCRemoteKitTests;
+			path = VLCRemoteKitExampleTests;
+			sourceTree = "<group>";
+		};
+		CE9E1E661B593FE600A06130 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				CE9E1E671B593FE600A06130 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		CE9E1E791B59418000A06130 /* VLCRemoteKit */ = {
+			isa = PBXGroup;
+			children = (
+				CE9E1E7A1B59418000A06130 /* VLCRemoteKit.swift */,
 			);
 			name = VLCRemoteKit;
 			path = ../VLCRemoteKit;
 			sourceTree = "<group>";
 		};
-		F49FFA3B18A3A2D4004BE640 /* Libs */ = {
-			isa = PBXGroup;
-			children = (
-				F49FFA3C18A3A2D4004BE640 /* Colours */,
-			);
-			name = Libs;
-			path = libs;
-			sourceTree = "<group>";
-		};
-		F49FFA3C18A3A2D4004BE640 /* Colours */ = {
-			isa = PBXGroup;
-			children = (
-				F49FFA3D18A3A2D4004BE640 /* Colours.h */,
-				F49FFA3E18A3A2D5004BE640 /* Colours.m */,
-			);
-			name = Colours;
-			path = colours;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		F4276DEA189437DF0031772F /* VLCRemoteKitExample */ = {
+		CE9E1E4C1B593FE600A06130 /* VLCRemoteKitExample */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F4276E20189437DF0031772F /* Build configuration list for PBXNativeTarget "VLCRemoteKitExample" */;
+			buildConfigurationList = CE9E1E6C1B593FE600A06130 /* Build configuration list for PBXNativeTarget "VLCRemoteKitExample" */;
 			buildPhases = (
-				F4276DE7189437DF0031772F /* Sources */,
-				F4276DE8189437DF0031772F /* Frameworks */,
-				F4276DE9189437DF0031772F /* Resources */,
+				CE9E1E491B593FE600A06130 /* Sources */,
+				CE9E1E4A1B593FE600A06130 /* Frameworks */,
+				CE9E1E4B1B593FE600A06130 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -203,20 +143,46 @@
 			);
 			name = VLCRemoteKitExample;
 			productName = VLCRemoteKitExample;
-			productReference = F4276DEB189437DF0031772F /* VLCRemoteKitExample.app */;
+			productReference = CE9E1E4D1B593FE600A06130 /* VLCRemoteKitExample.app */;
 			productType = "com.apple.product-type.application";
+		};
+		CE9E1E611B593FE600A06130 /* VLCRemoteKitExampleTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CE9E1E6F1B593FE600A06130 /* Build configuration list for PBXNativeTarget "VLCRemoteKitExampleTests" */;
+			buildPhases = (
+				CE9E1E5E1B593FE600A06130 /* Sources */,
+				CE9E1E5F1B593FE600A06130 /* Frameworks */,
+				CE9E1E601B593FE600A06130 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CE9E1E641B593FE600A06130 /* PBXTargetDependency */,
+			);
+			name = VLCRemoteKitExampleTests;
+			productName = VLCRemoteKitExampleTests;
+			productReference = CE9E1E621B593FE600A06130 /* VLCRemoteKitExampleTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		F4276DE3189437DF0031772F /* Project object */ = {
+		CE9E1E451B593FE500A06130 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				CLASSPREFIX = VRK;
-				LastUpgradeCheck = 0510;
-				ORGANIZATIONNAME = "Yannick Loriot";
+				LastUpgradeCheck = 0640;
+				ORGANIZATIONNAME = "Yannick LORIOT";
+				TargetAttributes = {
+					CE9E1E4C1B593FE600A06130 = {
+						CreatedOnToolsVersion = 6.4;
+					};
+					CE9E1E611B593FE600A06130 = {
+						CreatedOnToolsVersion = 6.4;
+						TestTargetID = CE9E1E4C1B593FE600A06130;
+					};
+				};
 			};
-			buildConfigurationList = F4276DE6189437DF0031772F /* Build configuration list for PBXProject "VLCRemoteKitExample" */;
+			buildConfigurationList = CE9E1E481B593FE500A06130 /* Build configuration list for PBXProject "VLCRemoteKitExample" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -224,81 +190,88 @@
 				en,
 				Base,
 			);
-			mainGroup = F4276DE2189437DF0031772F;
-			productRefGroup = F4276DEC189437DF0031772F /* Products */;
+			mainGroup = CE9E1E441B593FE500A06130;
+			productRefGroup = CE9E1E4E1B593FE600A06130 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				F4276DEA189437DF0031772F /* VLCRemoteKitExample */,
+				CE9E1E4C1B593FE600A06130 /* VLCRemoteKitExample */,
+				CE9E1E611B593FE600A06130 /* VLCRemoteKitExampleTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		F4276DE9189437DF0031772F /* Resources */ = {
+		CE9E1E4B1B593FE600A06130 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F4276E05189437DF0031772F /* Main_iPad.storyboard in Resources */,
-				F4276E0A189437DF0031772F /* Images.xcassets in Resources */,
-				F4276E02189437DF0031772F /* Main_iPhone.storyboard in Resources */,
-				F4276DF9189437DF0031772F /* InfoPlist.strings in Resources */,
+				CE9E1E581B593FE600A06130 /* Main.storyboard in Resources */,
+				CE9E1E5D1B593FE600A06130 /* LaunchScreen.xib in Resources */,
+				CE9E1E5A1B593FE600A06130 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CE9E1E601B593FE600A06130 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		F4276DE7189437DF0031772F /* Sources */ = {
+		CE9E1E491B593FE600A06130 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F46EC9F118A4FE7000CE4DDC /* VLCRemoteObject.m in Sources */,
-				F4276DFF189437DF0031772F /* VRKAppDelegate.m in Sources */,
-				F4276E08189437DF0031772F /* VRKViewController.m in Sources */,
-				F4276DFB189437DF0031772F /* main.m in Sources */,
-				F46EC9F218A4FE7000CE4DDC /* VLCRemotePlayer.m in Sources */,
-				F46EC9EF18A4FE7000CE4DDC /* VLCCommand.m in Sources */,
-				F49FFA3718A2D1E3004BE640 /* VRKConfigurationViewController.m in Sources */,
-				F49FFA3F18A3A2D5004BE640 /* Colours.m in Sources */,
-				F46EC9F018A4FE7000CE4DDC /* VLCHTTPClient.m in Sources */,
-				F46EC9EE18A4FE7000CE4DDC /* NSError+VLC.m in Sources */,
-				F43620AB18FAF2F300A1C2FF /* VRKPlaylistViewController.m in Sources */,
-				F46EC9F318A4FE7000CE4DDC /* VLCRemotePlaylist.m in Sources */,
+				CE9E1E551B593FE600A06130 /* ViewController.swift in Sources */,
+				CE9E1E7B1B59418000A06130 /* VLCRemoteKit.swift in Sources */,
+				CE9E1E531B593FE600A06130 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CE9E1E5E1B593FE600A06130 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE9E1E7C1B59418000A06130 /* VLCRemoteKit.swift in Sources */,
+				CE9E1E761B59413B00A06130 /* VLCRemoteKitExampleTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		CE9E1E641B593FE600A06130 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CE9E1E4C1B593FE600A06130 /* VLCRemoteKitExample */;
+			targetProxy = CE9E1E631B593FE600A06130 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
-		F4276DF7189437DF0031772F /* InfoPlist.strings */ = {
+		CE9E1E561B593FE600A06130 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				F4276DF8189437DF0031772F /* en */,
+				CE9E1E571B593FE600A06130 /* Base */,
 			);
-			name = InfoPlist.strings;
+			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
-		F4276E00189437DF0031772F /* Main_iPhone.storyboard */ = {
+		CE9E1E5B1B593FE600A06130 /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				F4276E01189437DF0031772F /* Base */,
+				CE9E1E5C1B593FE600A06130 /* Base */,
 			);
-			name = Main_iPhone.storyboard;
-			sourceTree = "<group>";
-		};
-		F4276E03189437DF0031772F /* Main_iPad.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				F4276E04189437DF0031772F /* Base */,
-			);
-			name = Main_iPad.storyboard;
+			name = LaunchScreen.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		F4276E1E189437DF0031772F /* Debug */ = {
+		CE9E1E6A1B593FE600A06130 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -313,11 +286,15 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -327,17 +304,19 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
-		F4276E1F189437DF0031772F /* Release */ = {
+		CE9E1E6B1B593FE600A06130 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -352,72 +331,114 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
-		F4276E21189437DF0031772F /* Debug */ = {
+		CE9E1E6D1B593FE600A06130 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "VLCRemoteKitExample/VLCRemoteKitExample-Prefix.pch";
-				INFOPLIST_FILE = "VLCRemoteKitExample/VLCRemoteKitExample-Info.plist";
+				INFOPLIST_FILE = VLCRemoteKitExample/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
 		};
-		F4276E22189437DF0031772F /* Release */ = {
+		CE9E1E6E1B593FE600A06130 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "VLCRemoteKitExample/VLCRemoteKitExample-Prefix.pch";
-				INFOPLIST_FILE = "VLCRemoteKitExample/VLCRemoteKitExample-Info.plist";
+				INFOPLIST_FILE = VLCRemoteKitExample/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		CE9E1E701B593FE600A06130 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = VLCRemoteKitExampleTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VLCRemoteKitExample.app/VLCRemoteKitExample";
+			};
+			name = Debug;
+		};
+		CE9E1E711B593FE600A06130 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = VLCRemoteKitExampleTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VLCRemoteKitExample.app/VLCRemoteKitExample";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		F4276DE6189437DF0031772F /* Build configuration list for PBXProject "VLCRemoteKitExample" */ = {
+		CE9E1E481B593FE500A06130 /* Build configuration list for PBXProject "VLCRemoteKitExample" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				F4276E1E189437DF0031772F /* Debug */,
-				F4276E1F189437DF0031772F /* Release */,
+				CE9E1E6A1B593FE600A06130 /* Debug */,
+				CE9E1E6B1B593FE600A06130 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F4276E20189437DF0031772F /* Build configuration list for PBXNativeTarget "VLCRemoteKitExample" */ = {
+		CE9E1E6C1B593FE600A06130 /* Build configuration list for PBXNativeTarget "VLCRemoteKitExample" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				F4276E21189437DF0031772F /* Debug */,
-				F4276E22189437DF0031772F /* Release */,
+				CE9E1E6D1B593FE600A06130 /* Debug */,
+				CE9E1E6E1B593FE600A06130 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CE9E1E6F1B593FE600A06130 /* Build configuration list for PBXNativeTarget "VLCRemoteKitExampleTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CE9E1E701B593FE600A06130 /* Debug */,
+				CE9E1E711B593FE600A06130 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = F4276DE3189437DF0031772F /* Project object */;
+	rootObject = CE9E1E451B593FE500A06130 /* Project object */;
 }
