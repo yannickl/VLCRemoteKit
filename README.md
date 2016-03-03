@@ -41,12 +41,6 @@ Open your project in Xcode from the .xcworkspace file (not the usual project fil
 $ open MyProject.xcworkspace
 ```
 
-#### Manually
-
-[Download](https://github.com/YannickL/VLCRemoteKit/archive/master.zip) the project and copy the `VLCRemoteKit` folder into your project and then simply `#import "VLCRemoteKit.h"` in the file(s) you would like to use it in.
-
-## Usage
-
 
 ## Contact
 
