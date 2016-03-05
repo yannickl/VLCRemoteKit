@@ -6,42 +6,6 @@ VLCRemoteKit is a library that lets you remotely control your VLC Media Player v
 
 It has been designed by following the `Proxy` pattern in order to prodive you a simple way to manipulate the VLC player. 
 
-### Installation
-
-The recommended approach to use _VLCRemoteKit_ in your project is using the [CocoaPods](http://cocoapods.org/) package manager, as it provides flexible dependency management and dead simple installation.
-
-#### CocoaPods
-
-Install CocoaPods if not already available:
-
-``` bash
-$ [sudo] gem install cocoapods
-$ pod setup
-```
-Go to the directory of your Xcode project, and Create and Edit your Podfile and add VLCRemoteKit:
-
-``` bash
-$ cd /path/to/MyProject
-$ touch Podfile
-$ edit Podfile
-platform :ios, '7.0' 
-# Or platform :osx, '10.9'
-pod 'VLCRemoteKit', '~> 1.0.0'
-```
-
-Install into your project:
-
-``` bash
-$ pod install
-```
-
-Open your project in Xcode from the .xcworkspace file (not the usual project file)
-
-``` bash
-$ open MyProject.xcworkspace
-```
-
-
 ## Contact
 
 Yannick Loriot
