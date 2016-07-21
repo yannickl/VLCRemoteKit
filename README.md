@@ -1,6 +1,6 @@
 # VLCRemoteKit (under dev)
 
-[![License](https://cocoapod-badges.herokuapp.com/l/VLCRemoteKit/badge.svg)](http://cocoadocs.org/docsets/VLCRemoteKit/) [![Supported Plateforms](https://cocoapod-badges.herokuapp.com/p/VLCRemoteKit/badge.svg)](http://cocoadocs.org/docsets/VLCRemoteKit/) [![Version](https://cocoapod-badges.herokuapp.com/v/VLCRemoteKit/badge.svg)](http://cocoadocs.org/docsets/VLCRemoteKit/) [![Build Status](https://travis-ci.org/yannickl/VLCRemoteKit.svg?branch=master)](https://travis-ci.org/YannickL/VLCRemoteKit) [![Coverage Status](https://coveralls.io/repos/YannickL/VLCRemoteKit/badge.svg)](https://coveralls.io/r/YannickL/VLCRemoteKit)
+[![Build Status](https://travis-ci.org/yannickl/VLCRemoteKit.svg?branch=master)](https://travis-ci.org/YannickL/VLCRemoteKit) [![Coverage Status](https://coveralls.io/repos/YannickL/VLCRemoteKit/badge.svg)](https://coveralls.io/r/YannickL/VLCRemoteKit)
 
 VLCRemoteKit is a library that lets you remotely control your VLC Media Player via the HTTP interface in Objective-C (iOS and/or Mac OS X).
 
