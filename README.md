@@ -2,9 +2,7 @@
 
 [![Build Status](https://travis-ci.org/yannickl/VLCRemoteKit.svg?branch=master)](https://travis-ci.org/YannickL/VLCRemoteKit) [![Coverage Status](https://coveralls.io/repos/YannickL/VLCRemoteKit/badge.svg)](https://coveralls.io/r/YannickL/VLCRemoteKit)
 
-VLCRemoteKit is a library that lets you remotely control your VLC Media Player via the HTTP interface in Objective-C (iOS and/or Mac OS X).
-
-It has been designed by following the `Proxy` pattern in order to prodive you a simple way to manipulate the VLC player. 
+VLCRemoteKit is a library that lets you remotely control your VLC Media Player via the HTTP interface in Objective-C (iOS and/or Mac OS X). It has been designed by following the `Proxy` pattern in order to prodive you a simple way to manipulate the VLC player. 
 
 ## Contact
 
