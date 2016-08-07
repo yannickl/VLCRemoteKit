@@ -1,4 +1,4 @@
-# VLCRemoteKit (under dev)
+# Under development
 
 [![Build Status](https://travis-ci.org/yannickl/VLCRemoteKit.svg?branch=master)](https://travis-ci.org/YannickL/VLCRemoteKit) [![Coverage Status](https://coveralls.io/repos/YannickL/VLCRemoteKit/badge.svg)](https://coveralls.io/r/YannickL/VLCRemoteKit)
 
